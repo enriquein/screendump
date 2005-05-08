@@ -131,6 +131,9 @@
 				RelativePath=".\bScreenDumped2Dlg.cpp">
 			</File>
 			<File
+				RelativePath=".\GlobalAtom.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -155,6 +158,9 @@
 			</File>
 			<File
 				RelativePath=".\bScreenDumped2Dlg.h">
+			</File>
+			<File
+				RelativePath=".\GlobalAtom.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">
