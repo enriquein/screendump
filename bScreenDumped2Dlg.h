@@ -3,6 +3,8 @@
 
 #pragma once
 #include "globalatom.h"
+#include "gdiplus.h" 
+using namespace Gdiplus;
 
 // CbScreenDumped2Dlg dialog
 class CbScreenDumped2Dlg : public CDialog
@@ -24,6 +26,8 @@ public:
 	void DoCleanup();
 	CGlobalAtom* m_Atom;
 	CGlobalAtom* m_AtomAlt;
+	GdiplusStartupInput m_gdiPlusStatupInput;
+	ULONG_PTR m_gdiPlusToken; 
 
 // Implementation
 protected:

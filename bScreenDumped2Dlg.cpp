@@ -3,6 +3,9 @@
 #include "bScreenDumped2Dlg.h"
 #include "shellapi.h"
 #include "Windows.h"
+#include "WindowCapture.h"
+#include "gdiplus.h"
+using namespace Gdiplus;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -18,6 +21,7 @@ CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/)
 
 void CbScreenDumped2Dlg::DoCleanup()
 {
+	GdiplusShutdown(m_gdiPlusToken);
 	DoUnregisterHotKeys();
 	ShellIcon_Terminate();
 	EndDialog(1);
@@ -39,6 +43,13 @@ END_MESSAGE_MAP()
 BOOL CbScreenDumped2Dlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	Status st;
+	st = GdiplusStartup(&m_gdiPlusToken, &m_gdiPlusStatupInput, NULL );
+	if(st != Ok)
+	{
+		MessageBox("death");
+		EndDialog(1);
+	}
 	ShellIcon_Initialize();
 	DoRegisterHotKeys();
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -134,7 +145,10 @@ LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
 	if( wParam == m_Atom->GetID() )
 	{
-		AfxMessageBox("Print Screen!");
+		if(!( CaptureWindow() ) )
+		{
+			AfxMessageBox("meh failed");
+		}
 	}
 	else
 	{
