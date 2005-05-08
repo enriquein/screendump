@@ -71,10 +71,8 @@ IDR_MAINFRAME           ICON                    "res\\bScreenDumped2.ico"
 // Dialog
 //
 
-IDD_BSCREENDUMPED2_DIALOG DIALOGEX 0, 0, 320, 200
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | 
-    WS_CAPTION
-EXSTYLE WS_EX_APPWINDOW
+IDD_BSCREENDUMPED2_DIALOG DIALOGEX 0, 0, 32, 26
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
@@ -130,12 +128,26 @@ BEGIN
     IDD_BSCREENDUMPED2_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 313
+        RIGHTMARGIN, 25
         TOPMARGIN, 7
-        BOTTOMMARGIN, 193
+        BOTTOMMARGIN, 19
     END
 END
 #endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MENU1 MENU DISCARDABLE
+BEGIN
+    POPUP "&Tray"
+    BEGIN
+        MENUITEM "Exit",                        IDM_EXIT
+    END
+END
 
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////

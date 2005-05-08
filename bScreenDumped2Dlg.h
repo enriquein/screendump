@@ -16,7 +16,9 @@ public:
 
 	protected:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV support
-
+	void ShellIcon_Initialize();
+	void ShellIcon_Terminate();
+	virtual BOOL OnCommand(WPARAM wParam, LPARAM lParam);
 
 // Implementation
 protected:
@@ -24,5 +26,6 @@ protected:
 
 	// Generated message map functions
 	virtual BOOL OnInitDialog();
+	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 };

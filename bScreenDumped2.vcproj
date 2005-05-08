@@ -185,5 +185,8 @@
 		</File>
 	</Files>
 	<Globals>
+		<Global
+			Name="RESOURCE_FILE"
+			Value="bScreenDumped2.rc"/>
 	</Globals>
 </VisualStudioProject>
