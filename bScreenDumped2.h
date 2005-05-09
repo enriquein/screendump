@@ -9,7 +9,6 @@
 
 #include "resource.h"		// main symbols
 
-
 // CbScreenDumped2App:
 // See bScreenDumped2.cpp for the implementation of this class
 //
@@ -18,6 +17,7 @@ class CbScreenDumped2App : public CWinApp
 {
 public:
 	CbScreenDumped2App();
+
 
 // Overrides
 	public:

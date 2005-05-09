@@ -2,6 +2,7 @@
 //
 
 #pragma once
+#include "HogVideo.h"
 #include "globalatom.h"
 #include "gdiplus.h" 
 using namespace Gdiplus;
@@ -28,6 +29,7 @@ public:
 	CGlobalAtom* m_AtomAlt;
 	GdiplusStartupInput m_gdiPlusStatupInput;
 	ULONG_PTR m_gdiPlusToken; 
+	CHogVideo m_Hog;
 
 // Implementation
 protected:

@@ -148,16 +148,35 @@ BOOL CaptureWindow()
 
 void DumpImage(Bitmap* aBmp)
 {
+	//When you create an EncoderParameters object, you must allocate enough memory
+	//to hold all of the EncoderParameter objects that will eventually be placed in
+	//the array. For example, if you want to create an EncoderParameters object that will
+	//hold an array of five EncoderParameter objects, you should use code similar to the following:
+
+	//	EncoderParameters* pEncoderParameters = (EncoderParameters*)
+	//	malloc(sizeof(EncoderParameters) + 4 * sizeof(EncoderParameter));
+
+	EncoderParameters* eParams = (EncoderParameters*)malloc(sizeof(EncoderParameters) + sizeof(EncoderParameter));
+	SYSTEMTIME sysTime;
 	CLSID encoderClsid;
+	WCHAR filename[16];
+	long temp = 40;
+	GetSystemTime(&sysTime);
+	swprintf(filename, L"%u%u%u.png", sysTime.wMinute, sysTime.wSecond, sysTime.wMilliseconds);
 	GetEncoderClsid(L"image/png", &encoderClsid);
-	aBmp->Save(L"desktop.png", &encoderClsid);
+	eParams->Count = 1;
+	eParams->Parameter->Guid = EncoderCompression;
+	eParams->Parameter->NumberOfValues = 1;
+	eParams->Parameter->Type = EncoderParameterValueTypeLong;
+	eParams->Parameter->Value = &temp;
+	aBmp->Save(filename, &encoderClsid, eParams);
+	free(eParams);
 }
 
 BOOL CaptureDesktop()
 {
 	return true;
 }
-
 
 
 int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)

@@ -1,9 +1,11 @@
 #include "stdafx.h"
+#include "HogVideo.h"
 #include "bScreenDumped2.h"
 #include "bScreenDumped2Dlg.h"
 #include "shellapi.h"
 #include "Windows.h"
 #include "WindowCapture.h"
+#include "GlobalSettings.h"
 #include "gdiplus.h"
 using namespace Gdiplus;
 
@@ -52,6 +54,8 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	}
 	ShellIcon_Initialize();
 	DoRegisterHotKeys();
+	m_Hog.SetVideo("C:\\checkout\\bscreendumped2\\trunk\\res\\bs.dont.delete.me");
+    m_Hog.Hog();
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 

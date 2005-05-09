@@ -15,6 +15,8 @@ CbScreenDumped2App::CbScreenDumped2App()
 }
 
 CbScreenDumped2App theApp;
+// The following globals will be used for settings
+
 
 BOOL CbScreenDumped2App::InitInstance()
 {

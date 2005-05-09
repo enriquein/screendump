@@ -139,6 +139,9 @@
 				RelativePath=".\GlobalAtom.cpp">
 			</File>
 			<File
+				RelativePath=".\GlobalSettings.cpp">
+			</File>
+			<File
 				RelativePath=".\HogVideo.cpp">
 			</File>
 			<File
@@ -172,6 +175,9 @@
 			</File>
 			<File
 				RelativePath=".\GlobalAtom.h">
+			</File>
+			<File
+				RelativePath=".\GlobalSettings.h">
 			</File>
 			<File
 				RelativePath=".\HogVideo.h">
