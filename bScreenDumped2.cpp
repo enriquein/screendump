@@ -7,7 +7,6 @@
 #endif
 
 BEGIN_MESSAGE_MAP(CbScreenDumped2App, CWinApp)
-	ON_COMMAND(ID_HELP, CWinApp::OnHelp)
 END_MESSAGE_MAP()
 
 CbScreenDumped2App::CbScreenDumped2App()
@@ -15,8 +14,6 @@ CbScreenDumped2App::CbScreenDumped2App()
 }
 
 CbScreenDumped2App theApp;
-// The following globals will be used for settings
-
 
 BOOL CbScreenDumped2App::InitInstance()
 {

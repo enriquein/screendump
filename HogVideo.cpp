@@ -142,6 +142,12 @@ bool CHogVideo::Hog()
     if (SUCCEEDED(hr))
     {
         // Run the graph.
+		pVideoWindow->put_AutoShow(OAFALSE);
+        pVideoWindow->put_Visible(OAFALSE);
+		pVideoWindow->put_Top(-100);
+        pVideoWindow->put_Left(-100);
+        pVideoWindow->put_Width(0);
+        pVideoWindow->put_Height(0);
         hr = pMediaControl->Run();
         // Hide the window
         pVideoWindow->put_WindowState(SW_HIDE);

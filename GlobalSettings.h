@@ -13,10 +13,14 @@ class CGlobalSettings
 public:
 	CGlobalSettings(void);
 	~CGlobalSettings(void);
+
 	selEncoder sEnc;
-	bool bAutoName;
-	CString szOutputDir;
+	BOOL bAutoName;
 	long lJpgQuality;
-	ReadSettings();
-	WriteSettings();
+	void ReadSettings();
+	void WriteSettings();
+	char szOutputDir[_MAX_PATH];
+
+protected:
+	char m_IniPath[_MAX_PATH];
 };

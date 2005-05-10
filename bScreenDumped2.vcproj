@@ -36,6 +36,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="gdiplus.lib Strmiids.lib"
 				ShowProgress="2"
+				OutputFile="$(OutDir)/bScreenDumped.exe"
 				Version="2.0.0"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\Lib&quot;"
@@ -77,9 +78,15 @@
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
+				Optimization="2"
+				GlobalOptimizations="TRUE"
+				InlineFunctionExpansion="2"
+				FavorSizeOrSpeed="1"
+				OptimizeForWindowsApplication="TRUE"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="FALSE"
 				RuntimeLibrary="0"
+				EnableEnhancedInstructionSet="0"
 				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
@@ -89,8 +96,10 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib"
+				OutputFile="$(OutDir)/bScreenDumped.exe"
 				LinkIncremental="1"
-				GenerateDebugInformation="TRUE"
+				GenerateDebugInformation="FALSE"
 				SubSystem="2"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -145,6 +154,9 @@
 				RelativePath=".\HogVideo.cpp">
 			</File>
 			<File
+				RelativePath=".\OptionsDialog.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -181,6 +193,9 @@
 			</File>
 			<File
 				RelativePath=".\HogVideo.h">
+			</File>
+			<File
+				RelativePath=".\OptionsDialog.h">
 			</File>
 			<File
 				RelativePath=".\Resource.h">

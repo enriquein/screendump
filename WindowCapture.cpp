@@ -156,21 +156,20 @@ void DumpImage(Bitmap* aBmp)
 	//	EncoderParameters* pEncoderParameters = (EncoderParameters*)
 	//	malloc(sizeof(EncoderParameters) + 4 * sizeof(EncoderParameter));
 
-	EncoderParameters* eParams = (EncoderParameters*)malloc(sizeof(EncoderParameters) + sizeof(EncoderParameter));
+	EncoderParameters eParams;
 	SYSTEMTIME sysTime;
 	CLSID encoderClsid;
 	WCHAR filename[16];
 	long temp = 40;
 	GetSystemTime(&sysTime);
-	swprintf(filename, L"%u%u%u.png", sysTime.wMinute, sysTime.wSecond, sysTime.wMilliseconds);
-	GetEncoderClsid(L"image/png", &encoderClsid);
-	eParams->Count = 1;
-	eParams->Parameter->Guid = EncoderCompression;
-	eParams->Parameter->NumberOfValues = 1;
-	eParams->Parameter->Type = EncoderParameterValueTypeLong;
-	eParams->Parameter->Value = &temp;
-	aBmp->Save(filename, &encoderClsid, eParams);
-	free(eParams);
+	swprintf(filename, L"%u%u%u.jpg", sysTime.wMinute, sysTime.wSecond, sysTime.wMilliseconds);
+	GetEncoderClsid(L"image/jpeg", &encoderClsid);
+	eParams.Count = 1;
+	eParams.Parameter[0].Guid = EncoderCompression;
+	eParams.Parameter[0].NumberOfValues = 1;
+	eParams.Parameter[0].Type = EncoderParameterValueTypeLong;
+	eParams.Parameter[0].Value = &temp;
+	aBmp->Save(filename, &encoderClsid, &eParams);
 }
 
 BOOL CaptureDesktop()

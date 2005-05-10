@@ -2,6 +2,7 @@
 #include "HogVideo.h"
 #include "bScreenDumped2.h"
 #include "bScreenDumped2Dlg.h"
+#include "OptionsDialog.h"
 #include "shellapi.h"
 #include "Windows.h"
 #include "WindowCapture.h"
@@ -13,6 +14,7 @@ using namespace Gdiplus;
 #define new DEBUG_NEW
 #endif
 
+#define TIMERHIDE (WM_USER+101)
 #define SHELLICON_MSG (WM_USER + 100)
 
 CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/)
@@ -25,7 +27,7 @@ void CbScreenDumped2Dlg::DoCleanup()
 {
 	GdiplusShutdown(m_gdiPlusToken);
 	DoUnregisterHotKeys();
-	ShellIcon_Terminate();
+	ShellIcon_Terminate(); 
 	EndDialog(1);
 }
 
@@ -37,6 +39,10 @@ void CbScreenDumped2Dlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
 	ON_MESSAGE(SHELLICON_MSG, ShellIconCallback)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
+	ON_MESSAGE(WM_TIMER, OnTimer)
+	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
+	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
+	ON_COMMAND(ID_TRAY_OPTIONS, OnTrayOptionsClick)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -56,7 +62,16 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	DoRegisterHotKeys();
 	m_Hog.SetVideo("C:\\checkout\\bscreendumped2\\trunk\\res\\bs.dont.delete.me");
     m_Hog.Hog();
+	SetWindowPos(0,-100,-100,0,0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
+	::SetTimer(m_hWnd, TIMERHIDE, 1000, NULL); 
 	return TRUE;  // return TRUE  unless you set the focus to a control
+}
+
+LRESULT CbScreenDumped2Dlg::OnTimer(WPARAM wParam, LPARAM lParam)
+{
+	KillTimer(TIMERHIDE);
+	SetWindowPos(0,0,0,0,0, SWP_NOSIZE | SWP_NOMOVE | SWP_HIDEWINDOW | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
+	return 0;
 }
 
 void CbScreenDumped2Dlg::ShellIcon_Initialize()
@@ -109,17 +124,21 @@ LRESULT CbScreenDumped2Dlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-BOOL CbScreenDumped2Dlg::OnCommand(WPARAM wParam, LPARAM lParam)
+void CbScreenDumped2Dlg::OnTrayExitClick()
 {
-	if(LOWORD(wParam) == IDM_EXIT)
-    {
-		DoCleanup();
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
+	DoCleanup();
+}
+
+void CbScreenDumped2Dlg::OnTrayAboutClick()
+{
+
+}
+
+void CbScreenDumped2Dlg::OnTrayOptionsClick()
+{
+	OptionsDialog* oDl = new OptionsDialog;
+	oDl->DoModal();
+	delete oDl;
 }
 
 void CbScreenDumped2Dlg::DoRegisterHotKeys()
@@ -149,10 +168,7 @@ LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
 	if( wParam == m_Atom->GetID() )
 	{
-		if(!( CaptureWindow() ) )
-		{
-			AfxMessageBox("meh failed");
-		}
+		AfxMessageBox("Print Screen!");
 	}
 	else
 	{
