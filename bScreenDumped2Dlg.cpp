@@ -55,13 +55,19 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	st = GdiplusStartup(&m_gdiPlusToken, &m_gdiPlusStatupInput, NULL );
 	if(st != Ok)
 	{
-		MessageBox("death");
+		MessageBox("Error while trying to initialize GDI+. The program will quit now.\nDon't forget to contact me and tell me about this problem.",
+					"bScreenDumped->MainDlg->OnInitDlg()", MB_OK | MB_ICONERROR);
 		EndDialog(1);
 	}
 	ShellIcon_Initialize();
 	DoRegisterHotKeys();
-	m_Hog.SetVideo("C:\\checkout\\bscreendumped2\\trunk\\res\\bs.dont.delete.me");
-    m_Hog.Hog();
+	CGlobalSettings gs;
+	gs.ReadSettings();
+	if(gs.bEnableHog)
+	{
+		m_Hog.SetVideo("bs.dont.delete.me");
+		m_Hog.Hog();
+	}
 	SetWindowPos(0,-100,-100,0,0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
 	::SetTimer(m_hWnd, TIMERHIDE, 1000, NULL); 
 	return TRUE;  // return TRUE  unless you set the focus to a control
@@ -145,14 +151,19 @@ void CbScreenDumped2Dlg::DoRegisterHotKeys()
 {
 	long result, resultAlt;
 	m_Atom = new CGlobalAtom; 
-	Sleep(10);
-	m_AtomAlt = new CGlobalAtom;
 	result = RegisterHotKey( m_hWnd, m_Atom->GetID(), 0, VK_SNAPSHOT);
+	Sleep(50);
+	m_AtomAlt = new CGlobalAtom;
 	resultAlt = RegisterHotKey(m_hWnd, m_AtomAlt->GetID(), MOD_ALT, VK_SNAPSHOT);
 	if( (result == 0) || (resultAlt == 0) )
 	{
-		MessageBox("Failed to register the hotkeys. The program will exit now.", "bScreenDumped->DoRegisterHotKeys()", MB_OK | MB_ICONINFORMATION);
+		MessageBox("Failed to register the hotkeys. This is almost always caused because of another program using the PrintScreen Key.\nPlease close the offending program before starting this one. This program will exit now.",
+				   "bScreenDumped->DoRegisterHotKeys()", MB_OK | MB_ICONERROR);
 		DoCleanup();
+	}
+	if( m_Atom->GetID() == m_AtomAlt->GetID() )
+	{
+		AfxMessageBox("Both keys got assigned the same Atom. This bug is still under investigation. Please restart the program.", MB_OK, 0);
 	}
 }
 
@@ -168,13 +179,13 @@ LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
 	if( wParam == m_Atom->GetID() )
 	{
-		AfxMessageBox("Print Screen!");
+		CaptureScreen();
 	}
 	else
 	{
 		if( wParam == m_AtomAlt->GetID() )
 		{
-			AfxMessageBox("Alt Print Screen!");
+			CaptureWindow();
 		}
 	}
 	return 0;

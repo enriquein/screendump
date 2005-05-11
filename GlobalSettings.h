@@ -16,6 +16,7 @@ public:
 
 	selEncoder sEnc;
 	BOOL bAutoName;
+	BOOL bEnableHog;
 	long lJpgQuality;
 	void ReadSettings();
 	void WriteSettings();

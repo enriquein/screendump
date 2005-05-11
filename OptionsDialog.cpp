@@ -90,8 +90,12 @@ void OptionsDialog::OnBnClickedOk()
 	CGlobalSettings gs;
 	gs.ReadSettings();
 	CButton* genButPtr;
+
 	genButPtr = (CButton*)GetDlgItem(IDC_CHKAUTONAME);
 	gs.bAutoName = (genButPtr->GetCheck() == BST_CHECKED) ? TRUE : FALSE;
+
+	genButPtr = (CButton*)GetDlgItem(IDC_CHKHOG);
+	gs.bEnableHog = (genButPtr->GetCheck() == BST_CHECKED) ? TRUE : FALSE;
 
 	switch ( GetCheckedRadioButton( IDC_RADIOBMP, IDC_RADIOJPEG ) )
 	{
@@ -203,15 +207,26 @@ BOOL OptionsDialog::OnInitDialog()
 	CEdit* ceQuality = (CEdit*) GetDlgItem(IDC_TXTQUALITY);
 	ceQuality->SetWindowText(buffer);	
 	ceQuality->SetLimitText(3);
-	CButton* chkAutoName = (CButton*)GetDlgItem(IDC_CHKAUTONAME);
+	CButton* genBPtr = (CButton*)GetDlgItem(IDC_CHKAUTONAME);
 	if(gs.bAutoName)
 	{
-		chkAutoName->SetCheck(BST_CHECKED);
+		genBPtr->SetCheck(BST_CHECKED);
 	}
 	else
 	{
-		chkAutoName->SetCheck(BST_UNCHECKED);
+		genBPtr->SetCheck(BST_UNCHECKED);
 	}
+
+	genBPtr = (CButton*)GetDlgItem(IDC_CHKHOG);
+	if(gs.bEnableHog)
+	{
+		genBPtr->SetCheck(BST_CHECKED);
+	}
+	else
+	{
+		genBPtr->SetCheck(BST_UNCHECKED);
+	}
+
 	GetDlgItem(IDC_TXTDESTINATION)->SetWindowText(gs.szOutputDir);
 
 	return TRUE; 

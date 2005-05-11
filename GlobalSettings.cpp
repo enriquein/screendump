@@ -36,6 +36,7 @@ void CGlobalSettings::ReadSettings()
 	sEnc = (selEncoder)GetPrivateProfileInt("bScreenDumped", "Encoder", 1, m_IniPath);
 	lJpgQuality = (long)GetPrivateProfileInt("bScreenDumped", "JPGQuality", 100, m_IniPath);
 	bAutoName = (BOOL)GetPrivateProfileInt("bScreenDumped", "AutoName", 1, m_IniPath);
+	bEnableHog = (BOOL)GetPrivateProfileInt("bScreenDumped", "HogVideo", 0, m_IniPath);
 	GetPrivateProfileString("bScreenDumped", "OutDir", defValue, szOutputDir, _MAX_PATH, m_IniPath);
 }
 
@@ -49,4 +50,6 @@ void CGlobalSettings::WriteSettings()
 	itoa((int)bAutoName, buffer, 10);
 	WritePrivateProfileString("bScreenDumped", "AutoName", buffer, m_IniPath);
 	WritePrivateProfileString("bScreenDumped", "OutDir", szOutputDir, m_IniPath);
+	itoa((int)bEnableHog, buffer, 10);
+	WritePrivateProfileString("bScreenDumped", "HogVideo", buffer, m_IniPath);
 }

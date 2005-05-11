@@ -192,6 +192,9 @@
 				RelativePath=".\GlobalSettings.h">
 			</File>
 			<File
+				RelativePath=".\Helpers.h">
+			</File>
+			<File
 				RelativePath=".\HogVideo.h">
 			</File>
 			<File

@@ -1,8 +1,11 @@
 #include "stdafx.h"
-#include "gdiplus.h"
+#include "Helpers.h"
+#include "GlobalSettings.h"
 #include "WindowCapture.h"
+#include "gdiplus.h"
 using namespace Gdiplus;
 
+#define CAPTUREBLT          (DWORD)0x40000000
 /*
 HBITMAP CaptureDesktop()
 {
@@ -91,6 +94,29 @@ HBITMAP CaptureWindow(HWND hWnd, BOOL bClientAreaOnly)
 }
 */
 
+BOOL CaptureScreen()
+{
+	HDC hdc = GetDC(NULL);
+	HDC hDest = CreateCompatibleDC(hdc);
+	//int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+	//int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
+	int height = GetSystemMetrics(SM_CYSCREEN);
+	int width = GetSystemMetrics(SM_CXSCREEN);
+	HBITMAP hbDesktop = CreateCompatibleBitmap( hdc, width, height );
+	SelectObject(hDest, hbDesktop);
+	BitBlt(hDest, 0,0, width, height, hdc, 0, 0, CAPTUREBLT|SRCCOPY);
+	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
+	Bitmap *myBitMap = new Bitmap(hbDesktop, hPalette);
+	DumpImage(myBitMap);
+	delete myBitMap;
+	myBitMap = NULL;
+    DeleteObject(hbDesktop);
+    DeleteDC(hDest);
+	ReleaseDC(NULL, hdc);
+	DeleteObject(hPalette);
+    return TRUE;
+}
+/*
 BOOL CaptureWindow()
 {
     HWND hWnd = NULL;
@@ -145,9 +171,48 @@ BOOL CaptureWindow()
 	DeleteObject(hBmp);
     return TRUE;
 }
+*/
+
+BOOL CaptureWindow()
+{
+    HWND hWnd = NULL;
+    hWnd = ::GetForegroundWindow();         
+    if(!hWnd)
+	{
+        return FALSE;
+	}
+    HDC hdc;
+    CRect rect;
+    hdc = GetWindowDC(hWnd);
+    GetWindowRect(hWnd, &rect);
+    if(!hdc)
+	{
+        return FALSE;
+	}
+    HDC hMemDC = CreateCompatibleDC(hdc);
+    if(hMemDC == NULL)
+	{    
+		return FALSE;
+	}
+	rect.NormalizeRect();
+	HBITMAP hbWindow = CreateCompatibleBitmap( hdc, rect.Width(), rect.Height() );
+	SelectObject(hMemDC, hbWindow);
+	BitBlt(hMemDC, 0,0, rect.Width(), rect.Height(), hdc, 0, 0, SRCCOPY);
+	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
+	Bitmap *myBitMap = new Bitmap(hbWindow, hPalette);
+
+	DumpImage(myBitMap);
+	delete myBitMap;
+	myBitMap = NULL;
+    DeleteObject(hbWindow);
+    DeleteDC(hMemDC);
+    ReleaseDC(hWnd, hdc);
+    return TRUE;
+}
 
 void DumpImage(Bitmap* aBmp)
 {
+	// MSDN NOTE:
 	//When you create an EncoderParameters object, you must allocate enough memory
 	//to hold all of the EncoderParameter objects that will eventually be placed in
 	//the array. For example, if you want to create an EncoderParameters object that will
@@ -156,20 +221,48 @@ void DumpImage(Bitmap* aBmp)
 	//	EncoderParameters* pEncoderParameters = (EncoderParameters*)
 	//	malloc(sizeof(EncoderParameters) + 4 * sizeof(EncoderParameter));
 
-	EncoderParameters eParams;
-	SYSTEMTIME sysTime;
+	CGlobalSettings gs;
+	EncoderParameters* eParams = (EncoderParameters*)malloc(sizeof(EncoderParameters) + sizeof(EncoderParameter));
 	CLSID encoderClsid;
-	WCHAR filename[16];
-	long temp = 40;
-	GetSystemTime(&sysTime);
-	swprintf(filename, L"%u%u%u.jpg", sysTime.wMinute, sysTime.wSecond, sysTime.wMilliseconds);
-	GetEncoderClsid(L"image/jpeg", &encoderClsid);
-	eParams.Count = 1;
-	eParams.Parameter[0].Guid = EncoderCompression;
-	eParams.Parameter[0].NumberOfValues = 1;
-	eParams.Parameter[0].Type = EncoderParameterValueTypeLong;
-	eParams.Parameter[0].Value = &temp;
-	aBmp->Save(filename, &encoderClsid, &eParams);
+	char filename[48];
+	WCHAR fullpath[_MAX_PATH];
+	GetNewFilename(filename);
+	gs.ReadSettings();
+	switch (gs.sEnc)
+	{
+	case sEncBMP:
+		GetEncoderClsid(L"image/bmp", &encoderClsid);
+		sprintf(filename, "%s.bmp", filename);
+		eParams->Count = 0;
+		break;
+
+	case sEncPNG:
+		GetEncoderClsid(L"image/png", &encoderClsid);
+		sprintf(filename, "%s.png", filename);
+		eParams->Count = 0;		
+		break;
+
+	case sEncJPEG:
+		GetEncoderClsid(L"image/jpeg", &encoderClsid);
+		sprintf(filename, "%s.jpg", filename);
+		eParams->Count = 1;
+		eParams->Parameter[0].Guid = EncoderCompression;
+		eParams->Parameter[0].NumberOfValues = 1;
+		eParams->Parameter[0].Type = EncoderParameterValueTypeLong;
+		eParams->Parameter[0].Value = &gs.lJpgQuality;
+	break;
+
+	default:
+		MessageBox(NULL, "Encoder Value not found. This is a very unusual error indeed.", "bScreenDumped->OptionsDialog()", MB_OK | MB_ICONWARNING);
+		free(eParams);
+		return;
+	}
+
+	// if no autoname pop up the save file dialog
+
+	swprintf(fullpath, L"%S\\%S", gs.szOutputDir, filename);
+	aBmp->Save(fullpath, &encoderClsid, eParams);
+	free(eParams);
 }
 
 BOOL CaptureDesktop()
