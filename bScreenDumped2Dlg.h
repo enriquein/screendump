@@ -4,8 +4,12 @@
 #pragma once
 #include "HogVideo.h"
 #include "globalatom.h"
+#include "OptionsDialog.h"
 #include "gdiplus.h" 
 using namespace Gdiplus;
+
+#define TIMERHIDE (WM_USER+101)
+#define SHELLICON_MSG (WM_USER + 100)
 
 // CbScreenDumped2Dlg dialog
 class CbScreenDumped2Dlg : public CDialog
@@ -30,15 +34,17 @@ protected:
 	ULONG_PTR m_gdiPlusToken; 
 	CHogVideo m_Hog;
 	HICON m_hIcon;
+	OptionsDialog* Odlg;
 
 	void OnTrayExitClick();
 	void OnTrayAboutClick();
 	void OnTrayOptionsClick();
-
+	void OnTrayOpenDest();
 
 	// Message map functions
 	virtual BOOL OnInitDialog();
 	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
+	afx_msg LRESULT OnOptDlgClose(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()

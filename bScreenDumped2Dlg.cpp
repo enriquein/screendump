@@ -14,9 +14,6 @@ using namespace Gdiplus;
 #define new DEBUG_NEW
 #endif
 
-#define TIMERHIDE (WM_USER+101)
-#define SHELLICON_MSG (WM_USER + 100)
-
 CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/)
 	: CDialog(CbScreenDumped2Dlg::IDD, pParent)
 {
@@ -28,6 +25,10 @@ void CbScreenDumped2Dlg::DoCleanup()
 	GdiplusShutdown(m_gdiPlusToken);
 	DoUnregisterHotKeys();
 	ShellIcon_Terminate(); 
+	if(Odlg != NULL)
+	{
+		Odlg->DestroyWindow();
+	}
 	EndDialog(1);
 }
 
@@ -40,9 +41,11 @@ BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
 	ON_MESSAGE(SHELLICON_MSG, ShellIconCallback)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_MESSAGE(WM_TIMER, OnTimer)
+	ON_MESSAGE(OPTIONSDLG_CLOSED, OnOptDlgClose)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
 	ON_COMMAND(ID_TRAY_OPTIONS, OnTrayOptionsClick)
+	ON_COMMAND(ID_TRAY_OPENDEST, OnTrayOpenDest)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -59,6 +62,7 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 					"bScreenDumped->MainDlg->OnInitDlg()", MB_OK | MB_ICONERROR);
 		EndDialog(1);
 	}
+	Odlg = NULL;
 	ShellIcon_Initialize();
 	DoRegisterHotKeys();
 	CGlobalSettings gs;
@@ -89,7 +93,7 @@ void CbScreenDumped2Dlg::ShellIcon_Initialize()
 	ni.uID = 1;
 	ni.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 	ni.uCallbackMessage = SHELLICON_MSG;
-	sprintf(ni.szTip,"bScreenDumped v (rev )"); 
+	sprintf(ni.szTip,"bScreenDumped v (rev )"); // FIXME
 	ni.hIcon = m_hIcon;
 	
 	while ( (Shell_NotifyIcon(NIM_ADD, &ni) && (iCount <= 6 ) ) )
@@ -137,14 +141,36 @@ void CbScreenDumped2Dlg::OnTrayExitClick()
 
 void CbScreenDumped2Dlg::OnTrayAboutClick()
 {
+// FIXME
+}
 
+void CbScreenDumped2Dlg::OnTrayOpenDest()
+{
+	CGlobalSettings gs;
+	gs.ReadSettings();
+	ShellExecute(m_hWnd, "open", gs.szOutputDir, NULL, NULL, SW_SHOWNORMAL);
+// FIXME
 }
 
 void CbScreenDumped2Dlg::OnTrayOptionsClick()
 {
-	OptionsDialog* oDl = new OptionsDialog;
-	oDl->DoModal();
-	delete oDl;
+	if(Odlg == NULL)
+	{
+		Odlg = new OptionsDialog;
+		Odlg->Create(IDD_SETTINGSDLG);
+		Odlg->ShowWindow(SW_SHOWNORMAL);
+		Odlg->parenthWnd = m_hWnd;
+	}
+	else
+	{
+		Odlg->ShowWindow(SW_SHOW);
+	}
+}
+
+LRESULT CbScreenDumped2Dlg::OnOptDlgClose(WPARAM wParam, LPARAM lParam)
+{
+	Odlg = NULL;
+	return 0;
 }
 
 void CbScreenDumped2Dlg::DoRegisterHotKeys()

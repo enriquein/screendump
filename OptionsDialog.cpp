@@ -31,7 +31,6 @@ BEGIN_MESSAGE_MAP(OptionsDialog, CDialog)
 	ON_BN_CLICKED(IDOK, OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, OnBnClickedCancel)
 	ON_BN_CLICKED(IDC_RADIOBMP, OnBnClickedRadiobmp)
-	ON_BN_CLICKED(IDC_RADIOTIFF, OnBnClickedRadiotiff)
 	ON_BN_CLICKED(IDC_RADIOPNG, OnBnClickedRadiopng)
 	ON_BN_CLICKED(IDC_RADIOJPEG, OnBnClickedRadiojpeg)
 	ON_BN_CLICKED(IDC_BTNBROWSE, OnBnClickedBtnbrowse)
@@ -113,17 +112,13 @@ void OptionsDialog::OnBnClickedOk()
 	case IDC_RADIOPNG:
 		gs.sEnc = sEncPNG;
 		break;
-
-	case IDC_RADIOTIFF:
-		gs.sEnc = sEncTIFF;
-		break;
 	}
 
 	GetDlgItem(IDC_TXTDESTINATION)->GetWindowText(gs.szOutputDir, _MAX_PATH);
 	gs.WriteSettings();
 	
 	// Call default OnOK Event
-	OnOK();
+	OnCancel();
 }
 
 void OptionsDialog::OnBnClickedCancel()
@@ -132,11 +127,6 @@ void OptionsDialog::OnBnClickedCancel()
 }
 
 void OptionsDialog::OnBnClickedRadiobmp()
-{
-	GetDlgItem(IDC_TXTQUALITY)->EnableWindow(FALSE); 
-}
-
-void OptionsDialog::OnBnClickedRadiotiff()
 {
 	GetDlgItem(IDC_TXTQUALITY)->EnableWindow(FALSE); 
 }
@@ -191,12 +181,6 @@ BOOL OptionsDialog::OnInitDialog()
 		radioEncoder->SetCheck(BST_CHECKED);
 		OnBnClickedRadiopng();
 		break;
-		
-	case sEncTIFF:
-		radioEncoder = (CButton*)GetDlgItem(IDC_RADIOTIFF);
-		radioEncoder->SetCheck(BST_CHECKED);
-		OnBnClickedRadiotiff();
-		break;
 
 	default:
 		MessageBox("Encoder Value not found. This is a very unusual error indeed.", "bScreenDumped->OptionsDialog()", MB_OK | MB_ICONWARNING);
@@ -230,4 +214,15 @@ BOOL OptionsDialog::OnInitDialog()
 	GetDlgItem(IDC_TXTDESTINATION)->SetWindowText(gs.szOutputDir);
 
 	return TRUE; 
+}
+
+void OptionsDialog::OnCancel()
+{
+	::SendMessage(parenthWnd, OPTIONSDLG_CLOSED, 0, 0);
+	DestroyWindow();
+}
+
+void OptionsDialog::PostNcDestroy()
+{
+	delete this;
 }
