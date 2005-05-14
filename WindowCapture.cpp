@@ -2,106 +2,23 @@
 #include "Helpers.h"
 #include "GlobalSettings.h"
 #include "WindowCapture.h"
+#include <io.h>
+#include <direct.h>
 #include "gdiplus.h"
 using namespace Gdiplus;
 
-#define CAPTUREBLT          (DWORD)0x40000000
-/*
-HBITMAP CaptureDesktop()
-{
-    HWND hWnd = NULL;
-
-    hWnd = GetDesktopWindow();          // Get handle to desktop window.
-
-    return CaptureWindow(hWnd, FALSE);  // Capture an image of this window.
-}
-
-HBITMAP CaptureForegroundWindow(BOOL bClientAreaOnly)
-{
-    HWND hWnd = NULL;
-
-    hWnd = ::GetForegroundWindow();             // Get the foreground window.
-
-    return CaptureWindow(hWnd, bClientAreaOnly);// Capture an image of this window.
-}
-
-HBITMAP CaptureWindow(HWND hWnd, BOOL bClientAreaOnly)
-{
-    if(!hWnd)
-        return NULL;
-
-    HDC hdc;
-    RECT rect;
-    if(bClientAreaOnly)
-    {
-        hdc = GetDC(hWnd);
-        GetClientRect(hWnd, &rect);
-    }
-    else
-    {
-        hdc = GetWindowDC(hWnd);
-        GetWindowRect(hWnd, &rect);
-    }
-
-    if(!hdc)
-        return NULL;
-
-    HDC hMemDC = CreateCompatibleDC(hdc);
-    if(hMemDC == NULL)
-        return NULL;
-
-    SIZE size;
-    size.cx = rect.right - rect.left;
-    if(rect.right < rect.left)
-        size.cx = -size.cx;
-    size.cy = rect.bottom - rect.top;
-    if(rect.bottom < rect.top)
-        size.cy = -size.cy;
-
-    HBITMAP hDDBmp = CreateCompatibleBitmap(hdc, size.cx, size.cy);
-    if(hDDBmp == NULL)
-    {
-        DeleteDC(hMemDC);
-        ReleaseDC(hWnd, hdc);
-        return NULL;
-    }
-
-    HBITMAP hOldBmp = static_cast<HBITMAP>(SelectObject(hMemDC, hDDBmp));
-    BitBlt(hMemDC, 0, 0, size.cx, size.cy, hdc, 0, 0, SRCCOPY);
-    SelectObject(hMemDC, hOldBmp);
-
-
-    HBITMAP hBmp = static_cast<HBITMAP>(CopyImage(hDDBmp,
-                                                    IMAGE_BITMAP,
-                                                    0,
-                                                    0,
-                                                    LR_CREATEDIBSECTION));
-
-
-
-	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
-	Bitmap *myBitMap = new Bitmap(hBmp, hPalette);
-	CLSID encoderClsid;
-	GetEncoderClsid(L"image/png", &encoderClsid);
-	myBitMap->Save(L"desktop.png", &encoderClsid);
-
-    DeleteObject(hDDBmp);
-    DeleteDC(hMemDC);
-    ReleaseDC(hWnd, hdc);
-	DeleteObject(hBmp);
-	myBitMap = NULL;
-    return hBmp;
-}
-*/
+#define CAPTUREBLT  (DWORD)0x40000000
+#define SM_CYVIRTUALSCREEN 79
+#define SM_CXVIRTUALSCREEN 78
 
 BOOL CaptureScreen()
 {
 	HDC hdc = GetDC(NULL);
 	HDC hDest = CreateCompatibleDC(hdc);
-	//int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
-	//int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-	int height = GetSystemMetrics(SM_CYSCREEN);
-	int width = GetSystemMetrics(SM_CXSCREEN);
+	int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
+	int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
+	//int height = GetSystemMetrics(SM_CYSCREEN);
+	//int width = GetSystemMetrics(SM_CXSCREEN);
 	HBITMAP hbDesktop = CreateCompatibleBitmap( hdc, width, height );
 	SelectObject(hDest, hbDesktop);
 	BitBlt(hDest, 0,0, width, height, hdc, 0, 0, CAPTUREBLT|SRCCOPY);
@@ -116,62 +33,6 @@ BOOL CaptureScreen()
 	DeleteObject(hPalette);
     return TRUE;
 }
-/*
-BOOL CaptureWindow()
-{
-    HWND hWnd = NULL;
-    hWnd = ::GetForegroundWindow();         
-    if(!hWnd)
-	{
-        return FALSE;
-	}
-    HDC hdc;
-    RECT rect;
-    hdc = GetWindowDC(hWnd);
-    GetWindowRect(hWnd, &rect);
-    if(!hdc)
-	{
-        return FALSE;
-	}
-    HDC hMemDC = CreateCompatibleDC(hdc);
-    if(hMemDC == NULL)
-	{    
-		return FALSE;
-	}
-	SIZE size;
-    size.cx = rect.right - rect.left;
-    if(rect.right < rect.left)
-	{
-        size.cx = -size.cx;
-	}
-	size.cy = rect.bottom - rect.top;
-    if(rect.bottom < rect.top)
-	{
-        size.cy = -size.cy;
-	}
-    HBITMAP hDDBmp = CreateCompatibleBitmap(hdc, size.cx, size.cy);
-    if(hDDBmp == NULL)
-    {
-        DeleteDC(hMemDC);
-        ReleaseDC(hWnd, hdc);
-        return NULL;
-    }
-    HBITMAP hOldBmp = static_cast<HBITMAP>(SelectObject(hMemDC, hDDBmp));
-    BitBlt(hMemDC, 0, 0, size.cx, size.cy, hdc, 0, 0, SRCCOPY);
-    SelectObject(hMemDC, hOldBmp);
-    HBITMAP hBmp = static_cast<HBITMAP>(CopyImage(hDDBmp, IMAGE_BITMAP, 0, 0, LR_CREATEDIBSECTION));
-	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
-	Bitmap *myBitMap = new Bitmap(hBmp, hPalette);
-	DumpImage(myBitMap);
-	delete myBitMap;
-	myBitMap = NULL;
-    DeleteObject(hDDBmp);
-    DeleteDC(hMemDC);
-    ReleaseDC(hWnd, hdc);
-	DeleteObject(hBmp);
-    return TRUE;
-}
-*/
 
 BOOL CaptureWindow()
 {
@@ -222,47 +83,74 @@ void DumpImage(Bitmap* aBmp)
 	//	malloc(sizeof(EncoderParameters) + 4 * sizeof(EncoderParameter));
 
 	CGlobalSettings gs;
-	EncoderParameters* eParams = (EncoderParameters*)malloc(sizeof(EncoderParameters) + sizeof(EncoderParameter));
+	EncoderParameters eParams; // = (EncoderParameters*)malloc(sizeof(EncoderParameters) + sizeof(EncoderParameter));
 	CLSID encoderClsid;
 	char filename[48];
+	char chFilter[60];
+	char chDefExt[4];
+	CFileDialog* cfSaveAs;
 	WCHAR fullpath[_MAX_PATH];
 	GetNewFilename(filename);
 	gs.ReadSettings();
+
+	// Check if the directory has been deleted:
+	if(_access(gs.szOutputDir, 0) == -1)
+	{
+		if(_mkdir(gs.szOutputDir) != 0)
+		{
+			MessageBox(NULL, "Unable to find screenshots directory.\nAdditionally, the program tried to create it and failed as well.", "bScreenDumped->DumpImage", MB_OK|MB_ICONERROR);
+		}
+	}
+
 	switch (gs.sEnc)
 	{
 	case sEncBMP:
+		sprintf(chFilter, "Bitmap Files (*.bmp)|*.bmp|All Files (*.*)|*.*||");
+		sprintf(chDefExt, "bmp");
 		GetEncoderClsid(L"image/bmp", &encoderClsid);
 		sprintf(filename, "%s.bmp", filename);
-		eParams->Count = 0;
+		eParams.Count = 0;
 		break;
 
 	case sEncPNG:
+		sprintf(chFilter, "PNG Files (*.png)|*.png|All Files (*.*)|*.*||");
+		sprintf(chDefExt, "png");
 		GetEncoderClsid(L"image/png", &encoderClsid);
 		sprintf(filename, "%s.png", filename);
-		eParams->Count = 0;		
+		eParams.Count = 0;		
 		break;
 
 	case sEncJPEG:
+		sprintf(chFilter, "JPEG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||");
+		sprintf(chDefExt, "jpg");
 		GetEncoderClsid(L"image/jpeg", &encoderClsid);
 		sprintf(filename, "%s.jpg", filename);
-		eParams->Count = 1;
-		eParams->Parameter[0].Guid = EncoderCompression;
-		eParams->Parameter[0].NumberOfValues = 1;
-		eParams->Parameter[0].Type = EncoderParameterValueTypeLong;
-		eParams->Parameter[0].Value = &gs.lJpgQuality;
+		eParams.Count = 1;
+		eParams.Parameter[0].Guid = EncoderQuality;
+		eParams.Parameter[0].NumberOfValues = 1;
+		eParams.Parameter[0].Type = EncoderParameterValueTypeLong;
+		eParams.Parameter[0].Value = &gs.lJpgQuality;
 	break;
 
 	default:
 		MessageBox(NULL, "Encoder Value not found. This is a very unusual error indeed.", "bScreenDumped->OptionsDialog()", MB_OK | MB_ICONWARNING);
-		free(eParams);
 		return;
 	}
 
-	// if no autoname pop up the save file dialog
-
-	swprintf(fullpath, L"%S\\%S", gs.szOutputDir, filename);
-	aBmp->Save(fullpath, &encoderClsid, eParams);
-	free(eParams);
+	if(!(gs.bAutoName))
+	{
+		cfSaveAs = new CFileDialog(FALSE, chDefExt, filename, OFN_HIDEREADONLY|OFN_EXPLORER, chFilter, NULL);
+		if( cfSaveAs->DoModal() == IDOK )
+		{
+			swprintf(fullpath, L"%S", cfSaveAs->GetPathName());
+		}
+		delete cfSaveAs;
+	}
+	else
+	{
+		swprintf(fullpath, L"%S\\%S", gs.szOutputDir, filename);
+	}
+	aBmp->Save(fullpath, &encoderClsid, &eParams);
 }
 
 BOOL CaptureDesktop()
