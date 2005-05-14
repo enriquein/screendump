@@ -151,6 +151,9 @@
 				RelativePath=".\GlobalSettings.cpp">
 			</File>
 			<File
+				RelativePath=".\Helpers.cpp">
+			</File>
+			<File
 				RelativePath=".\HogVideo.cpp">
 			</File>
 			<File
@@ -196,6 +199,9 @@
 			</File>
 			<File
 				RelativePath=".\HogVideo.h">
+			</File>
+			<File
+				RelativePath=".\LimitSingleInstance.h">
 			</File>
 			<File
 				RelativePath=".\OptionsDialog.h">

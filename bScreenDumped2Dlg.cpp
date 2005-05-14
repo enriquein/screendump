@@ -1,12 +1,11 @@
 #include "stdafx.h"
-#include "HogVideo.h"
-#include "bScreenDumped2.h"
-#include "bScreenDumped2Dlg.h"
-#include "OptionsDialog.h"
-#include "shellapi.h"
 #include "Windows.h"
+#include "HogVideo.h"
+#include "bScreenDumped2Dlg.h"
 #include "WindowCapture.h"
 #include "GlobalSettings.h"
+#include "OptionsDialog.h"
+#include "Helpers.h"
 #include "gdiplus.h"
 using namespace Gdiplus;
 
@@ -25,10 +24,6 @@ void CbScreenDumped2Dlg::DoCleanup()
 	GdiplusShutdown(m_gdiPlusToken);
 	DoUnregisterHotKeys();
 	ShellIcon_Terminate(); 
-	if(Odlg != NULL)
-	{
-		Odlg->DestroyWindow();
-	}
 	EndDialog(1);
 }
 
@@ -41,7 +36,6 @@ BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
 	ON_MESSAGE(SHELLICON_MSG, ShellIconCallback)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_MESSAGE(WM_TIMER, OnTimer)
-	ON_MESSAGE(OPTIONSDLG_CLOSED, OnOptDlgClose)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
 	ON_COMMAND(ID_TRAY_OPTIONS, OnTrayOptionsClick)
@@ -62,7 +56,8 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 					"bScreenDumped->MainDlg->OnInitDlg()", MB_OK | MB_ICONERROR);
 		EndDialog(1);
 	}
-	Odlg = NULL;
+	m_FullMenu.LoadMenu(IDR_MENU1);
+	m_trayMenu = m_FullMenu.GetSubMenu(0);
 	ShellIcon_Initialize();
 	DoRegisterHotKeys();
 	CGlobalSettings gs;
@@ -122,13 +117,10 @@ LRESULT CbScreenDumped2Dlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 {
 	if (lParam == WM_RBUTTONDOWN)
     {
-		CMenu *PopUpMenu, mnu;
-		mnu.LoadMenu(IDR_MENU1);
-		PopUpMenu = mnu.GetSubMenu(0);
 		CPoint pt;
 		GetCursorPos(&pt);		
 		SetForegroundWindow();
-		PopUpMenu->TrackPopupMenu(TPM_CENTERALIGN,pt.x,pt.y,this);
+		m_trayMenu->TrackPopupMenu(TPM_CENTERALIGN,pt.x,pt.y,this);
 		PostMessage(WM_NULL, 0, 0);
 	}
 	return 0;
@@ -154,23 +146,10 @@ void CbScreenDumped2Dlg::OnTrayOpenDest()
 
 void CbScreenDumped2Dlg::OnTrayOptionsClick()
 {
-	if(Odlg == NULL)
-	{
-		Odlg = new OptionsDialog;
-		Odlg->Create(IDD_SETTINGSDLG);
-		Odlg->ShowWindow(SW_SHOWNORMAL);
-		Odlg->parenthWnd = m_hWnd;
-	}
-	else
-	{
-		Odlg->ShowWindow(SW_SHOW);
-	}
-}
-
-LRESULT CbScreenDumped2Dlg::OnOptDlgClose(WPARAM wParam, LPARAM lParam)
-{
-	Odlg = NULL;
-	return 0;
+	OptionsDialog* oDl = new OptionsDialog;
+	ToggleTrayMenu(FALSE);
+	oDl->DoModal();
+	ToggleTrayMenu(TRUE);
 }
 
 void CbScreenDumped2Dlg::DoRegisterHotKeys()

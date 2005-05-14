@@ -2,9 +2,12 @@
 //
 
 #pragma once
+#ifndef BSCREENDUMPED2DLG_H
+#define BSCREENDUMPED2DLG_H
+
 #include "HogVideo.h"
 #include "globalatom.h"
-#include "OptionsDialog.h"
+#include "resource.h"
 #include "gdiplus.h" 
 using namespace Gdiplus;
 
@@ -17,6 +20,7 @@ class CbScreenDumped2Dlg : public CDialog
 // Construction
 public:
 	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
+	CMenu* m_trayMenu;
 
 // Dialog Data
 	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };
@@ -34,7 +38,7 @@ protected:
 	ULONG_PTR m_gdiPlusToken; 
 	CHogVideo m_Hog;
 	HICON m_hIcon;
-	OptionsDialog* Odlg;
+	CMenu m_FullMenu;
 
 	void OnTrayExitClick();
 	void OnTrayAboutClick();
@@ -44,8 +48,9 @@ protected:
 	// Message map functions
 	virtual BOOL OnInitDialog();
 	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
-	afx_msg LRESULT OnOptDlgClose(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
 };
+
+#endif

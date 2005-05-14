@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GLOBALSETTINGS_H
+#define GLOBALSETTINGS_H
 
 enum selEncoder 
 {
@@ -25,3 +26,4 @@ public:
 protected:
 	char m_IniPath[_MAX_PATH];
 };
+#endif

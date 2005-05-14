@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GLOBALATOM_H
+#define GLOBALATOM_H
 
 class CGlobalAtom
 {
@@ -10,3 +11,4 @@ public:
 private:
 	ATOM m_nID;
 };
+#endif

@@ -12,4 +12,4 @@ BOOL CaptureWindow();
 int GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
 void DumpImage(Bitmap* aBmp);
 
-#endif  WINDOWCAPTURE_H
+#endif  

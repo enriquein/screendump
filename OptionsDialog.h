@@ -1,8 +1,10 @@
 #pragma once
 
+#ifndef OPTIONSDIALOG_H
+#define OPTIONSDIALOG_H
 
 // OptionsDialog dialog
-#define OPTIONSDLG_CLOSED (WM_USER + 102)
+#include "resource.h"
 
 class OptionsDialog : public CDialog
 {
@@ -11,7 +13,6 @@ class OptionsDialog : public CDialog
 public:
 	OptionsDialog(CWnd* pParent = NULL);   // standard constructor
 	virtual ~OptionsDialog();
-	HWND parenthWnd;
 
 // Dialog Data
 	enum { IDD = IDD_SETTINGSDLG };
@@ -29,7 +30,5 @@ public:
 	afx_msg void OnBnClickedRadiojpeg();
 	afx_msg void OnBnClickedBtnbrowse();
 	virtual BOOL OnInitDialog();
-protected:
-	virtual void OnCancel();
-	virtual void PostNcDestroy();
 };
+#endif

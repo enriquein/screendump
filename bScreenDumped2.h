@@ -7,6 +7,8 @@
 	#error include 'stdafx.h' before including this file for PCH
 #endif
 
+#ifndef BSCREENDUMPED2
+#define BSCREENDUMPED2
 #include "resource.h"		// main symbols
 
 // CbScreenDumped2App:
@@ -29,3 +31,5 @@ public:
 };
 
 extern CbScreenDumped2App theApp;
+
+#endif

@@ -2,13 +2,11 @@
 //
 
 #include "stdafx.h"
-#include "afxdlgs.h"
-#include "bScreenDumped2.h"
-#include "OptionsDialog.h"
-#include "GlobalSettings.h"
 #include <io.h>
 #include <direct.h>
-
+#include "OptionsDialog.h"
+#include "GlobalSettings.h"
+#include "Helpers.h"
 // OptionsDialog dialog
 
 IMPLEMENT_DYNAMIC(OptionsDialog, CDialog)
@@ -214,15 +212,4 @@ BOOL OptionsDialog::OnInitDialog()
 	GetDlgItem(IDC_TXTDESTINATION)->SetWindowText(gs.szOutputDir);
 
 	return TRUE; 
-}
-
-void OptionsDialog::OnCancel()
-{
-	::SendMessage(parenthWnd, OPTIONSDLG_CLOSED, 0, 0);
-	DestroyWindow();
-}
-
-void OptionsDialog::PostNcDestroy()
-{
-	delete this;
 }

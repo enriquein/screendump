@@ -17,8 +17,6 @@ BOOL CaptureScreen()
 	HDC hDest = CreateCompatibleDC(hdc);
 	int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
 	int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-	//int height = GetSystemMetrics(SM_CYSCREEN);
-	//int width = GetSystemMetrics(SM_CXSCREEN);
 	HBITMAP hbDesktop = CreateCompatibleBitmap( hdc, width, height );
 	SelectObject(hDest, hbDesktop);
 	BitBlt(hDest, 0,0, width, height, hdc, 0, 0, CAPTUREBLT|SRCCOPY);
@@ -139,12 +137,14 @@ void DumpImage(Bitmap* aBmp)
 
 	if(!(gs.bAutoName))
 	{
+		ToggleTrayMenu(FALSE);
 		cfSaveAs = new CFileDialog(FALSE, chDefExt, filename, OFN_HIDEREADONLY|OFN_EXPLORER, chFilter, NULL);
 		if( cfSaveAs->DoModal() == IDOK )
 		{
 			swprintf(fullpath, L"%S", cfSaveAs->GetPathName());
 		}
 		delete cfSaveAs;
+		ToggleTrayMenu(TRUE);
 	}
 	else
 	{
