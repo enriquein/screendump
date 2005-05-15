@@ -5,6 +5,7 @@
 #include "WindowCapture.h"
 #include "GlobalSettings.h"
 #include "OptionsDialog.h"
+#include "AboutDialog.h"
 #include "Helpers.h"
 #include "gdiplus.h"
 using namespace Gdiplus;
@@ -133,7 +134,11 @@ void CbScreenDumped2Dlg::OnTrayExitClick()
 
 void CbScreenDumped2Dlg::OnTrayAboutClick()
 {
-// FIXME
+	CAboutDialog* cAbt = new CAboutDialog;
+	ToggleTrayMenu(FALSE);
+	cAbt->DoModal();
+	delete cAbt;
+	ToggleTrayMenu(TRUE);
 }
 
 void CbScreenDumped2Dlg::OnTrayOpenDest()
@@ -141,7 +146,6 @@ void CbScreenDumped2Dlg::OnTrayOpenDest()
 	CGlobalSettings gs;
 	gs.ReadSettings();
 	ShellExecute(m_hWnd, "open", gs.szOutputDir, NULL, NULL, SW_SHOWNORMAL);
-// FIXME
 }
 
 void CbScreenDumped2Dlg::OnTrayOptionsClick()
