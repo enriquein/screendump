@@ -7,6 +7,8 @@
 #include "OptionsDialog.h"
 #include "AboutDialog.h"
 #include "Helpers.h"
+#include "file_ver.h"
+#include <io.h>
 #include "gdiplus.h"
 using namespace Gdiplus;
 
@@ -49,6 +51,19 @@ END_MESSAGE_MAP()
 BOOL CbScreenDumped2Dlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+	CString exeName;
+	exeName = AfxGetAppName();
+	exeName += ".exe";
+	CFileVersionInfo cfInfo;
+	cfInfo.ReadVersionInfo(exeName);
+	if( cfInfo.IsValid() )
+	{
+		m_progVersion = cfInfo.GetCustomFileVersionString();
+	}
+	else
+	{
+		m_progVersion = " ";
+	}
 	Status st;
 	st = GdiplusStartup(&m_gdiPlusToken, &m_gdiPlusStatupInput, NULL );
 	if(st != Ok)
@@ -65,8 +80,17 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	gs.ReadSettings();
 	if(gs.bEnableHog)
 	{
-		m_Hog.SetVideo("bs.dont.delete.me");
-		m_Hog.Hog();
+		if(_access("bs.dont.delete.me", 0) == -1)
+		{
+			MessageBox("The dummy file required to take screenshots of videos was not found. This option will be disabled for now.\nPlease reinstall the program or contact me if you accidentally deleted the file.", "bScreenDumped->InitDialog()", MB_OK|MB_ICONERROR);
+			gs.bEnableHog = FALSE;
+			gs.WriteSettings();
+		}
+		else
+		{
+			m_Hog.SetVideo("bs.dont.delete.me");
+			m_Hog.Hog();
+		}
 	}
 	SetWindowPos(0,-100,-100,0,0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
 	::SetTimer(m_hWnd, TIMERHIDE, 1000, NULL); 
@@ -89,7 +113,7 @@ void CbScreenDumped2Dlg::ShellIcon_Initialize()
 	ni.uID = 1;
 	ni.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
 	ni.uCallbackMessage = SHELLICON_MSG;
-	sprintf(ni.szTip,"bScreenDumped v (rev )"); // FIXME
+	sprintf(ni.szTip,"bScreenDumped %s", m_progVersion);
 	ni.hIcon = m_hIcon;
 	
 	while ( (Shell_NotifyIcon(NIM_ADD, &ni) && (iCount <= 6 ) ) )

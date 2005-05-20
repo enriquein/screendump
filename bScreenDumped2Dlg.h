@@ -21,6 +21,7 @@ class CbScreenDumped2Dlg : public CDialog
 public:
 	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
 	CMenu* m_trayMenu;
+	CString m_progVersion;
 
 // Dialog Data
 	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };

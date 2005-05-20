@@ -34,7 +34,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdiplus.lib Strmiids.lib"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
 				ShowProgress="2"
 				OutputFile="$(OutDir)/bScreenDumped.exe"
 				Version="2.0.0"
@@ -96,7 +96,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdiplus.lib Strmiids.lib"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
 				OutputFile="$(OutDir)/bScreenDumped.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="FALSE"
@@ -148,6 +148,12 @@
 				RelativePath=".\bScreenDumped2Dlg.cpp">
 			</File>
 			<File
+				RelativePath=".\file_ver.cpp">
+			</File>
+			<File
+				RelativePath=".\file_ver.inl">
+			</File>
+			<File
 				RelativePath=".\GlobalAtom.cpp">
 			</File>
 			<File
@@ -193,6 +199,9 @@
 			</File>
 			<File
 				RelativePath=".\bScreenDumped2Dlg.h">
+			</File>
+			<File
+				RelativePath=".\file_ver.h">
 			</File>
 			<File
 				RelativePath=".\GlobalAtom.h">

@@ -20,7 +20,6 @@ class CbScreenDumped2App : public CWinApp
 public:
 	CbScreenDumped2App();
 
-
 // Overrides
 	public:
 	virtual BOOL InitInstance();

@@ -150,10 +150,10 @@ BEGIN
             VALUE "CompanyName", "Indie Code Labs"
             VALUE "FileDescription", "Small program that saves screenshots automatically"
             VALUE "FileVersion", "2.0.0.0"
-            VALUE "InternalName", "bScreenDumped2.exe"
+            VALUE "InternalName", "bScreenDumped.exe"
             VALUE "LegalCopyright", "None. Legal Stuff is gay."
             VALUE "LegalTrademarks", "None. Legal Stuff is gay."
-            VALUE "OriginalFilename", "bScreenDumped2.exe"
+            VALUE "OriginalFilename", "bScreenDumped.exe"
             VALUE "ProductName", "bScreenDumped"
             VALUE "ProductVersion", "2.0.0.0"
         END
