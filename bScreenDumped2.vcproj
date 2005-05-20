@@ -139,34 +139,34 @@
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
-				RelativePath=".\AboutDialog.cpp">
+				RelativePath=".\Dialogs\AboutDialog.cpp">
 			</File>
 			<File
-				RelativePath=".\bScreenDumped2.cpp">
+				RelativePath=".\Classes\bScreenDumped2.cpp">
 			</File>
 			<File
-				RelativePath=".\bScreenDumped2Dlg.cpp">
+				RelativePath=".\Dialogs\bScreenDumped2Dlg.cpp">
 			</File>
 			<File
-				RelativePath=".\file_ver.cpp">
+				RelativePath=".\Classes\file_ver.cpp">
 			</File>
 			<File
-				RelativePath=".\file_ver.inl">
+				RelativePath=".\Classes\file_ver.inl">
 			</File>
 			<File
-				RelativePath=".\GlobalAtom.cpp">
+				RelativePath=".\Classes\GlobalAtom.cpp">
 			</File>
 			<File
-				RelativePath=".\GlobalSettings.cpp">
+				RelativePath=".\Classes\GlobalSettings.cpp">
 			</File>
 			<File
-				RelativePath=".\Helpers.cpp">
+				RelativePath=".\Helpers\Helpers.cpp">
 			</File>
 			<File
-				RelativePath=".\HogVideo.cpp">
+				RelativePath=".\Classes\HogVideo.cpp">
 			</File>
 			<File
-				RelativePath=".\OptionsDialog.cpp">
+				RelativePath=".\Dialogs\OptionsDialog.cpp">
 			</File>
 			<File
 				RelativePath=".\stdafx.cpp">
@@ -184,7 +184,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\WindowCapture.cpp">
+				RelativePath=".\Helpers\WindowCapture.cpp">
 			</File>
 		</Filter>
 		<Filter
@@ -192,43 +192,43 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
-				RelativePath=".\AboutDialog.h">
+				RelativePath=".\Dialogs\AboutDialog.h">
 			</File>
 			<File
-				RelativePath=".\bScreenDumped2.h">
+				RelativePath=".\Classes\bScreenDumped2.h">
 			</File>
 			<File
-				RelativePath=".\bScreenDumped2Dlg.h">
+				RelativePath=".\Dialogs\bScreenDumped2Dlg.h">
 			</File>
 			<File
-				RelativePath=".\file_ver.h">
+				RelativePath=".\Classes\file_ver.h">
 			</File>
 			<File
-				RelativePath=".\GlobalAtom.h">
+				RelativePath=".\Classes\GlobalAtom.h">
 			</File>
 			<File
-				RelativePath=".\GlobalSettings.h">
+				RelativePath=".\Classes\GlobalSettings.h">
 			</File>
 			<File
-				RelativePath=".\Helpers.h">
+				RelativePath=".\Helpers\Helpers.h">
 			</File>
 			<File
-				RelativePath=".\HogVideo.h">
+				RelativePath=".\Classes\HogVideo.h">
 			</File>
 			<File
-				RelativePath=".\LimitSingleInstance.h">
+				RelativePath=".\Classes\LimitSingleInstance.h">
 			</File>
 			<File
-				RelativePath=".\OptionsDialog.h">
+				RelativePath=".\Dialogs\OptionsDialog.h">
 			</File>
 			<File
-				RelativePath=".\Resource.h">
+				RelativePath=".\res\Resource.h">
 			</File>
 			<File
 				RelativePath=".\stdafx.h">
 			</File>
 			<File
-				RelativePath=".\WindowCapture.h">
+				RelativePath=".\Helpers\WindowCapture.h">
 			</File>
 		</Filter>
 		<Filter
@@ -239,7 +239,7 @@
 				RelativePath=".\res\bScreenDumped2.ico">
 			</File>
 			<File
-				RelativePath=".\bScreenDumped2.rc">
+				RelativePath=".\res\bScreenDumped2.rc">
 			</File>
 			<File
 				RelativePath=".\res\bScreenDumped2.rc2">
@@ -255,6 +255,6 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value="bScreenDumped2.rc"/>
+			Value=".\res\bScreenDumped2.rc"/>
 	</Globals>
 </VisualStudioProject>

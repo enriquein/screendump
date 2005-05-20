@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Helpers.h"
+#include ".\Helpers.h"
 
 // must pass reference to a char[37] (or more) variable or it will shit hair!
 void GetNewFilename(char* retVal)

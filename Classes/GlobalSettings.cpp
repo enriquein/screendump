@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include ".\globalsettings.h"
 #include <direct.h>
 #include <io.h>

@@ -37,7 +37,7 @@
 //		includes
 //-----------------------------------------------------------------------------
 #include "stdafx.h"
-#include "file_ver.h"
+#include ".\file_ver.h"
 
 #ifdef _DEBUG
 #undef THIS_FILE

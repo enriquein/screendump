@@ -1,6 +1,6 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Windows.h"
-#include "globalatom.h"
+#include ".\globalatom.h"
 
 CGlobalAtom::CGlobalAtom(void)
 {

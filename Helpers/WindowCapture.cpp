@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "Helpers.h"
-#include "GlobalSettings.h"
-#include "WindowCapture.h"
+#include "..\Helpers\Helpers.h"
+#include "..\Classes\GlobalSettings.h"
+#include "..\Helpers\WindowCapture.h"
 #include <io.h>
 #include <direct.h>
 #include "gdiplus.h"

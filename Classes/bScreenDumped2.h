@@ -9,7 +9,7 @@
 
 #ifndef BSCREENDUMPED2
 #define BSCREENDUMPED2
-#include "resource.h"		// main symbols
+#include "..\res\resource.h"		// main symbols
 
 // CbScreenDumped2App:
 // See bScreenDumped2.cpp for the implementation of this class

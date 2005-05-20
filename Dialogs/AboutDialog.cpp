@@ -2,9 +2,9 @@
 //
 
 #include "stdafx.h"
-#include "resource.h"
-#include "bScreenDumped2Dlg.h"
-#include "aboutdialog.h"
+#include "..\res\resource.h"
+#include ".\bScreenDumped2Dlg.h"
+#include ".\aboutdialog.h"
 
 
 // CAboutDialog dialog

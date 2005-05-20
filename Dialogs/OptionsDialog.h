@@ -4,7 +4,7 @@
 #define OPTIONSDIALOG_H
 
 // OptionsDialog dialog
-#include "resource.h"
+#include "..\res\resource.h"
 
 class OptionsDialog : public CDialog
 {

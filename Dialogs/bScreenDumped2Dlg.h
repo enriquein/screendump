@@ -5,9 +5,9 @@
 #ifndef BSCREENDUMPED2DLG_H
 #define BSCREENDUMPED2DLG_H
 
-#include "HogVideo.h"
-#include "globalatom.h"
-#include "resource.h"
+#include "..\Classes\HogVideo.h"
+#include "..\Classes\globalatom.h"
+#include "..\res\resource.h"
 #include "gdiplus.h" 
 using namespace Gdiplus;
 

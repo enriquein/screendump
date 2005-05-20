@@ -226,7 +226,7 @@ private:
 };	// CFileVersionInfo
 
 
-#include "file_ver.inl"		// CFileVersionInfo inline functions
+#include ".\file_ver.inl"		// CFileVersionInfo inline functions
 
 
 

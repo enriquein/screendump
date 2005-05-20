@@ -4,9 +4,9 @@
 #include "stdafx.h"
 #include <io.h>
 #include <direct.h>
-#include "OptionsDialog.h"
-#include "GlobalSettings.h"
-#include "Helpers.h"
+#include ".\OptionsDialog.h"
+#include "..\Classes\GlobalSettings.h"
+#include "..\Helpers\Helpers.h"
 // OptionsDialog dialog
 
 IMPLEMENT_DYNAMIC(OptionsDialog, CDialog)

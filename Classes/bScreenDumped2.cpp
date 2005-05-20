@@ -1,7 +1,7 @@
 #include "stdafx.h"
-#include "bScreenDumped2.h"
-#include "bScreenDumped2Dlg.h"
-#include "LimitSingleInstance.h"
+#include "..\Classes\bScreenDumped2.h"
+#include "..\Dialogs\bScreenDumped2Dlg.h"
+#include "..\Classes\LimitSingleInstance.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
