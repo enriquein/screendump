@@ -196,7 +196,8 @@ void CbScreenDumped2Dlg::DoRegisterHotKeys()
 	}
 	if( m_Atom->GetID() == m_AtomAlt->GetID() )
 	{
-		AfxMessageBox("Both keys got assigned the same Atom. This bug is still under investigation. Please restart the program.", MB_OK, 0);
+		MessageBox("Both keys got assigned the same Atom. This bug is still under investigation. Please restart the program.",
+				   "bScreenDumped->DoRegisterHotKeys()", MB_OK | MB_ICONERROR);
 	}
 }
 

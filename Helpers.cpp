@@ -5,7 +5,7 @@
 void GetNewFilename(char* retVal)
 {
 	SYSTEMTIME tNow;
-	GetSystemTime(&tNow);
+	GetLocalTime(&tNow);
 	sprintf(retVal, "bSDump-%u-%02u-%02u--%02u-%02u-%02u-%03u", tNow.wYear, tNow.wMonth, tNow.wDay, tNow.wHour, tNow.wMinute, tNow.wSecond, tNow.wMilliseconds);
 }
 
