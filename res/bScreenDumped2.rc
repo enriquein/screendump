@@ -124,6 +124,33 @@ BEGIN
     LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,115,85,82,8
 END
 
+IDD_AUTOTIMER DIALOGEX 0, 0, 329, 156
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | 
+    WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "AutoCapture"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    EDITTEXT        ID_TXTACDELAY,133,64,50,12,ES_AUTOHSCROLL | ES_NUMBER
+    CONTROL         "seconds",ID_OPTSECONDS,"Button",BS_AUTORADIOBUTTON | 
+                    WS_GROUP,187,65,42,10
+    CONTROL         "milliseconds",ID_OPTMILLISECONDS,"Button",
+                    BS_AUTORADIOBUTTON,187,79,53,10
+    CONTROL         "entire screen",ID_OPTFULLSCREEN,"Button",
+                    BS_AUTORADIOBUTTON | WS_GROUP,81,95,58,10
+    CONTROL         "active window",ID_OPTFOREGROUND,"Button",
+                    BS_AUTORADIOBUTTON,81,111,61,10
+    DEFPUSHBUTTON   "Start AutoCapture",ID_BTNSTART,58,135,81,14
+    PUSHBUTTON      "Close",IDCANCEL,191,135,81,14
+    LTEXT           "AutoCapture makes the program automatically take screenshots in the interval you specify below. After autocapture starts, this window will be minimized. To stop autocapture, click on the window and select Stop Autocapture.",
+                    IDC_STATIC,7,7,315,24
+    LTEXT           "Take screenshots automatically every:",IDC_STATIC,7,66,
+                    124,8
+    LTEXT           "Please keep in mind that the program will save the screenshots with the settings you specify in the Options window.",
+                    IDC_STATIC,7,40,315,17
+    LTEXT           "Take a screenshot of:",IDC_STATIC,7,95,71,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -131,8 +158,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,0,0,14
- PRODUCTVERSION 2,0,0,14
+ FILEVERSION 2,0,0,17
+ PRODUCTVERSION 2,0,0,17
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -149,13 +176,13 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Indie Code Labs"
             VALUE "FileDescription", "Small program that saves screenshots automatically"
-            VALUE "FileVersion", "2.0.0.14"
+            VALUE "FileVersion", "2.0.0.17"
             VALUE "InternalName", "bScreenDumped.exe"
             VALUE "LegalCopyright", "None. Legal Stuff is gay."
             VALUE "LegalTrademarks", "None. Legal Stuff is gay."
             VALUE "OriginalFilename", "bScreenDumped.exe"
             VALUE "ProductName", "bScreenDumped"
-            VALUE "ProductVersion", "2.0.0.14"
+            VALUE "ProductVersion", "2.0.0.17"
         END
     END
     BLOCK "VarFileInfo"
@@ -195,6 +222,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 115
     END
+
+    IDD_AUTOTIMER, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 322
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 149
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -209,6 +244,7 @@ BEGIN
     POPUP "&Tray"
     BEGIN
         MENUITEM "Open Screenshots Folder",     ID_TRAY_OPENDEST
+        MENUITEM "AutoCapture",                 ID_TRAY_AUTOCAPTURE
         MENUITEM SEPARATOR
         MENUITEM "Options",                     ID_TRAY_OPTIONS
         MENUITEM "About...",                    ID_TRAY_ABOUT

@@ -13,59 +13,55 @@ using namespace Gdiplus;
 
 BOOL CaptureScreen()
 {
-	HDC hdc = GetDC(NULL);
-	HDC hDest = CreateCompatibleDC(hdc);
 	int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
 	int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-	HBITMAP hbDesktop = CreateCompatibleBitmap( hdc, width, height );
-	SelectObject(hDest, hbDesktop);
-	BitBlt(hDest, 0,0, width, height, hdc, 0, 0, CAPTUREBLT|SRCCOPY);
-	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
-	Bitmap *myBitMap = new Bitmap(hbDesktop, hPalette);
-	DumpImage(myBitMap);
-	delete myBitMap;
-	myBitMap = NULL;
-    DeleteObject(hbDesktop);
-    DeleteDC(hDest);
-	ReleaseDC(NULL, hdc);
-	DeleteObject(hPalette);
+	HDC hhdc = GetDC(NULL); // Don't clean up since CaptureRegion destroys it.
+	CaptureRegion(hhdc, 0, 0, width, height, TRUE);
     return TRUE;
 }
 
 BOOL CaptureWindow()
 {
     HWND hWnd = NULL;
-    hWnd = ::GetForegroundWindow();         
+    hWnd = ::GetForegroundWindow();   
     if(!hWnd)
 	{
         return FALSE;
 	}
-    HDC hdc;
     CRect rect;
-    hdc = GetWindowDC(hWnd);
     GetWindowRect(hWnd, &rect);
-    if(!hdc)
-	{
-        return FALSE;
-	}
-    HDC hMemDC = CreateCompatibleDC(hdc);
-    if(hMemDC == NULL)
-	{    
-		return FALSE;
-	}
 	rect.NormalizeRect();
-	HBITMAP hbWindow = CreateCompatibleBitmap( hdc, rect.Width(), rect.Height() );
-	SelectObject(hMemDC, hbWindow);
-	BitBlt(hMemDC, 0,0, rect.Width(), rect.Height(), hdc, 0, 0, SRCCOPY);
-	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
-	Bitmap *myBitMap = new Bitmap(hbWindow, hPalette);
+/*	if((GetWindowLong(hWnd, GWL_STYLE) & WS_MAXIMIZE) == WS_MAXIMIZE) // Is window maximized?
+	{
+		// Modify rect to eliminate mysterious black borders...
+		// check if this happens outside of winxp
+		rect.bottom += rect.top * 2;
+		rect.right += rect.left * 2;
+	}*/
+	HDC hhdc = GetWindowDC(hWnd); // Don't clean up since CaptureRegion destroys it.
+	CaptureRegion(hhdc, 0, 0, rect.Width(), rect.Height(), FALSE);
+    return TRUE;
+}
 
+BOOL CaptureRegion(HDC &hdc, int xCoord, int yCoord, int iWidth, int iHeight, BOOL bWantOverlayed)
+{
+	long bltFlags;
+	bltFlags = bWantOverlayed ? (CAPTUREBLT|SRCCOPY) : SRCCOPY;
+	//HDC hdc = GetDC(NULL);
+	HDC hDest = CreateCompatibleDC(hdc);
+	HBITMAP hbDesktop = CreateCompatibleBitmap( hdc, iWidth, iHeight ); 
+	SelectObject(hDest, hbDesktop);
+	BitBlt(hDest, 0,0, iWidth, iHeight, hdc, xCoord, yCoord, bltFlags);
+	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
+	Bitmap *myBitMap = new Bitmap(hbDesktop, hPalette);
 	DumpImage(myBitMap);
 	delete myBitMap;
 	myBitMap = NULL;
-    DeleteObject(hbWindow);
-    DeleteDC(hMemDC);
-    ReleaseDC(hWnd, hdc);
+    DeleteObject(hbDesktop);
+	DeleteObject(hPalette);
+    DeleteDC(hDest);
+	ReleaseDC(NULL, hdc);
+	DeleteDC(hdc);
     return TRUE;
 }
 
@@ -152,12 +148,6 @@ void DumpImage(Bitmap* aBmp)
 	}
 	aBmp->Save(fullpath, &encoderClsid, &eParams);
 }
-
-BOOL CaptureDesktop()
-{
-	return true;
-}
-
 
 int GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
 {

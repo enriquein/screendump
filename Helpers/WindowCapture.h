@@ -7,6 +7,7 @@
 #include "gdiplus.h"
 using namespace Gdiplus;
 
+BOOL CaptureRegion(HDC &hdc, int xCoord, int yCoord, int iWidth, int iHeight, BOOL bWantOverlayed);
 BOOL CaptureScreen();
 BOOL CaptureWindow();
 int GetEncoderClsid(const WCHAR* format, CLSID* pClsid);

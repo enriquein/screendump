@@ -41,10 +41,12 @@ protected:
 	HICON m_hIcon;
 	CMenu m_FullMenu;
 
+	// Tray Handlers
 	void OnTrayExitClick();
 	void OnTrayAboutClick();
 	void OnTrayOptionsClick();
 	void OnTrayOpenDest();
+	void OnTrayAutoCapture();
 
 	// Message map functions
 	virtual BOOL OnInitDialog();

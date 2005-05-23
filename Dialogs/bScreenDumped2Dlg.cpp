@@ -6,6 +6,7 @@
 #include "..\Classes\GlobalSettings.h"
 #include ".\OptionsDialog.h"
 #include ".\AboutDialog.h"
+#include ".\AutoCapture.h"
 #include "..\Helpers\Helpers.h"
 #include "..\Classes\file_ver.h"
 #include <io.h>
@@ -43,6 +44,7 @@ BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
 	ON_COMMAND(ID_TRAY_OPTIONS, OnTrayOptionsClick)
 	ON_COMMAND(ID_TRAY_OPENDEST, OnTrayOpenDest)
+	ON_COMMAND(ID_TRAY_AUTOCAPTURE, OnTrayAutoCapture)
 	//}}AFX_MSG_MAP
 END_MESSAGE_MAP()
 
@@ -180,6 +182,14 @@ void CbScreenDumped2Dlg::OnTrayOptionsClick()
 	ToggleTrayMenu(TRUE);
 }
 
+void CbScreenDumped2Dlg::OnTrayAutoCapture()
+{
+	CAutoCapture* cAC = new CAutoCapture;
+	ToggleTrayMenu(FALSE);
+	cAC->DoModal();
+	ToggleTrayMenu(TRUE);
+}
+
 void CbScreenDumped2Dlg::DoRegisterHotKeys()
 {
 	long result, resultAlt;
@@ -219,7 +229,7 @@ LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 	{
 		if( wParam == m_AtomAlt->GetID() )
 		{
-			CaptureWindow();
+			CaptureWindow(); 
 		}
 	}
 	return 0;

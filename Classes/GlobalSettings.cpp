@@ -7,6 +7,7 @@ CGlobalSettings::CGlobalSettings(void)
 {
 	// Get INI File path
 	OSVERSIONINFO osv;
+	osv.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx(&osv);
 	if( osv.dwMajorVersion > 4)
 	{

@@ -26,4 +26,5 @@ void ToggleTrayMenu(BOOL bEnable)
 	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_EXIT, lFlags);
 	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_OPENDEST, lFlags);
 	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_OPTIONS, lFlags);
+	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_AUTOCAPTURE, lFlags);
 }

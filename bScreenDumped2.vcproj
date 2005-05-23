@@ -21,9 +21,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				GlobalOptimizations="FALSE"
+				InlineFunctionExpansion="0"
+				FavorSizeOrSpeed="0"
+				OptimizeForWindowsApplication="FALSE"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="TRUE"
-				BasicRuntimeChecks="3"
+				BasicRuntimeChecks="0"
 				RuntimeLibrary="1"
 				TreatWChar_tAsBuiltInType="TRUE"
 				UsePrecompiledHeader="3"
@@ -37,7 +41,7 @@
 				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
 				ShowProgress="2"
 				OutputFile="$(OutDir)/bScreenDumped.exe"
-				Version="2.0.0"
+				Version=""
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\Lib&quot;"
 				GenerateDebugInformation="TRUE"
@@ -80,8 +84,10 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				GlobalOptimizations="TRUE"
-				InlineFunctionExpansion="2"
+				InlineFunctionExpansion="1"
+				ImproveFloatingPointConsistency="TRUE"
 				FavorSizeOrSpeed="1"
+				OmitFramePointers="FALSE"
 				OptimizeForWindowsApplication="TRUE"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				MinimalRebuild="FALSE"
@@ -91,7 +97,7 @@
 				UsePrecompiledHeader="3"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="3"/>
+				DebugInformationFormat="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
@@ -101,8 +107,8 @@
 				LinkIncremental="1"
 				GenerateDebugInformation="FALSE"
 				SubSystem="2"
-				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
+				OptimizeReferences="0"
+				EnableCOMDATFolding="0"
 				TargetMachine="1"/>
 			<Tool
 				Name="VCMIDLTool"
@@ -140,6 +146,9 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
 			<File
 				RelativePath=".\Dialogs\AboutDialog.cpp">
+			</File>
+			<File
+				RelativePath=".\Dialogs\AutoCapture.cpp">
 			</File>
 			<File
 				RelativePath=".\Classes\bScreenDumped2.cpp">
@@ -193,6 +202,9 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
 				RelativePath=".\Dialogs\AboutDialog.h">
+			</File>
+			<File
+				RelativePath=".\Dialogs\AutoCapture.h">
 			</File>
 			<File
 				RelativePath=".\Classes\bScreenDumped2.h">
