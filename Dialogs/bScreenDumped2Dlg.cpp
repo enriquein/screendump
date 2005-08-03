@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "Windows.h"
+//#include "Windows.h"
 #include "..\Classes\HogVideo.h"
 #include ".\bScreenDumped2Dlg.h"
 #include "..\Helpers\WindowCapture.h"
@@ -9,6 +9,7 @@
 #include ".\AutoCapture.h"
 #include "..\Helpers\Helpers.h"
 #include "..\Classes\file_ver.h"
+#include ".\RegionDialog.h"
 #include <io.h>
 #include "gdiplus.h"
 using namespace Gdiplus;
@@ -46,6 +47,7 @@ BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
 	ON_COMMAND(ID_TRAY_OPENDEST, OnTrayOpenDest)
 	ON_COMMAND(ID_TRAY_AUTOCAPTURE, OnTrayAutoCapture)
 	//}}AFX_MSG_MAP
+	ON_COMMAND(ID_TRAY_REGION, OnTrayRegion)
 END_MESSAGE_MAP()
 
 // CbScreenDumped2Dlg message handlers
@@ -179,6 +181,7 @@ void CbScreenDumped2Dlg::OnTrayOptionsClick()
 	OptionsDialog* oDl = new OptionsDialog;
 	ToggleTrayMenu(FALSE);
 	oDl->DoModal();
+	delete oDl;
 	ToggleTrayMenu(TRUE);
 }
 
@@ -187,7 +190,28 @@ void CbScreenDumped2Dlg::OnTrayAutoCapture()
 	CAutoCapture* cAC = new CAutoCapture;
 	ToggleTrayMenu(FALSE);
 	cAC->DoModal();
+	delete cAC;
 	ToggleTrayMenu(TRUE);
+}
+
+void CbScreenDumped2Dlg::OnTrayRegion()
+{
+	// Eliminar esto. la nueva idea es q sea un menu normal que loadee el Dialog de Regiones
+	// Alli habra un checkmark para darle enable/disable. Im out for the day.
+	UINT state = m_trayMenu->GetMenuState(ID_TRAY_REGION, MF_BYCOMMAND);
+	if (state & MF_CHECKED)
+	{
+		m_trayMenu->CheckMenuItem(ID_TRAY_REGION, MF_UNCHECKED | MF_BYCOMMAND);
+	}
+	else
+	{
+		CRegionDialog* cRD = new CRegionDialog;
+		ToggleTrayMenu(FALSE);
+		cRD->DoModal();
+		delete cRD;
+		ToggleTrayMenu(TRUE);
+        m_trayMenu->CheckMenuItem(ID_TRAY_REGION, MF_CHECKED | MF_BYCOMMAND);
+	}
 }
 
 void CbScreenDumped2Dlg::DoRegisterHotKeys()
@@ -234,3 +258,5 @@ LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 	}
 	return 0;
 }
+
+

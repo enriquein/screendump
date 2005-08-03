@@ -28,3 +28,16 @@ void ToggleTrayMenu(BOOL bEnable)
 	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_OPTIONS, lFlags);
 	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_AUTOCAPTURE, lFlags);
 }
+
+void SetTransparency(HWND hWnd, long lAlpha)
+{
+	OSVERSIONINFO osv;
+	osv.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	GetVersionEx(&osv);
+	if(osv.dwMajorVersion < 5)
+	{
+		long oldStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+		SetWindowLong(hWnd, GWL_EXSTYLE, oldStyle | WS_EX_LAYERED);
+		SetLayeredWindowAttributes(hWnd, NULL, (BYTE)lAlpha, LWA_ALPHA);
+	}
+}

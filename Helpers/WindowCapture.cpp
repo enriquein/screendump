@@ -31,13 +31,6 @@ BOOL CaptureWindow()
     CRect rect;
     GetWindowRect(hWnd, &rect);
 	rect.NormalizeRect();
-/*	if((GetWindowLong(hWnd, GWL_STYLE) & WS_MAXIMIZE) == WS_MAXIMIZE) // Is window maximized?
-	{
-		// Modify rect to eliminate mysterious black borders...
-		// check if this happens outside of winxp
-		rect.bottom += rect.top * 2;
-		rect.right += rect.left * 2;
-	}*/
 	HDC hhdc = GetWindowDC(hWnd); // Don't clean up since CaptureRegion destroys it.
 	CaptureRegion(hhdc, 0, 0, rect.Width(), rect.Height(), FALSE);
     return TRUE;

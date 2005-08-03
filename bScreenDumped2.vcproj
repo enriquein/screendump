@@ -25,6 +25,7 @@
 				InlineFunctionExpansion="0"
 				FavorSizeOrSpeed="0"
 				OptimizeForWindowsApplication="FALSE"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\Include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="0"
@@ -38,7 +39,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib"
 				ShowProgress="2"
 				OutputFile="$(OutDir)/bScreenDumped.exe"
 				Version=""
@@ -178,6 +179,12 @@
 				RelativePath=".\Dialogs\OptionsDialog.cpp">
 			</File>
 			<File
+				RelativePath=".\Dialogs\RegionDialog.cpp">
+			</File>
+			<File
+				RelativePath=".\Dialogs\RegionSelect.cpp">
+			</File>
+			<File
 				RelativePath=".\stdafx.cpp">
 				<FileConfiguration
 					Name="Debug|Win32">
@@ -232,6 +239,12 @@
 			</File>
 			<File
 				RelativePath=".\Dialogs\OptionsDialog.h">
+			</File>
+			<File
+				RelativePath=".\Dialogs\RegionDialog.h">
+			</File>
+			<File
+				RelativePath=".\Dialogs\RegionSelect.h">
 			</File>
 			<File
 				RelativePath=".\res\Resource.h">

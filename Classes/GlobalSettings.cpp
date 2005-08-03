@@ -9,7 +9,7 @@ CGlobalSettings::CGlobalSettings(void)
 	OSVERSIONINFO osv;
 	osv.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	GetVersionEx(&osv);
-	if( osv.dwMajorVersion > 4)
+	if( osv.dwMajorVersion >= 5)
 	{
 		SHGetSpecialFolderPath(NULL, m_IniPath, CSIDL_APPDATA, FALSE);
 		sprintf(m_IniPath, "%s\\bScreenDumped\\", m_IniPath);

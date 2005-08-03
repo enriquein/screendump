@@ -41,6 +41,10 @@ protected:
 	HICON m_hIcon;
 	CMenu m_FullMenu;
 
+	// Marronated global variable to handle region captures
+	BOOL m_bUseRegions;
+	RECT m_regionRect;
+
 	// Tray Handlers
 	void OnTrayExitClick();
 	void OnTrayAboutClick();
@@ -54,6 +58,8 @@ protected:
 	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnTrayRegion();
 };
 
 #endif

@@ -151,6 +151,28 @@ BEGIN
     LTEXT           "Take a screenshot of:",IDC_STATIC,7,95,71,8
 END
 
+IDD_REGIONSELECT DIALOGEX 0, 0, 213, 158
+STYLE DS_SETFONT | DS_CENTER | WS_CHILD | WS_VISIBLE | WS_THICKFRAME
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    CONTROL         "",IDC_IMGBACKGROUND,"Static",SS_WHITERECT,0,0,213,158
+END
+
+IDD_REGIONDIALOG DIALOGEX 0, 0, 154, 69
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | 
+    WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "Select the Region"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,97,46,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,7,46,50,16
+    LTEXT           "Use the white rectangle to select the region",
+                    IDC_STATIC,7,7,138,8
+    LTEXT           "to use for the screenshots.",IDC_STATIC,7,17,84,8
+    LTEXT           "Click on OK when you're done.",IDC_STATIC,7,30,98,8
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -231,6 +253,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 149
     END
+
+    IDD_REGIONDIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 147
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 62
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -246,6 +276,7 @@ BEGIN
     BEGIN
         MENUITEM "Open Screenshots Folder",     ID_TRAY_OPENDEST
         MENUITEM "AutoCapture",                 ID_TRAY_AUTOCAPTURE
+        MENUITEM "Use region for screenshot",   ID_TRAY_REGION
         MENUITEM SEPARATOR
         MENUITEM "Options",                     ID_TRAY_OPTIONS
         MENUITEM "About...",                    ID_TRAY_ABOUT
