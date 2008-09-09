@@ -121,7 +121,7 @@ CFileVersionInfo::CFileVersionInfo(const CFileVersionInfo& fvi)
 // initialize from a specific file (by name)
 CFileVersionInfo::CFileVersionInfo(LPCTSTR lpszFile)
 {
-	if (lpszFile && strlen(lpszFile))
+	if (lpszFile && _tcslen(lpszFile))
 	{
 		ReadVersionInfo(lpszFile);
 	}

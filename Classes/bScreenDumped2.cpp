@@ -15,7 +15,7 @@ CbScreenDumped2App::CbScreenDumped2App()
 }
 
 CbScreenDumped2App theApp;
-CLimitSingleInstance g_SingleInstanceObj(TEXT("Global\\{981AEB41-4426-4839-B27D-97F6E872204C}"));
+CLimitSingleInstance g_SingleInstanceObj(_T("{981AEB41-4426-4839-B27D-97F6E872204C}"), UNIQUE_TO_SESSION);
 // {981AEB41-4426-4839-B27D-97F6E872204C} Generated via GUIDGEN
 
 BOOL CbScreenDumped2App::InitInstance()
@@ -23,7 +23,7 @@ BOOL CbScreenDumped2App::InitInstance()
 	// Is another instance running?
 	if (g_SingleInstanceObj.IsAnotherInstanceRunning())
 	{
-		AfxMessageBox("bScreenDumped is already running.", MB_OK|MB_ICONERROR, 0);
+		AfxMessageBox(_T("bScreenDumped is already running."), MB_OK|MB_ICONERROR, 0);
 		return FALSE;
 	}
 	// InitCommonControls() is required on Windows XP if an application

@@ -7,6 +7,7 @@ CGlobalAtom::CGlobalAtom(void)
 	SYSTEMTIME sTime;
 	GetLocalTime(&sTime);
 	char buffer[10];
+    // TODO: Change to CString logic
 	sprintf(buffer, "%u%u%03u", sTime.wMinute, sTime.wSecond, sTime.wMilliseconds);
 	m_nID =	GlobalAddAtom(buffer);
 }

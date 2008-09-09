@@ -72,82 +72,63 @@ IDR_MAINFRAME           ICON                    "bScreenDumped2.ico"
 //
 
 IDD_BSCREENDUMPED2_DIALOG DIALOGEX 0, 0, 22, 10
-STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_POPUP | 
-    WS_CAPTION
+STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
 CAPTION "bScreenDumped"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
 
-IDD_SETTINGSDLG DIALOGEX 0, 0, 235, 167
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | 
-    WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+IDD_SETTINGSDLG DIALOGEX 0, 0, 235, 153
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "bScreenDumped Options"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Save Image As:",IDC_STATIC,7,7,221,71
-    CONTROL         "BMP",IDC_RADIOBMP,"Button",BS_AUTORADIOBUTTON,17,20,29,
-                    10
-    CONTROL         "PNG",IDC_RADIOPNG,"Button",BS_AUTORADIOBUTTON,17,33,29,
-                    10
-    CONTROL         "JPEG",IDC_RADIOJPEG,"Button",BS_AUTORADIOBUTTON | 
-                    BS_MULTILINE,17,46,32,10
+    CONTROL         "BMP",IDC_RADIOBMP,"Button",BS_AUTORADIOBUTTON,17,20,29,10
+    CONTROL         "PNG",IDC_RADIOPNG,"Button",BS_AUTORADIOBUTTON,17,33,29,10
+    CONTROL         "JPEG",IDC_RADIOJPEG,"Button",BS_AUTORADIOBUTTON | BS_MULTILINE,17,46,32,10
     EDITTEXT        IDC_TXTQUALITY,80,57,23,12,ES_AUTOHSCROLL | ES_NUMBER
     CONTROL         "Generate Filenames Automatically",IDC_CHKAUTONAME,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,84,124,10
-    CONTROL         "Enable taking screenshots of video/movie windows *",
-                    IDC_CHKHOG,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,100,
-                    184,10
-    LTEXT           "*(This option takes effect the next time you start bScreenDumped)",
-                    IDC_STATIC,12,113,216,8
-    EDITTEXT        IDC_TXTDESTINATION,76,127,136,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "...",IDC_BTNBROWSE,214,127,14,12
-    DEFPUSHBUTTON   "OK",IDOK,53,146,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,131,146,50,14
-    LTEXT           "Place screenshots in:",IDC_STATIC,7,129,68,8
+    CONTROL         "Enable taking screenshots of video/movie windows",IDC_CHKHOG,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,100,178,10
+    EDITTEXT        IDC_TXTDESTINATION,76,113,136,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BTNBROWSE,214,113,14,12
+    DEFPUSHBUTTON   "OK",IDOK,53,132,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,131,132,50,14
+    LTEXT           "Place screenshots in:",IDC_STATIC,7,115,68,8
     LTEXT           "Quality (1-100)",IDC_STATIC,29,59,50,8
 END
 
 IDD_ABOUTDIALOG DIALOGEX 0, 0, 314, 122
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "About bScreenDumped (version)"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "Close",IDOK,131,99,52,16
-    LTEXT           "bScreenDumped: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",
-                    IDC_STATIC,7,7,300,37
-    LTEXT           "As specified in the license agreement, you can use this program for free. :) enjoy.\n\nIf you have any problems, you can send me an email to braindead@indiecodelabs.com or visit the website http://www.indiecodelabs.com",
-                    IDC_STATIC,7,46,300,34
+    LTEXT           "bScreenDumped: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",IDC_STATIC,7,7,300,37
+    LTEXT           "As specified in the license agreement, you can use this program for free. :) enjoy.\n\nIf you have any problems, you can send me an email to braindead@indiecodelabs.com or visit the website http://www.indiecodelabs.com",IDC_STATIC,7,46,300,34
     LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,115,85,82,8
 END
 
 IDD_AUTOTIMER DIALOGEX 0, 0, 329, 156
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | 
-    WS_CAPTION | WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "AutoCapture"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     EDITTEXT        ID_TXTACDELAY,133,64,50,12,ES_AUTOHSCROLL | ES_NUMBER
-    CONTROL         "seconds",ID_OPTSECONDS,"Button",BS_AUTORADIOBUTTON | 
-                    WS_GROUP,187,65,42,10
-    CONTROL         "milliseconds",ID_OPTMILLISECONDS,"Button",
-                    BS_AUTORADIOBUTTON,187,79,53,10
-    CONTROL         "entire screen",ID_OPTFULLSCREEN,"Button",
-                    BS_AUTORADIOBUTTON | WS_GROUP,81,95,58,10
-    CONTROL         "active window",ID_OPTFOREGROUND,"Button",
-                    BS_AUTORADIOBUTTON,81,111,61,10
+    CONTROL         "seconds",ID_OPTSECONDS,"Button",BS_AUTORADIOBUTTON | WS_GROUP,187,65,42,10
+    CONTROL         "milliseconds",ID_OPTMILLISECONDS,"Button",BS_AUTORADIOBUTTON,187,79,53,10
+    CONTROL         "entire screen",ID_OPTFULLSCREEN,"Button",BS_AUTORADIOBUTTON | WS_GROUP,81,95,58,10
+    CONTROL         "active window",ID_OPTFOREGROUND,"Button",BS_AUTORADIOBUTTON,81,111,61,10
     DEFPUSHBUTTON   "Start AutoCapture",ID_BTNSTART,58,135,81,14
     PUSHBUTTON      "Close",IDCANCEL,191,135,81,14
-    LTEXT           "AutoCapture makes the program automatically take screenshots in the interval you specify below. After autocapture starts, this window will be minimized. To stop autocapture, click on the window and select Stop Autocapture.",
-                    IDC_STATIC,7,7,315,24
-    LTEXT           "Take screenshots automatically every:",IDC_STATIC,7,66,
-                    124,8
-    LTEXT           "Please keep in mind that the program will save the screenshots with the settings you specify in the Options window.",
-                    IDC_STATIC,7,40,315,17
+    LTEXT           "AutoCapture makes the program automatically take screenshots in the interval you specify below. After autocapture starts, this window will be minimized. To stop autocapture, click on the window and select Stop Autocapture.",IDC_STATIC,7,7,315,24
+    LTEXT           "Take screenshots automatically every:",IDC_STATIC,7,66,124,8
+    LTEXT           "Please keep in mind that the program will save the screenshots with the settings you specify in the Options window.",IDC_STATIC,7,40,315,17
     LTEXT           "Take a screenshot of:",IDC_STATIC,7,95,71,8
 END
 
@@ -159,16 +140,14 @@ BEGIN
 END
 
 IDD_REGIONDIALOG DIALOGEX 0, 0, 154, 69
-STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | 
-    WS_SYSMENU
+STYLE DS_SETFONT | DS_MODALFRAME | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Select the Region"
 FONT 8, "MS Sans Serif", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "OK",IDOK,97,46,50,16
     PUSHBUTTON      "Cancel",IDCANCEL,7,46,50,16
-    LTEXT           "Use the white rectangle to select the region",
-                    IDC_STATIC,7,7,138,8
+    LTEXT           "Use the white rectangle to select the region",IDC_STATIC,7,7,138,8
     LTEXT           "to use for the screenshots.",IDC_STATIC,7,17,84,8
     LTEXT           "Click on OK when you're done.",IDC_STATIC,7,30,98,8
 END
@@ -235,7 +214,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 228
         TOPMARGIN, 7
-        BOTTOMMARGIN, 160
+        BOTTOMMARGIN, 146
     END
 
     IDD_ABOUTDIALOG, DIALOG

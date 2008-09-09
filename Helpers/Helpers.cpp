@@ -1,34 +1,18 @@
 #include "stdafx.h"
+#include <windows.h>
 #include ".\Helpers.h"
 
-// must pass reference to a char[37] (or more) variable or it will shit hair!
-void GetNewFilename(char* retVal)
+CString GetNewFilename()
 {
+    CString strRet;
 	SYSTEMTIME tNow;
 	GetLocalTime(&tNow);
-	sprintf(retVal, "bSDump-%u-%02u-%02u--%02u-%02u-%02u-%03u", tNow.wYear, tNow.wMonth, tNow.wDay, tNow.wHour, tNow.wMinute, tNow.wSecond, tNow.wMilliseconds);
+	strRet.Format(_T("bSDump-%u-%02u-%02u--%02u-%02u-%02u-%03u"), tNow.wYear, tNow.wMonth, tNow.wDay, tNow.wHour, tNow.wMinute, tNow.wSecond, tNow.wMilliseconds);
+    return strRet;
 }
 
-void ToggleTrayMenu(BOOL bEnable)
-{	
-	CbScreenDumped2Dlg* mainWnd;
-	UINT lFlags;
-	if(bEnable)
-	{
-		lFlags = MF_BYCOMMAND|MF_ENABLED;
-	}
-	else
-	{
-		lFlags = MF_BYCOMMAND|MF_DISABLED|MF_GRAYED;
-	}
-	mainWnd = (CbScreenDumped2Dlg*)AfxGetApp()->m_pMainWnd;
-	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_ABOUT, lFlags);
-	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_EXIT, lFlags);
-	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_OPENDEST, lFlags);
-	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_OPTIONS, lFlags);
-	mainWnd->m_trayMenu->EnableMenuItem(ID_TRAY_AUTOCAPTURE, lFlags);
-}
-
+/*
+This was added for the region select dialog, if that ever gets implemented
 void SetTransparency(HWND hWnd, long lAlpha)
 {
 	OSVERSIONINFO osv;
@@ -37,7 +21,10 @@ void SetTransparency(HWND hWnd, long lAlpha)
 	if(osv.dwMajorVersion < 5)
 	{
 		long oldStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+        // TODO: Find out why WS_EX_LAYERED shows up as undefined
 		SetWindowLong(hWnd, GWL_EXSTYLE, oldStyle | WS_EX_LAYERED);
+        // TODO: Find out why LWA_ALPHA shows up as undefined
 		SetLayeredWindowAttributes(hWnd, NULL, (BYTE)lAlpha, LWA_ALPHA);
 	}
 }
+*/

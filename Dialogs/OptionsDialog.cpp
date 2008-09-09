@@ -1,18 +1,15 @@
-// OptionsDialog.cpp : implementation file
-//
-
 #include "stdafx.h"
 #include <io.h>
 #include <direct.h>
 #include ".\OptionsDialog.h"
 #include "..\Classes\GlobalSettings.h"
 #include "..\Helpers\Helpers.h"
-// OptionsDialog dialog
 
 IMPLEMENT_DYNAMIC(OptionsDialog, CDialog)
 OptionsDialog::OptionsDialog(CWnd* pParent /*=NULL*/)
 	: CDialog(OptionsDialog::IDD, pParent)
 {
+    initialized = false;
 }
 
 OptionsDialog::~OptionsDialog()
@@ -21,7 +18,15 @@ OptionsDialog::~OptionsDialog()
 
 void OptionsDialog::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+    CDialog::DoDataExchange(pDX);
+    DDX_Control(pDX, IDOK, c_OK);
+    DDX_Control(pDX, IDC_TXTDESTINATION, c_Destination);
+    DDX_Control(pDX, IDC_TXTQUALITY, c_JpegQuality);
+    DDX_Control(pDX, IDC_RADIOBMP, c_optBmp);
+    DDX_Control(pDX, IDC_RADIOJPEG, c_optJpeg);
+    DDX_Control(pDX, IDC_RADIOPNG, c_optPng);
+    DDX_Control(pDX, IDC_CHKAUTONAME, c_chkAutoName);
+    DDX_Control(pDX, IDC_CHKHOG, c_chkHog);
 }
 
 
@@ -36,49 +41,44 @@ END_MESSAGE_MAP()
 
 
 // OptionsDialog message handlers
-
 void OptionsDialog::OnBnClickedOk()
 {
 	// Validate!
 	// Quality TextBox
-	CButton* chkJPEG = (CButton*)GetDlgItem(IDC_RADIOJPEG);
-	if(chkJPEG->GetCheck() == BST_CHECKED)
+	CString strVal;
+    int val = 0;
+    if(c_optJpeg.GetCheck() == BST_CHECKED)
 	{
-		char buffer[4];
-		int val;
-		CEdit* ceQuality = (CEdit*)GetDlgItem(IDC_TXTQUALITY);
-		ceQuality->GetWindowText(buffer, 4);
-		val = atoi(buffer);
+        c_JpegQuality.GetWindowText(strVal);
+		val = ttoi(strVal);
 		if( (val > 100) || (val <= 0) )  
 		{
-			MessageBox("Please enter a number between 1 and 100.", "bScreenDumped->Options", MB_OK|MB_ICONERROR);
-			ceQuality->SetFocus();
-			ceQuality->SetSel(0,4, TRUE);
+			MessageBox(_T("Please enter a number between 1 and 100."), _T("bScreenDumped->Options"), MB_OK|MB_ICONERROR);
+			c_JpegQuality.SetFocus();
+			c_JpegQuality.SetSel(0,4, true);
 			return;
 		}
 	}
 
 	// Path TextBox
-	CEdit* cePath = (CEdit*)GetDlgItem(IDC_TXTDESTINATION);
-	char pathBuffer[_MAX_PATH];
-	cePath->GetWindowText(pathBuffer, _MAX_PATH);
-	if(_access(pathBuffer, 0) == -1)
+	c_Destination.GetWindowText(strVal);
+	if(_taccess(strVal, 0) == -1)
 	{
-		if( MessageBox("The selected directory does not exist. Do you wish to create it?", "bScreenDumped->Options", MB_YESNO|MB_ICONQUESTION) == IDYES )
+		if( MessageBox(_T("The selected directory does not exist. Do you wish to create it?"), _T("bScreenDumped->Options"), MB_YESNO|MB_ICONQUESTION) == IDYES )
 		{
-			if(_mkdir(pathBuffer) != 0)
+			if(_tmkdir(strVal) != 0)
 			{
-				MessageBox("Unable to create directory, please make sure the path is correct.", "bScreenDumped->Options", MB_OK|MB_ICONERROR);
-				cePath->SetFocus();
-				cePath->SetSel(0,cePath->GetWindowTextLength(), TRUE);
+				MessageBox(_T("Unable to create directory, please make sure the path is correct."), _T("bScreenDumped->Options"), MB_OK|MB_ICONERROR);
+				c_Destination.SetFocus();
+				c_Destination.SetSel(0, c_Destination.GetWindowTextLength(), true);
 				return;
 			}
 		}
 		else
 		{
-			MessageBox("You chose to not create the directory. Please choose a valid destination before proceeding.", "bScreenDumped->Options", MB_OK|MB_ICONINFORMATION);
-			cePath->SetFocus();
-			cePath->SetSel(0,cePath->GetWindowTextLength(), TRUE);
+			MessageBox(_T("You chose to not create the directory. Please choose a valid destination before proceeding."), _T("bScreenDumped->Options"), MB_OK|MB_ICONINFORMATION);
+			c_Destination.SetFocus();
+			c_Destination.SetSel(0, c_Destination.GetWindowTextLength(), true);
 			return;
 		}
 	}
@@ -86,36 +86,30 @@ void OptionsDialog::OnBnClickedOk()
 	// Save Settings
 	CGlobalSettings gs;
 	gs.ReadSettings();
-	CButton* genButPtr;
 
-	genButPtr = (CButton*)GetDlgItem(IDC_CHKAUTONAME);
-	gs.bAutoName = (genButPtr->GetCheck() == BST_CHECKED) ? TRUE : FALSE;
+    gs.bAutoName = (c_chkAutoName.GetCheck() == BST_CHECKED) ? true : false;
+	gs.bEnableHog = (c_chkHog.GetCheck() == BST_CHECKED) ? true : false;
 
-	genButPtr = (CButton*)GetDlgItem(IDC_CHKHOG);
-	gs.bEnableHog = (genButPtr->GetCheck() == BST_CHECKED) ? TRUE : FALSE;
-
-	switch ( GetCheckedRadioButton( IDC_RADIOBMP, IDC_RADIOJPEG ) )
-	{
-	case IDC_RADIOBMP:
+    if( c_optBmp.GetCheck() == BST_CHECKED )
+    {
 		gs.sEnc = sEncBMP;
-		break;
+    }
 
-	case IDC_RADIOJPEG:
-		gs.sEnc = sEncJPEG;
-		char temp[4];
-		GetDlgItem(IDC_TXTQUALITY)->GetWindowText(temp, 4);
-		gs.lJpgQuality = atol(temp);
-		break;
+    if( c_optJpeg.GetCheck() == BST_CHECKED )
+    {	
+        gs.sEnc = sEncJPEG;
+		c_JpegQuality.GetWindowText(strVal);
+		gs.lJpgQuality = _ttol(strVal);
+    }
 
-	case IDC_RADIOPNG:
+    if( c_optPng.GetCheck() == BST_CHECKED )
+    {
 		gs.sEnc = sEncPNG;
-		break;
-	}
-
-	GetDlgItem(IDC_TXTDESTINATION)->GetWindowText(gs.szOutputDir, _MAX_PATH);
+    }
+    c_Destination.GetWindowText(gs.szOutputDir);
 	gs.WriteSettings();
 	
-	// Call default OnOK Event
+    // Doesn't matter if this gets called since settings are saved/reloaded.
 	OnCancel();
 }
 
@@ -126,27 +120,27 @@ void OptionsDialog::OnBnClickedCancel()
 
 void OptionsDialog::OnBnClickedRadiobmp()
 {
-	GetDlgItem(IDC_TXTQUALITY)->EnableWindow(FALSE); 
+	updateControls(); 
 }
 
 void OptionsDialog::OnBnClickedRadiopng()
 {
-	GetDlgItem(IDC_TXTQUALITY)->EnableWindow(FALSE); 
+	updateControls(); 
 }
 
 void OptionsDialog::OnBnClickedRadiojpeg()
 {
-	GetDlgItem(IDC_TXTQUALITY)->EnableWindow(TRUE); 
+	updateControls(); 
 }
 
 void OptionsDialog::OnBnClickedBtnbrowse()
 {
-	CFileDialog* cfDlg = new CFileDialog(TRUE, NULL, "DO NOT DELETE THIS TEXT", OFN_HIDEREADONLY|OFN_EXPLORER, "Directories|*.12ewdfvrfter||", this);
+	CFileDialog* cfDlg = new CFileDialog(TRUE, NULL, _T("DO NOT DELETE THIS TEXT"), OFN_HIDEREADONLY|OFN_EXPLORER, _T("Directories|*.12ewdfvrfter||"), this);
 	if(cfDlg->DoModal() == IDOK)
 	{
 		CString csPath = cfDlg->GetPathName();
-		csPath = csPath.Left( csPath.ReverseFind('\\') );
-		GetDlgItem(IDC_TXTDESTINATION)->SetWindowText(csPath);
+		csPath = csPath.Left( csPath.ReverseFind(_T('\\')) );
+        c_Destination.SetWindowText(csPath);
 	}
 	delete cfDlg;
 }
@@ -154,62 +148,95 @@ void OptionsDialog::OnBnClickedBtnbrowse()
 BOOL OptionsDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	ShowWindow(SW_NORMAL);
+    // TODO: well more of a reminder. check comment below
+	//ShowWindow(SW_NORMAL);
+
+    initialized = true;
+    initializeControls();
+    updateControls();
+	return TRUE; 
+}
+
+void OptionsDialog::initializeControls()
+{
 	// Load Settings
 	CGlobalSettings gs;
 	gs.ReadSettings();
-	CButton* radioEncoder;
+
 	// Initialize Controls
 	switch(gs.sEnc)
 	{
 	case sEncBMP:
-		radioEncoder = (CButton*)GetDlgItem(IDC_RADIOBMP);
-		radioEncoder->SetCheck(BST_CHECKED);
+        c_optBmp.SetCheck(BST_CHECKED);
 		OnBnClickedRadiobmp();
 		break;
 
 	case sEncJPEG:
-		radioEncoder = (CButton*)GetDlgItem(IDC_RADIOJPEG);
-		radioEncoder->SetCheck(BST_CHECKED);
+        c_optJpeg.SetCheck(BST_CHECKED);
 		OnBnClickedRadiojpeg();
 		break;
 
 	case sEncPNG:
-		radioEncoder = (CButton*)GetDlgItem(IDC_RADIOPNG);
-		radioEncoder->SetCheck(BST_CHECKED);
+        c_optPng.SetCheck(BST_CHECKED);
 		OnBnClickedRadiopng();
 		break;
 
 	default:
-		MessageBox("Encoder Value not found. This is a very unusual error indeed.", "bScreenDumped->OptionsDialog()", MB_OK | MB_ICONWARNING);
+		MessageBox(_T("Encoder Value not found. This is a very unusual error indeed."), _T("bScreenDumped->OptionsDialog()->initializeControls"), MB_OK | MB_ICONWARNING);
 		break;
 	}
-	char buffer[4];
-	itoa((int)gs.lJpgQuality, buffer, 10);
-	CEdit* ceQuality = (CEdit*) GetDlgItem(IDC_TXTQUALITY);
-	ceQuality->SetWindowText(buffer);	
-	ceQuality->SetLimitText(3);
-	CButton* genBPtr = (CButton*)GetDlgItem(IDC_CHKAUTONAME);
+
+    CString tmpStr;
+	tmpStr.Format(_T("%d"), gs.lJpgQuality);
+    c_JpegQuality.SetWindowText(tmpStr);	
+	c_JpegQuality.SetLimitText(3);
+    
 	if(gs.bAutoName)
 	{
-		genBPtr->SetCheck(BST_CHECKED);
+		c_chkAutoName.SetCheck(BST_CHECKED);
 	}
 	else
 	{
-		genBPtr->SetCheck(BST_UNCHECKED);
+		c_chkAutoName.SetCheck(BST_UNCHECKED);
 	}
 
-	genBPtr = (CButton*)GetDlgItem(IDC_CHKHOG);
 	if(gs.bEnableHog)
 	{
-		genBPtr->SetCheck(BST_CHECKED);
+        c_chkHog.SetCheck(BST_CHECKED);
 	}
 	else
 	{
-		genBPtr->SetCheck(BST_UNCHECKED);
+		c_chkHog.SetCheck(BST_UNCHECKED);
 	}
+    c_Destination.SetWindowText(gs.szOutputDir);
+}
 
-	GetDlgItem(IDC_TXTDESTINATION)->SetWindowText(gs.szOutputDir);
+// All the control validation logic goes here
+void OptionsDialog::updateControls()
+{
+    // a little sanity checking in case the controls haven't been initialized yet.
+    if(!initialized)
+    {
+        return;
+    }
 
-	return TRUE; 
+    bool enable;
+    CString tmpStr;
+    int iDestLen = 0, iJpgQualLen = 0;
+    c_Destination.GetWindowText(tmpStr);
+    tmpStr = tmpStr.Trim();
+    iDestLen = tmpStr.GetLength();
+    if( c_optJpeg.GetCheck() == BST_CHECKED )
+    {
+        c_JpegQuality.GetWindowText(tmpStr);
+        tmpStr = tmpStr.Trim();
+        iJpgQualLen = tmpStr.GetLength();
+    }
+    enable = ( (iDestLen > 0) && ( c_optBmp.GetCheck() == BST_CHECKED || c_optJpeg.GetCheck() == BST_CHECKED || c_optPng == BST_CHECKED ) );
+    if (c_optJpeg.GetCheck() == BST_CHECKED && iJpgQualLen == 0)
+    {
+        enable = false;
+    }
+    c_JpegQuality.EnableWindow(c_optJpeg.GetCheck());
+    c_OK.EnableWindow(enable);
 }

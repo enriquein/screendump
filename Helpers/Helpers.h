@@ -1,11 +1,8 @@
 #ifndef MY_HELPERS
 #define MY_HELPERS
+#include "..\Classes\HogVideo.h"
 
-#include "..\stdafx.h"
-#include "Windows.h"
-#include "..\Dialogs\bScreenDumped2Dlg.h"
-
-void SetTransparency(HWND hWnd, long lAlpha); 
-void GetNewFilename(char* retVal);
-void ToggleTrayMenu(BOOL bEnable);
+// void SetTransparency(HWND hWnd, long lAlpha); 
+CString GetNewFilename();
+bool HogVideo(CHogVideo *hogger);
 #endif

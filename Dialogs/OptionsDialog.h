@@ -5,6 +5,7 @@
 
 // OptionsDialog dialog
 #include "..\res\resource.h"
+#include "afxwin.h"
 
 class OptionsDialog : public CDialog
 {
@@ -19,7 +20,8 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
+    void updateControls();
+    void initializeControls();
 
 	DECLARE_MESSAGE_MAP()
 public:
@@ -30,5 +32,16 @@ public:
 	afx_msg void OnBnClickedRadiojpeg();
 	afx_msg void OnBnClickedBtnbrowse();
 	virtual BOOL OnInitDialog();
+
+private:
+    CButton c_OK;
+    CEdit c_Destination;
+    CEdit c_JpegQuality;
+    CButton c_optBmp;
+    CButton c_optJpeg;
+    CButton c_optPng;
+    CButton c_chkAutoName;
+    CButton c_chkHog;
+    bool initialized;
 };
 #endif

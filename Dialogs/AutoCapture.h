@@ -1,9 +1,8 @@
 #pragma once
-
-
-// CAutoCapture dialog
-
-#define TIMERAUTOCAPTURE (WM_USER+102)
+#ifndef AUTOCAPTURE_H
+#define AUTOCAPTURE_H
+#include "afxwin.h"
+#include "..\Helpers\message.h"
 
 class CAutoCapture : public CDialog
 {
@@ -12,14 +11,14 @@ class CAutoCapture : public CDialog
 public:
 	CAutoCapture(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CAutoCapture();
-
+    static UINT UWM_TIMER_AC;
 
 // Dialog Data
 	enum { IDD = IDD_AUTOTIMER };
 
 protected:
 	BOOL bCatchForeground;
-	void EnableControls(BOOL bEnable);
+	void EnableControls(bool bEnable);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
@@ -31,4 +30,12 @@ protected:
 	virtual void OnCancel();
 public:
 	afx_msg void OnClose();
+private:
+    CEdit c_txtACDelay;
+    CButton c_optSeconds;
+    CButton c_optMilliseconds;
+    CButton c_optFullScreen;
+    CButton c_optForeground;
+    CButton c_btnStart;
 };
+#endif

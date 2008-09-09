@@ -1,42 +1,74 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="7.10"
+	Version="8.00"
 	Name="bScreenDumped2"
 	ProjectGUID="{E7EF77DB-7FA7-4A1D-809E-71B9FC57C8E1}"
 	RootNamespace="bScreenDumped2"
-	Keyword="MFCProj">
+	Keyword="MFCProj"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32"/>
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="1"
-			CharacterSet="2">
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="_DEBUG"
+				MkTypLibCompatible="false"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				GlobalOptimizations="FALSE"
 				InlineFunctionExpansion="0"
 				FavorSizeOrSpeed="0"
-				OptimizeForWindowsApplication="FALSE"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\Include&quot;"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\Microsoft Visual Studio 8\VC\PlatformSDK\Include&quot;;&quot;C:\Program Files\Microsoft SDKs\Windows\v6.0A\Include&quot;"
 				PreprocessorDefinitions="WIN32;_WINDOWS;_DEBUG"
-				MinimalRebuild="TRUE"
+				MinimalRebuild="true"
 				BasicRuntimeChecks="0"
 				RuntimeLibrary="1"
-				TreatWChar_tAsBuiltInType="TRUE"
-				UsePrecompiledHeader="3"
+				TreatWChar_tAsBuiltInType="true"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="4"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="4"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_DEBUG"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib"
@@ -44,98 +76,125 @@
 				OutputFile="$(OutDir)/bScreenDumped.exe"
 				Version=""
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\Lib&quot;"
-				GenerateDebugInformation="TRUE"
+				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft DirectX SDK (August 2008)\Lib&quot;;&quot;C:\Program Files\Microsoft Visual Studio .NET 2003\Vc7\PlatformSDK\Lib&quot;"
+				GenerateDebugInformation="true"
 				SubSystem="2"
-				TargetMachine="1"/>
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="_DEBUG"
-				MkTypLibCompatible="FALSE"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_DEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCWebDeploymentTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
+			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="1"
-			CharacterSet="2">
+			CharacterSet="2"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+				PreprocessorDefinitions="NDEBUG"
+				MkTypLibCompatible="false"
+			/>
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="2"
-				GlobalOptimizations="TRUE"
 				InlineFunctionExpansion="1"
-				ImproveFloatingPointConsistency="TRUE"
 				FavorSizeOrSpeed="1"
-				OmitFramePointers="FALSE"
-				OptimizeForWindowsApplication="TRUE"
+				OmitFramePointers="false"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
-				MinimalRebuild="FALSE"
+				MinimalRebuild="false"
 				RuntimeLibrary="0"
 				EnableEnhancedInstructionSet="0"
-				TreatWChar_tAsBuiltInType="TRUE"
-				UsePrecompiledHeader="3"
+				TreatWChar_tAsBuiltInType="true"
+				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="TRUE"
-				DebugInformationFormat="0"/>
+				Detect64BitPortabilityProblems="true"
+				DebugInformationFormat="0"
+			/>
 			<Tool
-				Name="VCCustomBuildTool"/>
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="NDEBUG"
+				Culture="1033"
+				AdditionalIncludeDirectories="$(IntDir)"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
 				OutputFile="$(OutDir)/bScreenDumped.exe"
 				LinkIncremental="1"
-				GenerateDebugInformation="FALSE"
+				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="0"
 				EnableCOMDATFolding="0"
-				TargetMachine="1"/>
+				TargetMachine="1"
+			/>
 			<Tool
-				Name="VCMIDLTool"
-				PreprocessorDefinitions="NDEBUG"
-				MkTypLibCompatible="FALSE"/>
+				Name="VCALinkTool"
+			/>
 			<Tool
-				Name="VCPostBuildEventTool"/>
+				Name="VCManifestTool"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+				Name="VCXDCMakeTool"
+			/>
 			<Tool
-				Name="VCPreLinkEventTool"/>
+				Name="VCBscMakeTool"
+			/>
 			<Tool
-				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="NDEBUG"
-				Culture="1033"
-				AdditionalIncludeDirectories="$(IntDir)"/>
+				Name="VCFxCopTool"
+			/>
 			<Tool
-				Name="VCWebServiceProxyGeneratorTool"/>
+				Name="VCAppVerifierTool"
+			/>
 			<Tool
-				Name="VCXMLDataGeneratorTool"/>
+				Name="VCWebDeploymentTool"
+			/>
 			<Tool
-				Name="VCWebDeploymentTool"/>
-			<Tool
-				Name="VCManagedWrapperGeneratorTool"/>
-			<Tool
-				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
 	<References>
@@ -144,142 +203,190 @@
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath=".\Dialogs\AboutDialog.cpp">
+				RelativePath=".\Dialogs\AboutDialog.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\AutoCapture.cpp">
+				RelativePath=".\Dialogs\AutoCapture.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\bScreenDumped2.cpp">
+				RelativePath=".\Classes\bScreenDumped2.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\bScreenDumped2Dlg.cpp">
+				RelativePath=".\Dialogs\bScreenDumped2Dlg.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\file_ver.cpp">
+				RelativePath=".\Classes\ErrorString.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\file_ver.inl">
+				RelativePath=".\Classes\file_ver.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\GlobalAtom.cpp">
+				RelativePath=".\Classes\file_ver.inl"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\GlobalSettings.cpp">
+				RelativePath=".\Classes\GlobalAtom.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Helpers\Helpers.cpp">
+				RelativePath=".\Classes\GlobalSettings.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\HogVideo.cpp">
+				RelativePath=".\Helpers\Helpers.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\OptionsDialog.cpp">
+				RelativePath=".\Classes\HogVideo.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\RegionDialog.cpp">
+				RelativePath=".\Dialogs\OptionsDialog.cpp"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\RegionSelect.cpp">
-			</File>
-			<File
-				RelativePath=".\stdafx.cpp">
+				RelativePath=".\stdafx.cpp"
+				>
 				<FileConfiguration
-					Name="Debug|Win32">
+					Name="Debug|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
+						UsePrecompiledHeader="1"
+					/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="Release|Win32"
+					>
 					<Tool
 						Name="VCCLCompilerTool"
-						UsePrecompiledHeader="1"/>
+						UsePrecompiledHeader="1"
+					/>
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Helpers\WindowCapture.cpp">
+				RelativePath=".\Helpers\WindowCapture.cpp"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath=".\Dialogs\AboutDialog.h">
+				RelativePath=".\Dialogs\AboutDialog.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\AutoCapture.h">
+				RelativePath=".\Dialogs\AutoCapture.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\bScreenDumped2.h">
+				RelativePath=".\Classes\bScreenDumped2.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\bScreenDumped2Dlg.h">
+				RelativePath=".\Dialogs\bScreenDumped2Dlg.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\file_ver.h">
+				RelativePath=".\Classes\ErrorString.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\GlobalAtom.h">
+				RelativePath=".\Classes\file_ver.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\GlobalSettings.h">
+				RelativePath=".\Classes\GlobalAtom.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Helpers\Helpers.h">
+				RelativePath=".\Classes\GlobalSettings.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\HogVideo.h">
+				RelativePath=".\Helpers\Helpers.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Classes\LimitSingleInstance.h">
+				RelativePath=".\Classes\HogVideo.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\OptionsDialog.h">
+				RelativePath=".\Classes\LimitSingleInstance.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\RegionDialog.h">
+				RelativePath=".\Dialogs\OptionsDialog.h"
+				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\RegionSelect.h">
+				RelativePath=".\res\Resource.h"
+				>
 			</File>
 			<File
-				RelativePath=".\res\Resource.h">
+				RelativePath=".\stdafx.h"
+				>
 			</File>
 			<File
-				RelativePath=".\stdafx.h">
-			</File>
-			<File
-				RelativePath=".\Helpers\WindowCapture.h">
+				RelativePath=".\Helpers\WindowCapture.h"
+				>
 			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
-			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}">
+			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
+			>
 			<File
-				RelativePath=".\res\bScreenDumped2.ico">
+				RelativePath=".\res\bScreenDumped2.ico"
+				>
 			</File>
 			<File
-				RelativePath=".\res\bScreenDumped2.rc">
+				RelativePath=".\res\bScreenDumped2.rc"
+				>
 			</File>
 			<File
-				RelativePath=".\res\bScreenDumped2.rc2">
+				RelativePath=".\res\bScreenDumped2.rc2"
+				>
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\res\bScreenDumped2.manifest">
-		</File>
-		<File
-			RelativePath=".\ReadMe.txt">
+			RelativePath=".\res\bScreenDumped2.manifest"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				ExcludedFromBuild="true"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				ExcludedFromBuild="true"
+				>
+				<Tool
+					Name="VCCustomBuildTool"
+				/>
+			</FileConfiguration>
 		</File>
 	</Files>
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value=".\res\bScreenDumped2.rc"/>
+			Value=".\res\bScreenDumped2.rc"
+		/>
 	</Globals>
 </VisualStudioProject>

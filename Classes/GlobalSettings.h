@@ -1,3 +1,4 @@
+#pragma once
 #ifndef GLOBALSETTINGS_H
 #define GLOBALSETTINGS_H
 
@@ -16,14 +17,14 @@ public:
 	~CGlobalSettings(void);
 
 	selEncoder sEnc;
-	BOOL bAutoName;
-	BOOL bEnableHog;
+	bool bAutoName;
+	bool bEnableHog;
 	long lJpgQuality;
 	void ReadSettings();
 	void WriteSettings();
-	char szOutputDir[_MAX_PATH];
+	CString szOutputDir;
 
 protected:
-	char m_IniPath[_MAX_PATH];
+	CString m_IniPath;
 };
 #endif

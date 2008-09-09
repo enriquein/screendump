@@ -5,9 +5,6 @@
 #ifndef HOGVIDEO_H
 #define HOGVIDEO_H
 
-#include <tchar.h>
-#include <wtypes.h>
-
 class CHogVideo  
 {
 public:
@@ -20,8 +17,7 @@ public:
     void    Cleanup();
 
 private:
-
-    wchar_t m_wszFilename[MAX_PATH];
+    CString m_Filename;
     bool    m_bCOMInitialized;
     void   *m_pGraph;
     void   *m_pMediaControl;

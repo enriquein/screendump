@@ -1,7 +1,8 @@
 #include "stdafx.h"
-#include ".\globalsettings.h"
+#include <windows.h>
 #include <direct.h>
 #include <io.h>
+#include ".\GlobalSettings.h"
 
 CGlobalSettings::CGlobalSettings(void)
 {
@@ -11,18 +12,22 @@ CGlobalSettings::CGlobalSettings(void)
 	GetVersionEx(&osv);
 	if( osv.dwMajorVersion >= 5)
 	{
-		SHGetSpecialFolderPath(NULL, m_IniPath, CSIDL_APPDATA, FALSE);
-		sprintf(m_IniPath, "%s\\bScreenDumped\\", m_IniPath);
-		if(_access(m_IniPath, 0) == -1)
+        LPTSTR p = m_IniPath.GetBuffer(_MAX_PATH);
+		SHGetSpecialFolderPath(NULL, p, CSIDL_APPDATA, FALSE);
+        m_IniPath.ReleaseBuffer();
+        m_IniPath += _T("\\bScreenDumped\\");
+		if(_taccess(m_IniPath, 0) == -1)
 		{
-			_mkdir(m_IniPath);
+			_tmkdir(m_IniPath);
 		}
-		sprintf(m_IniPath, "%sbS.ini", m_IniPath);
+        m_IniPath += _T("%sbS.ini");
 	}
 	else
 	{
-		_getcwd(m_IniPath, _MAX_PATH);
-        sprintf(m_IniPath, "%s\\bS.ini", m_IniPath);
+        LPTSTR p = m_IniPath.GetBuffer(_MAX_PATH); 
+		_tgetcwd(p, _MAX_PATH);
+        m_IniPath.ReleaseBuffer();
+        m_IniPath += _T("\\bS.ini");
 	}
 }
 
@@ -32,25 +37,30 @@ CGlobalSettings::~CGlobalSettings(void)
 
 void CGlobalSettings::ReadSettings()
 {
-	char defValue[_MAX_PATH];
-	_getcwd(defValue, _MAX_PATH);
-	sEnc = (selEncoder)GetPrivateProfileInt("bScreenDumped2", "Encoder", 1, m_IniPath);
-	lJpgQuality = (long)GetPrivateProfileInt("bScreenDumped2", "JPGQuality", 100, m_IniPath);
-	bAutoName = (BOOL)GetPrivateProfileInt("bScreenDumped2", "AutoName", 1, m_IniPath);
-	bEnableHog = (BOOL)GetPrivateProfileInt("bScreenDumped2", "HogVideo", 0, m_IniPath);
-	GetPrivateProfileString("bScreenDumped2", "OutDir", defValue, szOutputDir, _MAX_PATH, m_IniPath);
+	CString defValue;
+	LPTSTR defPtr, outPtr;
+    sEnc = (selEncoder)GetPrivateProfileInt(_T("bScreenDumped2"), _T("Encoder"), 1, m_IniPath);
+	lJpgQuality = (long)GetPrivateProfileInt(_T("bScreenDumped2"), _T("JPGQuality"), 100, m_IniPath);
+	bAutoName = (bool)GetPrivateProfileInt(_T("bScreenDumped2"), _T("AutoName"), 1, m_IniPath);
+	bEnableHog = (bool)GetPrivateProfileInt(_T("bScreenDumped2"), _T("HogVideo"), 0, m_IniPath);
+    defPtr = defValue.GetBuffer(_MAX_PATH);
+	_tgetcwd(defPtr, _MAX_PATH);
+    defValue.ReleaseBuffer();
+    outPtr = szOutputDir.GetBuffer(_MAX_PATH);
+	GetPrivateProfileString(_T("bScreenDumped2"), _T("OutDir"), defValue, outPtr, _MAX_PATH, m_IniPath);
+    szOutputDir.ReleaseBuffer();
 }
 
 void CGlobalSettings::WriteSettings()
 {
-	char buffer[_MAX_PATH];
-	itoa((int)sEnc, buffer, 10);
-	WritePrivateProfileString("bScreenDumped2", "Encoder", buffer, m_IniPath);
-	itoa((int)lJpgQuality, buffer, 10);
-	WritePrivateProfileString("bScreenDumped2", "JPGQuality", buffer, m_IniPath);
-	itoa((int)bAutoName, buffer, 10);
-	WritePrivateProfileString("bScreenDumped2", "AutoName", buffer, m_IniPath);
-	WritePrivateProfileString("bScreenDumped2", "OutDir", szOutputDir, m_IniPath);
-	itoa((int)bEnableHog, buffer, 10);
-	WritePrivateProfileString("bScreenDumped2", "HogVideo", buffer, m_IniPath);
+    CString buffer;
+    buffer.Format(_T("%d"), sEnc);
+	WritePrivateProfileString(_T("bScreenDumped2"), _T("Encoder"), buffer, m_IniPath);
+    buffer.Format(_T("%d"), lJpgQuality);
+	WritePrivateProfileString(_T("bScreenDumped2"), _T("JPGQuality"), buffer, m_IniPath);
+    buffer.Format(_T("%d"), bAutoName);
+	WritePrivateProfileString(_T("bScreenDumped2"), _T("AutoName"), buffer, m_IniPath);
+	WritePrivateProfileString(_T("bScreenDumped2"), _T("OutDir"), szOutputDir, m_IniPath);
+    buffer.Format(_T("%d"), bEnableHog);
+	WritePrivateProfileString(_T("bScreenDumped2"), _T("HogVideo"), buffer, m_IniPath);
 }

@@ -3,7 +3,7 @@
 #include ".\AutoCapture.h"
 #include "..\Helpers\WindowCapture.h"
 
-// CAutoCapture dialog
+UINT CAutoCapture::UWM_TIMER_AC = ::RegisterWindowMessage(_T("UWM_TIMER_AC-{6B26ED52-0908-422b-9944-17DCC2EB7A40}"));
 
 IMPLEMENT_DYNAMIC(CAutoCapture, CDialog)
 CAutoCapture::CAutoCapture(CWnd* pParent /*=NULL*/)
@@ -17,7 +17,13 @@ CAutoCapture::~CAutoCapture()
 
 void CAutoCapture::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
+    CDialog::DoDataExchange(pDX);
+    DDX_Control(pDX, ID_TXTACDELAY, c_txtACDelay);
+    DDX_Control(pDX, ID_OPTSECONDS, c_optSeconds);
+    DDX_Control(pDX, ID_OPTMILLISECONDS, c_optMilliseconds);
+    DDX_Control(pDX, ID_OPTFULLSCREEN, c_optFullScreen);
+    DDX_Control(pDX, ID_OPTFOREGROUND, c_optForeground);
+    DDX_Control(pDX, ID_BTNSTART, c_btnStart);
 }
 
 
@@ -33,37 +39,36 @@ END_MESSAGE_MAP()
 void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
 {
 	// Check if we're actually stopping the capture:
-	CString butText;
-	GetDlgItem(ID_BTNSTART)->GetWindowText(butText);
-	if(butText != "Start AutoCapture")
+	CString tmpText;
+    c_btnStart.GetWindowText(tmpText);
+	if(tmpText != _T("Start AutoCapture"))
 	{
 		// Stopping Capture
-		KillTimer(TIMERAUTOCAPTURE);
+        KillTimer(UWM_TIMER_AC);
 		EnableControls(TRUE);
-		GetDlgItem(ID_BTNSTART)->SetWindowText("Start AutoCapture");
+		c_btnStart.SetWindowText(_T("Start AutoCapture"));
 		return;
 	}
 
 	// Validation
 	UINT iDelay;
-	if(GetDlgItem(ID_TXTACDELAY)->GetWindowTextLength() == 0)
+    c_txtACDelay.GetWindowText(tmpText);
+    tmpText = tmpText.Trim();
+	if(tmpText.GetLength() == 0)
 	{
-		MessageBox("Please enter the amount of time to wait until screenshots.", "bScreenDumped->AutoCapture", MB_OK|MB_ICONERROR);
-		GetDlgItem(ID_TXTACDELAY)->SetFocus();
+		MessageBox(_T("Please enter the amount of time to wait until screenshots."), _T("bScreenDumped->AutoCapture"), MB_OK|MB_ICONERROR);
+		c_txtACDelay.SetFocus();
 		return;
 	}
-	CString secVal;
-	GetDlgItem(ID_TXTACDELAY)->GetWindowText(secVal);
-	iDelay = (UINT)atoi(secVal);
-	CButton* radioButton;
-	radioButton = (CButton*)GetDlgItem(ID_OPTSECONDS);
-	if(radioButton->GetCheck() == BST_CHECKED) 
+    c_txtACDelay.GetWindowText(tmpText);
+	iDelay = (UINT)_ttoi(tmpText);
+    if(c_optSeconds.GetCheck() == BST_CHECKED) 
 	{
 		// User chose seconds
 		if(iDelay > 60)
 		{
-			MessageBox("Please enter a number between 1 and 60.", "bScreenDumped->AutoCapture", MB_OK|MB_ICONERROR);
-			GetDlgItem(ID_TXTACDELAY)->SetFocus();
+			MessageBox(_T("Please enter a number between 1 and 60."), _T("bScreenDumped->AutoCapture"), MB_OK|MB_ICONERROR);
+			c_txtACDelay.SetFocus();
 			return;
 		}
 		else
@@ -76,27 +81,26 @@ void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
 		// User chose milliseconds
 		if( (iDelay > 60000) || (iDelay < 250) )
 		{
-			MessageBox("Please enter a number between 250 and 60000.", "bScreenDumped->AutoCapture", MB_OK|MB_ICONERROR);
-			GetDlgItem(ID_TXTACDELAY)->SetFocus();
+			MessageBox(_T("Please enter a number between 250 and 60000."), _T("bScreenDumped->AutoCapture"), MB_OK|MB_ICONERROR);
+			c_txtACDelay.SetFocus();
 			return;
 		}
 	}
-	radioButton = (CButton*)GetDlgItem(ID_OPTFULLSCREEN);
 	// End Validation
 
-	if(radioButton->GetCheck() == BST_CHECKED) 
+    if(c_optFullScreen.GetCheck() == BST_CHECKED) 
 	{
 		// User chose fullscreen mode
-		bCatchForeground = FALSE;
+		bCatchForeground = false;
 	}
 	else
 	{
 		// User chose active window mode
-		bCatchForeground = TRUE;
+		bCatchForeground = true;
 	}
-	EnableControls(FALSE);
-	GetDlgItem(ID_BTNSTART)->SetWindowText("Stop AutoCapture");
-	::SetTimer(this->m_hWnd, TIMERAUTOCAPTURE, iDelay, NULL);
+	EnableControls(false);
+	c_btnStart.SetWindowText(_T("Stop AutoCapture"));
+	::SetTimer(this->m_hWnd, UWM_TIMER_AC, iDelay, NULL);
 	ShowWindow(SW_SHOWMINIMIZED);
 }
 
@@ -113,42 +117,27 @@ LRESULT CAutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CAutoCapture::EnableControls(BOOL bEnable)
+void CAutoCapture::EnableControls(bool bEnable)
 {
-	if(bEnable)
-	{	
-		GetDlgItem(ID_TXTACDELAY)->EnableWindow(TRUE);
-		GetDlgItem(ID_OPTFOREGROUND)->EnableWindow(TRUE);
-		GetDlgItem(ID_OPTFULLSCREEN)->EnableWindow(TRUE);
-		GetDlgItem(ID_OPTSECONDS)->EnableWindow(TRUE);
-		GetDlgItem(ID_OPTMILLISECONDS)->EnableWindow(TRUE);
-	}
-	else
-	{
-		GetDlgItem(ID_TXTACDELAY)->EnableWindow(FALSE);
-		GetDlgItem(ID_OPTFOREGROUND)->EnableWindow(FALSE);
-		GetDlgItem(ID_OPTFULLSCREEN)->EnableWindow(FALSE);
-		GetDlgItem(ID_OPTSECONDS)->EnableWindow(FALSE);
-		GetDlgItem(ID_OPTMILLISECONDS)->EnableWindow(FALSE);
-	}
+	c_txtACDelay.EnableWindow(bEnable);
+    c_optForeground.EnableWindow(bEnable);
+	c_optFullScreen.EnableWindow(bEnable);
+	c_optSeconds.EnableWindow(bEnable);
+	c_optMilliseconds.EnableWindow(bEnable);
 }
 
 BOOL CAutoCapture::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	CButton* cbut;
-	cbut = (CButton*)GetDlgItem(ID_OPTFULLSCREEN);
-	cbut->SetCheck(BST_CHECKED);
-	cbut = (CButton*)GetDlgItem(ID_OPTSECONDS);
-	cbut->SetCheck(BST_CHECKED);
-	cbut = NULL;
-	GetDlgItem(ID_TXTACDELAY)->SetWindowText("5");
+    c_optFullScreen.SetCheck(BST_CHECKED);
+    c_optSeconds.SetCheck(BST_CHECKED);
+    c_txtACDelay.SetWindowText(_T("5"));
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
 void CAutoCapture::OnCancel()
 {
-	KillTimer(TIMERAUTOCAPTURE);
+	KillTimer(UWM_TIMER_AC);
 	CDialog::OnCancel();
 }
 

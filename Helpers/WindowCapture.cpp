@@ -2,6 +2,7 @@
 #include "..\Helpers\Helpers.h"
 #include "..\Classes\GlobalSettings.h"
 #include "..\Helpers\WindowCapture.h"
+#include "..\Dialogs\bScreenDumped2Dlg.h"
 #include <io.h>
 #include <direct.h>
 #include "gdiplus.h"
@@ -11,6 +12,7 @@ using namespace Gdiplus;
 #define SM_CYVIRTUALSCREEN 79
 #define SM_CXVIRTUALSCREEN 78
 
+//TODO: Turn this into a class if possible
 BOOL CaptureScreen()
 {
 	int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
@@ -72,46 +74,46 @@ void DumpImage(Bitmap* aBmp)
 	CGlobalSettings gs;
 	EncoderParameters eParams; // = (EncoderParameters*)malloc(sizeof(EncoderParameters) + sizeof(EncoderParameter));
 	CLSID encoderClsid;
-	char filename[48];
-	char chFilter[60];
-	char chDefExt[4];
+	CString filename;
+	CString Filter;
+	CString DefExt;
 	CFileDialog* cfSaveAs;
-	WCHAR fullpath[_MAX_PATH];
-	GetNewFilename(filename);
+	CString fullpath;
+	filename = GetNewFilename();
 	gs.ReadSettings();
 
 	// Check if the directory has been deleted:
-	if(_access(gs.szOutputDir, 0) == -1)
+	if(_taccess(gs.szOutputDir, 0) == -1)
 	{
-		if(_mkdir(gs.szOutputDir) != 0)
+		if(_tmkdir(gs.szOutputDir) != 0)
 		{
-			MessageBox(NULL, "Unable to find screenshots directory.\nAdditionally, the program tried to create it and failed as well.", "bScreenDumped->DumpImage", MB_OK|MB_ICONERROR);
+            MessageBox(NULL, _T("Unable to find screenshots directory.\nAdditionally, the program tried to create it and failed as well."), _T("bScreenDumped->DumpImage"), MB_OK|MB_ICONERROR);
 		}
 	}
 
 	switch (gs.sEnc)
 	{
 	case sEncBMP:
-		sprintf(chFilter, "Bitmap Files (*.bmp)|*.bmp|All Files (*.*)|*.*||");
-		sprintf(chDefExt, "bmp");
-		GetEncoderClsid(L"image/bmp", &encoderClsid);
-		sprintf(filename, "%s.bmp", filename);
+		Filter = _T("Bitmap Files (*.bmp)|*.bmp|All Files (*.*)|*.*||");
+		DefExt = _T("bmp");
+		GetEncoderClsid(_T("image/bmp"), &encoderClsid);
+        filename += _T(".bmp");
 		eParams.Count = 0;
 		break;
 
 	case sEncPNG:
-		sprintf(chFilter, "PNG Files (*.png)|*.png|All Files (*.*)|*.*||");
-		sprintf(chDefExt, "png");
-		GetEncoderClsid(L"image/png", &encoderClsid);
-		sprintf(filename, "%s.png", filename);
+		Filter = _T("PNG Files (*.png)|*.png|All Files (*.*)|*.*||");
+		DefExt = _T("png");
+		GetEncoderClsid(_T("image/png"), &encoderClsid);
+		filename += _T(".png");
 		eParams.Count = 0;		
 		break;
 
 	case sEncJPEG:
-		sprintf(chFilter, "JPEG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||");
-		sprintf(chDefExt, "jpg");
-		GetEncoderClsid(L"image/jpeg", &encoderClsid);
-		sprintf(filename, "%s.jpg", filename);
+		Filter = _T("JPEG Files (*.jpg)|*.jpg|All Files (*.*)|*.*||");
+		DefExt =  _T("jpg");
+		GetEncoderClsid(_T("image/jpeg"), &encoderClsid);
+		filename += _T(".jpg");
 		eParams.Count = 1;
 		eParams.Parameter[0].Guid = EncoderQuality;
 		eParams.Parameter[0].NumberOfValues = 1;
@@ -120,24 +122,26 @@ void DumpImage(Bitmap* aBmp)
 	break;
 
 	default:
-		MessageBox(NULL, "Encoder Value not found. This is a very unusual error indeed.", "bScreenDumped->OptionsDialog()", MB_OK | MB_ICONWARNING);
+        MessageBox(NULL, _T("Encoder Value not found. This is a very unusual error indeed."), _T("bScreenDumped->WindowCapture->DumpImage()"), MB_OK | MB_ICONWARNING);
 		return;
 	}
 
 	if(!(gs.bAutoName))
 	{
-		ToggleTrayMenu(FALSE);
-		cfSaveAs = new CFileDialog(FALSE, chDefExt, filename, OFN_HIDEREADONLY|OFN_EXPLORER, chFilter, NULL);
+        CbScreenDumped2Dlg * mainWnd;
+        mainWnd = (CbScreenDumped2Dlg*)AfxGetApp()->m_pMainWnd;
+		mainWnd->ToggleTrayMenu(FALSE);
+		cfSaveAs = new CFileDialog(FALSE, DefExt, filename, OFN_HIDEREADONLY|OFN_EXPLORER, Filter, NULL);
 		if( cfSaveAs->DoModal() == IDOK )
 		{
-			swprintf(fullpath, L"%S", cfSaveAs->GetPathName());
+			fullpath = cfSaveAs->GetPathName();
 		}
 		delete cfSaveAs;
-		ToggleTrayMenu(TRUE);
+		mainWnd->ToggleTrayMenu(TRUE);
 	}
 	else
 	{
-		swprintf(fullpath, L"%S\\%S", gs.szOutputDir, filename);
+		fullpath = gs.szOutputDir + filename;
 	}
 	aBmp->Save(fullpath, &encoderClsid, &eParams);
 }

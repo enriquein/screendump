@@ -4,7 +4,6 @@
 #include "stdafx.h"
 #include ".\HogVideo.h"
 #include <dshow.h>
-#include <string.h>
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
@@ -118,11 +117,7 @@ void CHogVideo::Cleanup()
 
 void CHogVideo::SetVideo(LPCTSTR szFilename)
 {
-#ifdef _UNICODE
-    wcsncpy(m_szFilename, szFilename, MAX_PATH);
-#else
-    mbstowcs(m_wszFilename, szFilename, MAX_PATH);
-#endif
+    m_Filename = szFilename;
 }
 
 bool CHogVideo::Hog()
@@ -138,7 +133,7 @@ bool CHogVideo::Hog()
     IVideoWindow  *pVideoWindow     = (IVideoWindow*)   m_pVideoWindow;
 
     // Build the graph. IMPORTANT: Change string to a file on your system.
-    hr = pGraph->RenderFile(m_wszFilename, NULL);
+    hr = pGraph->RenderFile(m_Filename, NULL);
     if (SUCCEEDED(hr))
     {
         // Run the graph.

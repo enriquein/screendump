@@ -11,8 +11,8 @@
 #include "gdiplus.h" 
 using namespace Gdiplus;
 
-#define TIMERHIDE (WM_USER+101)
-#define SHELLICON_MSG (WM_USER + 100)
+#define TIMERHIDE _T("TIMERHIDE-{F4F9FA6B-ED7A-41cb-B543-0B218E3DAF9A}")
+#define SHELLICON_MSG _T("SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}")
 
 // CbScreenDumped2Dlg dialog
 class CbScreenDumped2Dlg : public CDialog
@@ -20,8 +20,10 @@ class CbScreenDumped2Dlg : public CDialog
 // Construction
 public:
 	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
-	CMenu* m_trayMenu;
+	CMenu m_trayMenu;
 	CString m_progVersion;
+    void ToggleTrayMenu(BOOL bEnable); // Enables/Disables the tray menu items.
+    void CbScreenDumped2Dlg::StartHog(); // Starts the hogger control.
 
 // Dialog Data
 	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };
@@ -33,17 +35,13 @@ protected:
 	void DoRegisterHotKeys();
 	void DoUnregisterHotKeys();
 	void DoCleanup();
+    void CbScreenDumped2Dlg::ToggleTrayMenu(bool bEnable);
 	CGlobalAtom* m_Atom;
 	CGlobalAtom* m_AtomAlt;
+    CHogVideo m_Hog;
 	GdiplusStartupInput m_gdiPlusStatupInput;
 	ULONG_PTR m_gdiPlusToken; 
-	CHogVideo m_Hog;
 	HICON m_hIcon;
-	CMenu m_FullMenu;
-
-	// Marronated global variable to handle region captures
-	BOOL m_bUseRegions;
-	RECT m_regionRect;
 
 	// Tray Handlers
 	void OnTrayExitClick();

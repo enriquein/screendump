@@ -1,6 +1,5 @@
 // AboutDialog.cpp : implementation file
 //
-
 #include "stdafx.h"
 #include "..\res\resource.h"
 #include ".\bScreenDumped2Dlg.h"
@@ -34,10 +33,10 @@ END_MESSAGE_MAP()
 BOOL CAboutDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-	char fVersionText[64];
+	CString strVersionText;
 	CbScreenDumped2Dlg* mainDlg;
 	mainDlg = (CbScreenDumped2Dlg*)AfxGetApp()->m_pMainWnd;
-	sprintf(fVersionText, "About bScreenDumped %s", mainDlg->m_progVersion);
-	SetWindowText(fVersionText);
+    strVersionText = _T("About bScreenDumped ") + mainDlg->m_progVersion;
+    SetWindowText(strVersionText);
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
