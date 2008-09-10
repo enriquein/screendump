@@ -2,7 +2,6 @@
 #ifndef AUTOCAPTURE_H
 #define AUTOCAPTURE_H
 #include "afxwin.h"
-#include "..\Helpers\message.h"
 
 class CAutoCapture : public CDialog
 {

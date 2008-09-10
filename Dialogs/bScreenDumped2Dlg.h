@@ -11,8 +11,7 @@
 #include "gdiplus.h" 
 using namespace Gdiplus;
 
-#define TIMERHIDE _T("TIMERHIDE-{F4F9FA6B-ED7A-41cb-B543-0B218E3DAF9A}")
-#define SHELLICON_MSG _T("SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}")
+
 
 // CbScreenDumped2Dlg dialog
 class CbScreenDumped2Dlg : public CDialog
@@ -22,8 +21,10 @@ public:
 	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
 	CMenu m_trayMenu;
 	CString m_progVersion;
-    void ToggleTrayMenu(BOOL bEnable); // Enables/Disables the tray menu items.
-    void CbScreenDumped2Dlg::StartHog(); // Starts the hogger control.
+    void ToggleTrayMenu(bool bEnable); // Enables/Disables the tray menu items.
+    void StartHog(); // Starts the hogger control.
+    static UINT UWM_SHELLICON_MSG;
+    static UINT UWM_TIMER_HIDE;
 
 // Dialog Data
 	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };
@@ -35,7 +36,6 @@ protected:
 	void DoRegisterHotKeys();
 	void DoUnregisterHotKeys();
 	void DoCleanup();
-    void CbScreenDumped2Dlg::ToggleTrayMenu(bool bEnable);
 	CGlobalAtom* m_Atom;
 	CGlobalAtom* m_AtomAlt;
     CHogVideo m_Hog;
@@ -56,8 +56,6 @@ protected:
 	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
-public:
-	afx_msg void OnTrayRegion();
 };
 
 #endif

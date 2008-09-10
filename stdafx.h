@@ -39,3 +39,8 @@
 #include <afxcmn.h>			// MFC support for Windows Common Controls
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
+// We're using Unicode for the fsck of it
+#ifndef _UNICODE
+#define _UNICODE
+#endif
+

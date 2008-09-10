@@ -14,6 +14,9 @@
 #include "gdiplus.h"
 using namespace Gdiplus;
 
+UINT CbScreenDumped2Dlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
+UINT CbScreenDumped2Dlg::UWM_TIMER_HIDE = ::RegisterWindowMessage(_T("UWM_TIMER_HIDE-{F4F9FA6B-ED7A-41cb-B543-0B218E3DAF9A}"));
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -38,7 +41,7 @@ void CbScreenDumped2Dlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
-	ON_MESSAGE(SHELLICON_MSG, ShellIconCallback)
+	ON_REGISTERED_MESSAGE(UWM_SHELLICON_MSG, ShellIconCallback)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_MESSAGE(WM_TIMER, OnTimer)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
@@ -47,7 +50,6 @@ BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
 	ON_COMMAND(ID_TRAY_OPENDEST, OnTrayOpenDest)
 	ON_COMMAND(ID_TRAY_AUTOCAPTURE, OnTrayAutoCapture)
 	//}}AFX_MSG_MAP
-	ON_COMMAND(ID_TRAY_REGION, OnTrayRegion)
 END_MESSAGE_MAP()
 
 // CbScreenDumped2Dlg message handlers
@@ -82,13 +84,13 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
     //TODO: Figure out why the hell is this here
 	SetWindowPos(0,-100,-100,0,0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
     // TODO: need to change this so that it doesnt stick (like in lisa's comp)
-	::SetTimer(m_hWnd, TIMERHIDE, 1000, NULL); 
+	::SetTimer(m_hWnd, UWM_TIMER_HIDE, 1000, NULL); 
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
 LRESULT CbScreenDumped2Dlg::OnTimer(WPARAM wParam, LPARAM lParam)
 {
-	KillTimer(TIMERHIDE);
+	KillTimer(UWM_TIMER_HIDE);
 	SetWindowPos(0,0,0,0,0, SWP_NOSIZE | SWP_NOMOVE | SWP_HIDEWINDOW | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
 	return 0;
 }
@@ -102,7 +104,7 @@ void CbScreenDumped2Dlg::ShellIcon_Initialize()
 	ni.hWnd = m_hWnd; 
 	ni.uID = 1;
 	ni.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
-	ni.uCallbackMessage = SHELLICON_MSG;
+    ni.uCallbackMessage = UWM_SHELLICON_MSG;
     ttipText = _T("bScreenDumped ") + m_progVersion;
     lstrcpy(ni.szTip, ttipText);
 	ni.hIcon = m_hIcon;
@@ -213,27 +215,15 @@ void CbScreenDumped2Dlg::DoRegisterHotKeys()
 	long result, resultAlt;
 	m_Atom = new CGlobalAtom; 
 	result = RegisterHotKey( m_hWnd, m_Atom->GetID(), 0, VK_SNAPSHOT);
-    // TODO: This is only temporary and for debug purposes
-	//Sleep(50);
+	Sleep(150); // Since we use the system time to initialize the atoms, we need to wait to avoid getting the same timestamp.
 	m_AtomAlt = new CGlobalAtom;
 	resultAlt = RegisterHotKey(m_hWnd, m_AtomAlt->GetID(), MOD_ALT, VK_SNAPSHOT);
     DWORD err = ::GetLastError();
 	if( (result == 0) || (resultAlt == 0) )
 	{
-		MessageBox(_T("Failed to register the hotkeys. This is almost always caused because of another program using the PrintScreen Key.\nPlease close the offending program before starting this one. This program will exit now."),
+		MessageBox(_T("Failed to register the hotkeys. This is almost always caused because of another program using the PrintScreen Key.\nPlease close the offending program before restarting this one."),
 				   _T("bScreenDumped->DoRegisterHotKeys()"), MB_OK | MB_ICONERROR);
-		DoCleanup();
 	}
-	if( m_Atom->GetID() == m_AtomAlt->GetID() )
-	{
-        //TODO: This is only temporary and for debug purposes.
-//		MessageBox("Both key combinations got assigned to the same Key.\nThis bug is still under investigation.\nPlease restart the program.",
-//				   "bScreenDumped->DoRegisterHotKeys()", MB_OK | MB_ICONERROR);
-        CString tmpErrorMsg;
-        tmpErrorMsg.Format(_T("m_Atom->GetID() == m_AtomAlt->GetID(). Error number: %d\nDescription: %s"), err, ErrorString(err));
-        MessageBox(tmpErrorMsg, _T("bScreenDumped->DoRegisterHotKeys()"), MB_OK | MB_ICONERROR);
-    
-    }
 }
 
 void CbScreenDumped2Dlg::DoUnregisterHotKeys()

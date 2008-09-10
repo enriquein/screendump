@@ -20,7 +20,7 @@ CGlobalSettings::CGlobalSettings(void)
 		{
 			_tmkdir(m_IniPath);
 		}
-        m_IniPath += _T("%sbS.ini");
+        m_IniPath += _T("bS.ini");
 	}
 	else
 	{
@@ -49,6 +49,11 @@ void CGlobalSettings::ReadSettings()
     outPtr = szOutputDir.GetBuffer(_MAX_PATH);
 	GetPrivateProfileString(_T("bScreenDumped2"), _T("OutDir"), defValue, outPtr, _MAX_PATH, m_IniPath);
     szOutputDir.ReleaseBuffer();
+    // Ok so lets check if the directory has an ending \ to avoid some unexpected stuff
+    if( szOutputDir.Right(1) != _T("\\") )
+    {
+        szOutputDir += _T("\\");
+    }
 }
 
 void CGlobalSettings::WriteSettings()

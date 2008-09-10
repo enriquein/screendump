@@ -50,7 +50,7 @@ void OptionsDialog::OnBnClickedOk()
     if(c_optJpeg.GetCheck() == BST_CHECKED)
 	{
         c_JpegQuality.GetWindowText(strVal);
-		val = ttoi(strVal);
+		val = _ttoi(strVal);
 		if( (val > 100) || (val <= 0) )  
 		{
 			MessageBox(_T("Please enter a number between 1 and 100."), _T("bScreenDumped->Options"), MB_OK|MB_ICONERROR);
@@ -232,8 +232,8 @@ void OptionsDialog::updateControls()
         tmpStr = tmpStr.Trim();
         iJpgQualLen = tmpStr.GetLength();
     }
-    enable = ( (iDestLen > 0) && ( c_optBmp.GetCheck() == BST_CHECKED || c_optJpeg.GetCheck() == BST_CHECKED || c_optPng == BST_CHECKED ) );
-    if (c_optJpeg.GetCheck() == BST_CHECKED && iJpgQualLen == 0)
+    enable = ( (iDestLen > 0) && ( (c_optBmp.GetCheck() == BST_CHECKED) || (c_optJpeg.GetCheck() == BST_CHECKED) || (c_optPng.GetCheck() == BST_CHECKED) ) );
+    if( (c_optJpeg.GetCheck() == BST_CHECKED) && (iJpgQualLen == 0) )
     {
         enable = false;
     }

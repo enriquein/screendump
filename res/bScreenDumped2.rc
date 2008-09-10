@@ -255,7 +255,6 @@ BEGIN
     BEGIN
         MENUITEM "Open Screenshots Folder",     ID_TRAY_OPENDEST
         MENUITEM "AutoCapture",                 ID_TRAY_AUTOCAPTURE
-        MENUITEM "Use region for screenshot",   ID_TRAY_REGION
         MENUITEM SEPARATOR
         MENUITEM "Options",                     ID_TRAY_OPTIONS
         MENUITEM "About...",                    ID_TRAY_ABOUT
