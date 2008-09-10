@@ -117,7 +117,7 @@ LRESULT CAutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CAutoCapture::EnableControls(bool bEnable)
+void CAutoCapture::EnableControls(BOOL bEnable)
 {
 	c_txtACDelay.EnableWindow(bEnable);
     c_optForeground.EnableWindow(bEnable);

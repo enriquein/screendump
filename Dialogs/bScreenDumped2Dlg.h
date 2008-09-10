@@ -21,10 +21,9 @@ public:
 	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
 	CMenu m_trayMenu;
 	CString m_progVersion;
-    void ToggleTrayMenu(bool bEnable); // Enables/Disables the tray menu items.
+    void ToggleTrayMenu(BOOL bEnable); // Enables/Disables the tray menu items.
     void StartHog(); // Starts the hogger control.
     static UINT UWM_SHELLICON_MSG;
-    static UINT UWM_TIMER_HIDE;
 
 // Dialog Data
 	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };
@@ -42,6 +41,7 @@ protected:
 	GdiplusStartupInput m_gdiPlusStatupInput;
 	ULONG_PTR m_gdiPlusToken; 
 	HICON m_hIcon;
+    BOOL isVisible; 
 
 	// Tray Handlers
 	void OnTrayExitClick();
@@ -52,10 +52,11 @@ protected:
 
 	// Message map functions
 	virtual BOOL OnInitDialog();
-	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
+public:
+    afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
 };
 
 #endif

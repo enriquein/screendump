@@ -17,7 +17,7 @@ public:
 
 protected:
 	BOOL bCatchForeground;
-	void EnableControls(bool bEnable);
+	void EnableControls(BOOL bEnable);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()

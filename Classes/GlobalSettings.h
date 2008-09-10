@@ -17,8 +17,8 @@ public:
 	~CGlobalSettings(void);
 
 	selEncoder sEnc;
-	bool bAutoName;
-	bool bEnableHog;
+	BOOL bAutoName;
+	BOOL bEnableHog;
 	long lJpgQuality;
 	void ReadSettings();
 	void WriteSettings();

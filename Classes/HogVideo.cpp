@@ -120,7 +120,7 @@ void CHogVideo::SetVideo(LPCTSTR szFilename)
     m_Filename = szFilename;
 }
 
-bool CHogVideo::Hog()
+BOOL CHogVideo::Hog()
 {
     if (!m_pGraph && !m_pMediaControl && !m_pVideoWindow)
         return false;
@@ -166,7 +166,7 @@ bool CHogVideo::Hog()
         return false;
 }
 
-bool CHogVideo::UnHog()
+BOOL CHogVideo::UnHog()
 {
     if (!m_pMediaControl)
         return false;

@@ -1,5 +1,4 @@
 #include "stdafx.h"
-//#include "Windows.h"
 #include "..\Classes\HogVideo.h"
 #include ".\bScreenDumped2Dlg.h"
 #include "..\Helpers\WindowCapture.h"
@@ -15,16 +14,15 @@
 using namespace Gdiplus;
 
 UINT CbScreenDumped2Dlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
-UINT CbScreenDumped2Dlg::UWM_TIMER_HIDE = ::RegisterWindowMessage(_T("UWM_TIMER_HIDE-{F4F9FA6B-ED7A-41cb-B543-0B218E3DAF9A}"));
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/)
-	: CDialog(CbScreenDumped2Dlg::IDD, pParent)
+CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScreenDumped2Dlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+    isVisible = FALSE;
 }
 
 void CbScreenDumped2Dlg::DoCleanup()
@@ -43,13 +41,13 @@ void CbScreenDumped2Dlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
 	ON_REGISTERED_MESSAGE(UWM_SHELLICON_MSG, ShellIconCallback)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
-	ON_MESSAGE(WM_TIMER, OnTimer)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
 	ON_COMMAND(ID_TRAY_OPTIONS, OnTrayOptionsClick)
 	ON_COMMAND(ID_TRAY_OPENDEST, OnTrayOpenDest)
 	ON_COMMAND(ID_TRAY_AUTOCAPTURE, OnTrayAutoCapture)
 	//}}AFX_MSG_MAP
+    ON_WM_WINDOWPOSCHANGING()
 END_MESSAGE_MAP()
 
 // CbScreenDumped2Dlg message handlers
@@ -80,19 +78,7 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	ShellIcon_Initialize();
 	DoRegisterHotKeys();
     StartHog();
-
-    //TODO: Figure out why the hell is this here
-	SetWindowPos(0,-100,-100,0,0, SWP_NOSIZE | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
-    // TODO: need to change this so that it doesnt stick (like in lisa's comp)
-	::SetTimer(m_hWnd, UWM_TIMER_HIDE, 1000, NULL); 
 	return TRUE;  // return TRUE  unless you set the focus to a control
-}
-
-LRESULT CbScreenDumped2Dlg::OnTimer(WPARAM wParam, LPARAM lParam)
-{
-	KillTimer(UWM_TIMER_HIDE);
-	SetWindowPos(0,0,0,0,0, SWP_NOSIZE | SWP_NOMOVE | SWP_HIDEWINDOW | SWP_NOACTIVATE | SWP_NOOWNERZORDER);
-	return 0;
 }
 
 // TODO: Eventually use my shellicon class
@@ -250,7 +236,7 @@ LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CbScreenDumped2Dlg::ToggleTrayMenu(bool bEnable)
+void CbScreenDumped2Dlg::ToggleTrayMenu(BOOL bEnable)
 {	
 	UINT lFlags;
 	if(bEnable)
@@ -278,7 +264,7 @@ void CbScreenDumped2Dlg::StartHog()
     {
         CString strFileName(_T("bs.dont.delete.me"));
         m_Hog.SetVideo(strFileName);
-        bool tmpSuccess = true;
+        BOOL tmpSuccess = true;
         CString tmpErrStr;
         if(_taccess(strFileName, 0) == -1)
         {
@@ -300,4 +286,12 @@ void CbScreenDumped2Dlg::StartHog()
 		    gs.WriteSettings();
 	    }
     }
+}
+void CbScreenDumped2Dlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
+{
+    if(!isVisible)
+    {
+        lpwndpos->flags &= ~SWP_SHOWWINDOW;
+    }
+    CDialog::OnWindowPosChanging(lpwndpos);
 }

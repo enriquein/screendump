@@ -41,8 +41,8 @@ void CGlobalSettings::ReadSettings()
 	LPTSTR defPtr, outPtr;
     sEnc = (selEncoder)GetPrivateProfileInt(_T("bScreenDumped2"), _T("Encoder"), 1, m_IniPath);
 	lJpgQuality = (long)GetPrivateProfileInt(_T("bScreenDumped2"), _T("JPGQuality"), 100, m_IniPath);
-	bAutoName = (bool)GetPrivateProfileInt(_T("bScreenDumped2"), _T("AutoName"), 1, m_IniPath);
-	bEnableHog = (bool)GetPrivateProfileInt(_T("bScreenDumped2"), _T("HogVideo"), 0, m_IniPath);
+	bAutoName = (BOOL)GetPrivateProfileInt(_T("bScreenDumped2"), _T("AutoName"), 1, m_IniPath);
+	bEnableHog = (BOOL)GetPrivateProfileInt(_T("bScreenDumped2"), _T("HogVideo"), 0, m_IniPath);
     defPtr = defValue.GetBuffer(_MAX_PATH);
 	_tgetcwd(defPtr, _MAX_PATH);
     defValue.ReleaseBuffer();

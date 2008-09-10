@@ -220,7 +220,7 @@ void OptionsDialog::updateControls()
         return;
     }
 
-    bool enable;
+    BOOL enable;
     CString tmpStr;
     int iDestLen = 0, iJpgQualLen = 0;
     c_Destination.GetWindowText(tmpStr);

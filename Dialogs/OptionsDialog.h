@@ -42,6 +42,6 @@ private:
     CButton c_optPng;
     CButton c_chkAutoName;
     CButton c_chkHog;
-    bool initialized;
+    BOOL initialized;
 };
 #endif

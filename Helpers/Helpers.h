@@ -4,5 +4,5 @@
 
 // void SetTransparency(HWND hWnd, long lAlpha); 
 CString GetNewFilename();
-bool HogVideo(CHogVideo *hogger);
+BOOL HogVideo(CHogVideo *hogger);
 #endif
