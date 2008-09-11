@@ -92,7 +92,7 @@ void CbScreenDumped2Dlg::ShellIcon_Initialize()
 	ni.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     ni.uCallbackMessage = UWM_SHELLICON_MSG;
     ttipText = _T("bScreenDumped ") + m_progVersion;
-    lstrcpy(ni.szTip, ttipText);
+    _tcscpy(ni.szTip, ttipText);
 	ni.hIcon = m_hIcon;
 	
     // We have to keep retrying because Shell_NotifyIcon usually fails during Windows startup
