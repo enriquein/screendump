@@ -23,11 +23,11 @@ CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScre
     isVisible = FALSE;
 }
 
-void CbScreenDumped2Dlg::DoCleanup()
+CbScreenDumped2Dlg::~CbScreenDumped2Dlg()
 {
+    delete wc;
 	DoUnregisterHotKeys();
 	ShellIcon_Terminate(); 
-	EndDialog(1);
 }
 
 void CbScreenDumped2Dlg::DoDataExchange(CDataExchange* pDX)
@@ -47,11 +47,25 @@ BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
     ON_WM_WINDOWPOSCHANGING()
 END_MESSAGE_MAP()
 
-// CbScreenDumped2Dlg message handlers
-
 BOOL CbScreenDumped2Dlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
+    // Check if GDI+ was successfully loaded:
+    try
+    {
+        wc = new WindowCapture();
+    }
+    catch(CResourceException *e)
+    {
+        CString str;
+        LPTSTR *msg = str.GetBuffer(512);
+        e->GetErrorMessage(msg, 512, 0);
+        str.ReleaseBuffer();
+        str.Format(_T("An error has ocurred while initializing the capture engine.\nUsually this is related to gdiplus.dll not being available or not loading correctly.\nThe error returned by the system was:\n%s"), str);
+        MessageBox(str, _T("bScreenDumped->Init"), MB_OK | MB_ICONERROR);
+        EndDialog(1);
+    }
+
 	CString exeName(CString(AfxGetAppName()) + CString(_T(".exe")));
 	CFileVersionInfo cfInfo;
 	cfInfo.ReadVersionInfo(exeName);
@@ -70,7 +84,6 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-// TODO: Eventually use my shellicon class
 void CbScreenDumped2Dlg::ShellIcon_Initialize()
 {
     CString ttipText;
@@ -126,15 +139,14 @@ LRESULT CbScreenDumped2Dlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 
 void CbScreenDumped2Dlg::OnTrayExitClick()
 {
-	DoCleanup();
+	EndDialog(1);
 }
 
 void CbScreenDumped2Dlg::OnTrayAboutClick()
 {
-	CAboutDialog* cAbt = new CAboutDialog;
+	CAboutDialog cAbt;
 	ToggleTrayMenu(FALSE);
-	cAbt->DoModal();
-	delete cAbt;
+	cAbt.DoModal();
 	ToggleTrayMenu(TRUE);
 }
 
@@ -142,48 +154,26 @@ void CbScreenDumped2Dlg::OnTrayOpenDest()
 {
 	CGlobalSettings gs;
 	gs.ReadSettings();
+    // TODO: add a sanity check for the path just in case it got modified by hand
+    // TODO: alternative: test if it works with a blank string (should bring root path)
 	ShellExecute(m_hWnd, _T("open"), gs.szOutputDir, NULL, NULL, SW_SHOWNORMAL);
 }
 
 void CbScreenDumped2Dlg::OnTrayOptionsClick()
 {
-	OptionsDialog* oDl = new OptionsDialog;
+	OptionsDialog oDl;
 	ToggleTrayMenu(FALSE);
-	oDl->DoModal();
-	delete oDl;
+	oDl.DoModal();
 	ToggleTrayMenu(TRUE);
 }
 
 void CbScreenDumped2Dlg::OnTrayAutoCapture()
 {
-	CAutoCapture* cAC = new CAutoCapture;
+	CAutoCapture cAC;
 	ToggleTrayMenu(FALSE);
-	cAC->DoModal();
-	delete cAC;
+	cAC.DoModal();
 	ToggleTrayMenu(TRUE);
 }
-
-/*
-void CbScreenDumped2Dlg::OnTrayRegion()
-{
-	// TODO: Eliminar esto. la nueva idea es q sea un menu normal que loadee el Dialog de Regiones
-	// Alli habra un checkmark para darle enable/disable. Im out for the day.
-	UINT state = m_trayMenu->GetMenuState(ID_TRAY_REGION, MF_BYCOMMAND);
-	if (state & MF_CHECKED)
-	{
-		m_trayMenu->CheckMenuItem(ID_TRAY_REGION, MF_UNCHECKED | MF_BYCOMMAND);
-	}
-	else
-	{
-		CRegionDialog* cRD = new CRegionDialog;
-		ToggleTrayMenu(FALSE);
-		cRD->DoModal();
-		delete cRD;
-		ToggleTrayMenu(TRUE);
-        m_trayMenu->CheckMenuItem(ID_TRAY_REGION, MF_CHECKED | MF_BYCOMMAND);
-	}
-}
-*/
 
 void CbScreenDumped2Dlg::DoRegisterHotKeys()
 {
@@ -193,7 +183,6 @@ void CbScreenDumped2Dlg::DoRegisterHotKeys()
 	Sleep(150); // Since we use the system time to initialize the atoms, we need to wait to avoid getting the same timestamp.
 	m_AtomAlt = new CGlobalAtom;
 	resultAlt = RegisterHotKey(m_hWnd, m_AtomAlt->GetID(), MOD_ALT, VK_SNAPSHOT);
-    DWORD err = ::GetLastError();
 	if( (result == 0) || (resultAlt == 0) )
 	{
 		MessageBox(_T("Failed to register the hotkeys. This is almost always caused because of another program using the PrintScreen Key.\nPlease close the offending program before restarting this one."),
@@ -257,7 +246,7 @@ void CbScreenDumped2Dlg::StartHog()
         CString tmpErrStr;
         if(_taccess(strFileName, 0) == -1)
         {
-            tmpErrStr = _T("A problem ocurred while enabling screenshots of videos:\nCould not find the bs.dont.delete.me file inside the program folder.\nThis option will be disabled for now.");
+            tmpErrStr = _T("A problem ocurred while enabling screenshots of videos:\nCould not find the `bs.dont.delete.me` file inside the program folder.\nThis option will be disabled for now.");
             tmpSuccess = false;
         }
         else
@@ -283,4 +272,14 @@ void CbScreenDumped2Dlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
         lpwndpos->flags &= ~SWP_SHOWWINDOW;
     }
     CDialog::OnWindowPosChanging(lpwndpos);
+}
+
+void CbScreenDumped2Dlg::CaptureScreen()
+{
+    // TODO: fill
+}
+
+void CbScreenDumped2Dlg::CaptureWindow()
+{
+    // TODO: fill
 }

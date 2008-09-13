@@ -16,6 +16,7 @@ class CbScreenDumped2Dlg : public CDialog
 // Construction
 public:
 	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
+    ~CbScreenDumped2Dlg();
 	CMenu m_trayMenu;
 	CString m_progVersion;
     void ToggleTrayMenu(BOOL bEnable); // Enables/Disables the tray menu items.
@@ -31,8 +32,9 @@ protected:
 	void ShellIcon_Terminate();
 	void DoRegisterHotKeys();
 	void DoUnregisterHotKeys();
-	void DoCleanup();
-    WindowCapture wc;
+    void CaptureScreen();
+    void CaptureWindow();
+    WindowCapture* wc;
 	CGlobalAtom* m_Atom;
 	CGlobalAtom* m_AtomAlt;
     CHogVideo m_Hog;
