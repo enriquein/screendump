@@ -8,10 +8,7 @@
 #include "..\Classes\HogVideo.h"
 #include "..\Classes\globalatom.h"
 #include "..\res\resource.h"
-#include "gdiplus.h" 
-using namespace Gdiplus;
-
-
+#include "..\Classes\GlobalSettings.h"
 
 // CbScreenDumped2Dlg dialog
 class CbScreenDumped2Dlg : public CDialog
@@ -35,11 +32,10 @@ protected:
 	void DoRegisterHotKeys();
 	void DoUnregisterHotKeys();
 	void DoCleanup();
+    WindowCapture wc;
 	CGlobalAtom* m_Atom;
 	CGlobalAtom* m_AtomAlt;
     CHogVideo m_Hog;
-	GdiplusStartupInput m_gdiPlusStatupInput;
-	ULONG_PTR m_gdiPlusToken; 
 	HICON m_hIcon;
     BOOL isVisible; 
 

@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Classes\HogVideo.h"
 #include ".\bScreenDumped2Dlg.h"
-#include "..\Helpers\WindowCapture.h"
+#include "..\Classes\WindowCapture.h"
 #include "..\Classes\GlobalSettings.h"
 #include ".\OptionsDialog.h"
 #include ".\AboutDialog.h"
@@ -10,8 +10,6 @@
 #include "..\Classes\file_ver.h"
 #include "..\Classes\ErrorString.h"
 #include <io.h>
-#include "gdiplus.h"
-using namespace Gdiplus;
 
 UINT CbScreenDumped2Dlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
 
@@ -27,7 +25,6 @@ CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScre
 
 void CbScreenDumped2Dlg::DoCleanup()
 {
-	GdiplusShutdown(m_gdiPlusToken);
 	DoUnregisterHotKeys();
 	ShellIcon_Terminate(); 
 	EndDialog(1);
@@ -65,14 +62,6 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	else
 	{
 		m_progVersion = _T(" ");
-	}
-	Status st;
-	st = GdiplusStartup(&m_gdiPlusToken, &m_gdiPlusStatupInput, NULL );
-	if(st != Ok)
-	{
-		MessageBox(_T("Error while trying to initialize GDI+. The program will quit now.\nDon't forget to contact me and tell me about this problem."),
-				   _T("bScreenDumped->MainDlg->OnInitDlg()"), MB_OK | MB_ICONERROR);
-		EndDialog(1);
 	}
 	m_trayMenu.LoadMenu(IDR_MENU1); 
 	ShellIcon_Initialize();

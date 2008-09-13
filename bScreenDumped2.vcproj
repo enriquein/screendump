@@ -274,7 +274,7 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\Helpers\WindowCapture.cpp"
+				RelativePath=".\Classes\WindowCapture.cpp"
 				>
 			</File>
 		</Filter>
@@ -340,7 +340,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Helpers\WindowCapture.h"
+				RelativePath=".\Classes\WindowCapture.h"
 				>
 			</File>
 		</Filter>
