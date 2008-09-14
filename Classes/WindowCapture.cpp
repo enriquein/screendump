@@ -16,9 +16,10 @@ using namespace Gdiplus;
 #define SM_CXVIRTUALSCREEN 78
 #endif
 
-WindowCapture::WindowCapture()
+// Default constructor, throws CResourceException if GDIStartup failed.
+WindowCapture::WindowCapture() 
 {
-    // We start off with jpg as the default. Quality = 100
+    lastGdiStatus = Aborted; // Initialized to anything not "Ok" so that StartGDI is the *only* one to be able to change it to "Ok".
     sEnc = sEncJPEG;
     lQuality = 100;
     gdiStartupInput.GdiplusVersion = 1; 
@@ -39,16 +40,20 @@ WindowCapture::~WindowCapture()
 
 BOOL WindowCapture::StartGDI()
 {
-    Status st = GdiplusStartup(&gdiToken, &gdiStartupInput, NULL);
-    return (st == Ok);
+    lastGdiStatus = GdiplusStartup(&gdiToken, &gdiStartupInput, NULL);
+    return (lastGdiStatus == Ok);
 }
 
 void WindowCapture::StopGDI()
 {
-    GdiplusShutdown(gdiToken);
+    if(lastGdiStatus == Ok)
+    {
+        GdiplusShutdown(gdiToken);
+        lastGdiStatus = Aborted
+    }
 }
 
-void WindowCapture::SetEncoder(selEncoder enc, long lQualityVal = 100)
+void WindowCapture::SetEncoder(selEncoder enc, long lQualityVal /* = 100 */)
 {
     sEnc = enc;
     lQuality = lQualityVal;
@@ -93,7 +98,7 @@ BOOL WindowCapture::CaptureScreen(CString strFilename)
     return TRUE;
 }
 
-BOOL WindowCapture::CaptureWindow(HDC &hdc, CString strFilename)
+BOOL WindowCapture::CaptureWindow(CString strFilename)
 {
     HWND hWnd = NULL;
     hWnd = ::GetForegroundWindow();   

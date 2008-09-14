@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "..\Classes\bScreenDumped2.h"
 #include ".\AutoCapture.h"
-#include "..\Helpers\WindowCapture.h"
+#include "..\Classes\WindowCapture.h"
 
 UINT CAutoCapture::UWM_TIMER_AC = ::RegisterWindowMessage(_T("UWM_TIMER_AC-{6B26ED52-0908-422b-9944-17DCC2EB7A40}"));
 
@@ -108,11 +108,13 @@ LRESULT CAutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
 {
 	if(bCatchForeground)
 	{
-		CaptureWindow();
+//	would rather post a msg to the main dlg
+//        CaptureWindow();
 	}
 	else
 	{
-		CaptureScreen();
+//	would rather post a msg to the main dlg
+//		CaptureScreen();
 	}
 	return 0;
 }

@@ -9,6 +9,7 @@
 #include "..\Classes\globalatom.h"
 #include "..\res\resource.h"
 #include "..\Classes\GlobalSettings.h"
+#include "..\Classes\WindowCapture.h"
 
 // CbScreenDumped2Dlg dialog
 class CbScreenDumped2Dlg : public CDialog
@@ -32,8 +33,6 @@ protected:
 	void ShellIcon_Terminate();
 	void DoRegisterHotKeys();
 	void DoUnregisterHotKeys();
-    void CaptureScreen();
-    void CaptureWindow();
     WindowCapture* wc;
 	CGlobalAtom* m_Atom;
 	CGlobalAtom* m_AtomAlt;

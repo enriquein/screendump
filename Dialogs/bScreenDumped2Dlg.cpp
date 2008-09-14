@@ -9,7 +9,6 @@
 #include "..\Helpers\Helpers.h"
 #include "..\Classes\file_ver.h"
 #include "..\Classes\ErrorString.h"
-#include <io.h>
 
 UINT CbScreenDumped2Dlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
 
@@ -21,6 +20,18 @@ CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScre
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
     isVisible = FALSE;
+    // Check if GDI+ was successfully loaded:
+    try
+    {
+        wc = new WindowCapture();
+    }
+    catch(...)
+    {
+        CString msg;
+        msg = _T("An error has ocurred while initializing the capture engine.\nThis is usually related to gdiplus.dll not being available or not loading correctly.\nPlease make sure you installed the version that matches your version of Windows.");
+        MessageBox(msg, _T("bScreenDumped->Ctor"), MB_OK | MB_ICONERROR);
+        wc = NULL;
+    }
 }
 
 CbScreenDumped2Dlg::~CbScreenDumped2Dlg()
@@ -28,6 +39,7 @@ CbScreenDumped2Dlg::~CbScreenDumped2Dlg()
     delete wc;
 	DoUnregisterHotKeys();
 	ShellIcon_Terminate(); 
+
 }
 
 void CbScreenDumped2Dlg::DoDataExchange(CDataExchange* pDX)
@@ -50,22 +62,17 @@ END_MESSAGE_MAP()
 BOOL CbScreenDumped2Dlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-    // Check if GDI+ was successfully loaded:
-    try
+    
+    if(wc == NULL)
     {
-        wc = new WindowCapture();
-    }
-    catch(CResourceException *e)
-    {
-        CString str;
-        LPTSTR *msg = str.GetBuffer(512);
-        e->GetErrorMessage(msg, 512, 0);
-        str.ReleaseBuffer();
-        str.Format(_T("An error has ocurred while initializing the capture engine.\nUsually this is related to gdiplus.dll not being available or not loading correctly.\nThe error returned by the system was:\n%s"), str);
-        MessageBox(str, _T("bScreenDumped->Init"), MB_OK | MB_ICONERROR);
+        // If we got here, then our windowcapture engine is dead. Bail.
         EndDialog(1);
+        return TRUE;
     }
 
+    CGlobalSettings gs;
+    gs.ReadSettings();
+    wc->SetEncoder(gs.sEnc, gs.lJpgQuality);
 	CString exeName(CString(AfxGetAppName()) + CString(_T(".exe")));
 	CFileVersionInfo cfInfo;
 	cfInfo.ReadVersionInfo(exeName);
@@ -94,7 +101,7 @@ void CbScreenDumped2Dlg::ShellIcon_Initialize()
 	ni.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     ni.uCallbackMessage = UWM_SHELLICON_MSG;
     ttipText = _T("bScreenDumped ") + m_progVersion;
-    _tcscpy(ni.szTip, ttipText);
+    _tcscpy_s(ni.szTip, ttipText);
 	ni.hIcon = m_hIcon;
 	
     // We have to keep retrying because Shell_NotifyIcon usually fails during Windows startup
@@ -192,25 +199,56 @@ void CbScreenDumped2Dlg::DoRegisterHotKeys()
 
 void CbScreenDumped2Dlg::DoUnregisterHotKeys()
 {
-    UnregisterHotKey( m_hWnd, m_Atom->GetID() );
-    UnregisterHotKey( m_hWnd, m_AtomAlt->GetID() );
-	delete m_Atom;
-	delete m_AtomAlt;
+    if( (m_Atom != NULL) && (m_AtomAlt != NULL) )
+    {
+        UnregisterHotKey( m_hWnd, m_Atom->GetID() );
+        UnregisterHotKey( m_hWnd, m_AtomAlt->GetID() );
+        delete m_Atom;
+	    delete m_AtomAlt;
+    }
 }
 
 LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
-	if( wParam == m_Atom->GetID() )
-	{
-		CaptureScreen();
-	}
-	else
-	{
-		if( wParam == m_AtomAlt->GetID() )
-		{
-			CaptureWindow(); 
-		}
-	}
+    BOOL bErr = FALSE;
+    CString fName;
+    CGlobalSettings gs;
+    gs.ReadSettings();
+
+    if(gs.bAutoName)
+    {
+        if(!CheckCreateDir(gs.szOutputDir))
+        {
+            CString errMsg;
+            errMsg.Format(_T("Unable to locate the destination folder:\n%s\nThe folder was not found and the program failed to create it.\nPlease set a proper directory in the Options window."), gs.szOutputDir);
+            MessageBox(errMsg, _T("bScreenDumped->CaptureScreen()"), MB_OK | MB_ICONERROR);
+            bErr = TRUE;
+        }
+        fName = gs.szOutputDir + GetNewFilename();
+    }
+    else
+    {
+        fName = GetFilenameFromUser();
+        if(fName.GetLength() == 0)
+        {
+            bErr = TRUE;
+        }
+    }
+
+    if (!bErr)
+    {
+	    if( wParam == m_Atom->GetID() )
+	    {
+            wc->CaptureScreen(fName);
+	    }
+	    else
+	    {
+		    if( wParam == m_AtomAlt->GetID() )
+		    {
+			    wc->CaptureWindow(fName); 
+		    }
+	    }    
+    }
 	return 0;
 }
 
@@ -272,14 +310,4 @@ void CbScreenDumped2Dlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
         lpwndpos->flags &= ~SWP_SHOWWINDOW;
     }
     CDialog::OnWindowPosChanging(lpwndpos);
-}
-
-void CbScreenDumped2Dlg::CaptureScreen()
-{
-    // TODO: fill
-}
-
-void CbScreenDumped2Dlg::CaptureWindow()
-{
-    // TODO: fill
 }
