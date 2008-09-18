@@ -280,25 +280,25 @@ void CbScreenDumped2Dlg::StartHog()
     {
         CString strFileName(_T("bs.dont.delete.me"));
         m_Hog.SetVideo(strFileName);
-        BOOL tmpSuccess = true;
+        BOOL tmpSuccess = TRUE;
         CString tmpErrStr;
         if(_taccess(strFileName, 0) == -1)
         {
             tmpErrStr = _T("A problem ocurred while enabling screenshots of videos:\nCould not find the `bs.dont.delete.me` file inside the program folder.\nThis option will be disabled for now.");
-            tmpSuccess = false;
+            tmpSuccess = FALSE;
         }
         else
         {
 	        if(!m_Hog.Hog())
             {
                 tmpErrStr = _T("A problem ocurred while enabling screenshots of videos.\nPlease report this message.\nThis option will be disabled for now.");
-                tmpSuccess = false;
+                tmpSuccess = FALSE;
             }
         }
         if(!tmpSuccess)
         {
 		    MessageBox(tmpErrStr, _T("bScreenDumped->InitDialog()->EnablingHog"), MB_OK|MB_ICONERROR);
-		    gs.bEnableHog = false;
+		    gs.bEnableHog = FALSE;
 		    gs.WriteSettings();
 	    }
     }
