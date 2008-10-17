@@ -15,8 +15,10 @@ public:
     BOOL    Hog();
     BOOL    UnHog();
     void    Cleanup();
+    BOOL    IsHogging();
 
 private:
+    BOOL    m_HogEnabled;
     CString m_Filename;
     BOOL    m_bCOMInitialized;
     void   *m_pGraph;

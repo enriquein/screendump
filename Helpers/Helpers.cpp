@@ -1,9 +1,10 @@
 #include "stdafx.h"
-#include <windows.h>
+/* #include <windows.h>
 #include ".\Helpers.h"
 #include "afxdlgs.h"
 #include <io.h>
-
+*/
+/*
 CString GetNewFilename()
 {
     CString strRet;
@@ -12,7 +13,8 @@ CString GetNewFilename()
 	strRet.Format(_T("img_%u%02u%02u_%02u%02u%02u%03u"), tNow.wYear, tNow.wMonth, tNow.wDay, tNow.wHour, tNow.wMinute, tNow.wSecond, tNow.wMilliseconds);
     return strRet;
 }
-
+*/
+/*
 BOOL CheckCreateDir(CString path)
 {
     BOOL returnVal = TRUE;
@@ -26,7 +28,8 @@ BOOL CheckCreateDir(CString path)
 	}
     return returnVal;
 }
-
+*/
+/*
 CString GetFilenameFromUser()
 {
     CString retStr;
@@ -41,7 +44,7 @@ CString GetFilenameFromUser()
     }
     return retStr;
 }
-
+*/
 
 /*
 This was added for the region select dialog, if that ever gets implemented

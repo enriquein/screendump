@@ -3,11 +3,12 @@
 #define GLOBALSETTINGS_H
 #include "WindowCapture.h"
 
+// TODO: Make this class throw exceptions when it should.
 class CGlobalSettings
 {
 public:
-	CGlobalSettings(void);
-	~CGlobalSettings(void);
+	CGlobalSettings();
+	~CGlobalSettings();
 
 	selEncoder sEnc;
 	BOOL bAutoName;
@@ -15,9 +16,13 @@ public:
 	long lJpgQuality;
 	void ReadSettings();
 	void WriteSettings();
-	CString szOutputDir;
+    CString GetNewFileName();
+    CString getOutputDir();
+    BOOL setOutputDir(CString& sDir);
 
 protected:
+    BOOL CheckCreateDir(CString path);
+	CString szOutputDir;    
 	CString m_IniPath;
 };
 #endif

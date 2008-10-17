@@ -49,7 +49,7 @@ void WindowCapture::StopGDI()
     if(lastGdiStatus == Ok)
     {
         GdiplusShutdown(gdiToken);
-        lastGdiStatus = Aborted
+        lastGdiStatus = Aborted;
     }
 }
 
@@ -207,5 +207,8 @@ void WindowCapture::DumpImage(Bitmap* aBmp, LPCTSTR filename)
 		eParams.Parameter[0].Value = &lQuality;
 	    break;
 	}
+
+    // TODO: add exception handling in case of ReadOnly path or Full Disk etc.
+    // hint: declare a variable of type Status and then do a switch based on that. 
 	aBmp->Save(fullFilePath, &encoderClsid, &eParams);
 }

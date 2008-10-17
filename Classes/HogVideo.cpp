@@ -10,6 +10,7 @@
 
 CHogVideo::CHogVideo()
 {
+    m_HogEnabled = false;
     m_bCOMInitialized   = false;
     m_pGraph            = NULL;
     m_pMediaControl     = NULL;
@@ -123,7 +124,10 @@ void CHogVideo::SetVideo(LPCTSTR szFilename)
 BOOL CHogVideo::Hog()
 {
     if (!m_pGraph && !m_pMediaControl && !m_pVideoWindow)
+    {
+        m_HogEnabled = false;
         return false;
+    }
 
     this->UnHog();
 
@@ -157,17 +161,25 @@ BOOL CHogVideo::Hog()
         {
             // Hog the resource.
             pMediaControl->Pause();
+            m_HogEnabled = true;
             return true;
         }
         else
+        {
+            m_HogEnabled = false;
             return false;
+        }
     }
     else
+    {
+        m_HogEnabled = false;
         return false;
+    }
 }
 
 BOOL CHogVideo::UnHog()
 {
+    m_HogEnabled = false;
     if (!m_pMediaControl)
         return false;
 

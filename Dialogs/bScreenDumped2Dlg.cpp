@@ -6,11 +6,14 @@
 #include ".\OptionsDialog.h"
 #include ".\AboutDialog.h"
 #include ".\AutoCapture.h"
-#include "..\Helpers\Helpers.h"
 #include "..\Classes\file_ver.h"
 #include "..\Classes\ErrorString.h"
 
 UINT CbScreenDumped2Dlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
+UINT CbScreenDumped2Dlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY-{963FEF79-2137-4fa7-A0D9-D1C4F1D32298}"));
+UINT CbScreenDumped2Dlg::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
+UINT CbScreenDumped2Dlg::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
+UINT CbScreenDumped2Dlg::UWM_REQUESTHOG = ::RegisterWindowMessage(_T("UWM_REQUESTHOG-{E12B2B17-5A47-4691-B962-4469B1F960E6}"));
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -19,7 +22,6 @@ UINT CbScreenDumped2Dlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHE
 CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScreenDumped2Dlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
-    isVisible = FALSE;
     // Check if GDI+ was successfully loaded:
     try
     {
@@ -28,7 +30,7 @@ CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScre
     catch(...)
     {
         CString msg;
-        msg = _T("An error has ocurred while initializing the capture engine.\nThis is usually related to gdiplus.dll not being available or not loading correctly.\nPlease make sure you installed the version that matches your version of Windows.");
+        msg = _T("An error has ocurred while initializing the capture engine.\nThis is usually related to gdiplus.dll not being available or not loading correctly.\nPlease make sure you installed the program version that matches your version of Windows.");
         MessageBox(msg, _T("bScreenDumped->Ctor"), MB_OK | MB_ICONERROR);
         wc = NULL;
     }
@@ -48,7 +50,11 @@ void CbScreenDumped2Dlg::DoDataExchange(CDataExchange* pDX)
 }
 
 BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
-	ON_REGISTERED_MESSAGE(UWM_SHELLICON_MSG, ShellIconCallback)
+    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_SHELLICON_MSG, ShellIconCallback)
+    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_TOGGLETRAY, OnToggleTrayMsg)
+    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_CAPTURESCREEN, OnCaptureScreenMsg)
+    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_CAPTUREWINDOW, OnCaptureWindowMsg)
+    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_REQUESTHOG, OnRequestHog)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
@@ -161,9 +167,7 @@ void CbScreenDumped2Dlg::OnTrayOpenDest()
 {
 	CGlobalSettings gs;
 	gs.ReadSettings();
-    // TODO: add a sanity check for the path just in case it got modified by hand
-    // TODO: alternative: test if it works with a blank string (should bring root path)
-	ShellExecute(m_hWnd, _T("open"), gs.szOutputDir, NULL, NULL, SW_SHOWNORMAL);
+	ShellExecute(m_hWnd, _T("open"), gs.getOutputDir(), NULL, NULL, SW_SHOWNORMAL);
 }
 
 void CbScreenDumped2Dlg::OnTrayOptionsClick()
@@ -180,6 +184,45 @@ void CbScreenDumped2Dlg::OnTrayAutoCapture()
 	ToggleTrayMenu(FALSE);
 	cAC.DoModal();
 	ToggleTrayMenu(TRUE);
+}
+
+// Allows other dialogs to request Screen Captures.
+LRESULT CbScreenDumped2Dlg::OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam)
+{
+    RequestScreenCapture();
+    return 0;
+}
+
+// Allows other dialogs to request Window Captures 
+LRESULT CbScreenDumped2Dlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
+{
+    RequestWindowCapture();
+    return 0;
+}
+
+// Allows other dialogs to request enabling/disabling of the hog interface.
+// (BOOL) wParam = Should we enable/disable hog? True means Enable, False disable.
+LRESULT CbScreenDumped2Dlg::OnRequestHog(WPARAM wParam, LPARAM lParam)
+{
+    if( (BOOL)wParam )
+    {
+        StartHog();
+    }
+    else
+    {
+        StopHog();
+    }
+    return 0;
+}
+
+// (BOOL)wParam tells us if we want to enable/disable the tray. TRUE = enable, FALSE = disable.
+LRESULT CbScreenDumped2Dlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
+{
+    if(wParam != NULL)
+    {
+        ToggleTrayMenu((BOOL)wParam);
+    }
+    return 0;
 }
 
 void CbScreenDumped2Dlg::DoRegisterHotKeys()
@@ -210,45 +253,17 @@ void CbScreenDumped2Dlg::DoUnregisterHotKeys()
 
 LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
-    BOOL bErr = FALSE;
-    CString fName;
-    CGlobalSettings gs;
-    gs.ReadSettings();
-
-    if(gs.bAutoName)
+    if( wParam == m_Atom->GetID() )
     {
-        if(!CheckCreateDir(gs.szOutputDir))
-        {
-            CString errMsg;
-            errMsg.Format(_T("Unable to locate the destination folder:\n%s\nThe folder was not found and the program failed to create it.\nPlease set a proper directory in the Options window."), gs.szOutputDir);
-            MessageBox(errMsg, _T("bScreenDumped->CaptureScreen()"), MB_OK | MB_ICONERROR);
-            bErr = TRUE;
-        }
-        fName = gs.szOutputDir + GetNewFilename();
+        RequestScreenCapture();
     }
     else
     {
-        fName = GetFilenameFromUser();
-        if(fName.GetLength() == 0)
+        if( wParam == m_AtomAlt->GetID() )
         {
-            bErr = TRUE;
+	        RequestWindowCapture(); 
         }
-    }
-
-    if (!bErr)
-    {
-	    if( wParam == m_Atom->GetID() )
-	    {
-            wc->CaptureScreen(fName);
-	    }
-	    else
-	    {
-		    if( wParam == m_AtomAlt->GetID() )
-		    {
-			    wc->CaptureWindow(fName); 
-		    }
-	    }    
-    }
+    }    
 	return 0;
 }
 
@@ -303,11 +318,63 @@ void CbScreenDumped2Dlg::StartHog()
 	    }
     }
 }
+
+// Stops the hog window. 
+void CbScreenDumped2Dlg::StopHog()
+{
+    m_Hog.UnHog();
+}
+
 void CbScreenDumped2Dlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
-    if(!isVisible)
-    {
-        lpwndpos->flags &= ~SWP_SHOWWINDOW;
-    }
+    lpwndpos->flags &= ~SWP_SHOWWINDOW;
     CDialog::OnWindowPosChanging(lpwndpos);
+}
+
+void CbScreenDumped2Dlg::RequestWindowCapture()
+{
+    // I really hate duplicating code, just seemed necessary here
+    CGlobalSettings gs;
+    CString fName;
+    try
+    {
+        fName = gs.GetNewFileName();
+    }
+    catch (CFileException* e)
+    {
+        if(e->m_cause == CFileException::badPath)
+        {
+            CString errMsg;
+            errMsg.Format(_T("There was an error trying to save the image to %s. Possible reasons are:\nPath is invalid, access is denied, folder or drive is read only."), fName);
+            MessageBox(errMsg, _T("bScreenDumped->RequestCapture"), MB_ICONERROR|MB_OK);
+        }
+    }
+    if(fName.GetLength() > 0)
+    {
+        wc->CaptureWindow(fName);
+    }
+}
+
+void CbScreenDumped2Dlg::RequestScreenCapture()
+{
+    // I really hate duplicating code, just seemed necessary here
+    CGlobalSettings gs;
+    CString fName;
+    try
+    {
+        fName = gs.GetNewFileName();
+    }
+    catch (CFileException* e)
+    {
+        if(e->m_cause == CFileException::badPath)
+        {
+            CString errMsg;
+            errMsg.Format(_T("There was an error trying to save the image to %s. Possible reasons are:\nPath is invalid, access is denied, folder or drive is read only."), fName);
+            MessageBox(errMsg, _T("bScreenDumped->RequestCapture"), MB_ICONERROR|MB_OK);            
+        }
+    }
+    if(fName.GetLength() > 0)
+    {
+        wc->CaptureScreen(fName);
+    }
 }

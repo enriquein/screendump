@@ -4,7 +4,7 @@
 #include <io.h>
 #include ".\GlobalSettings.h"
 
-CGlobalSettings::CGlobalSettings(void)
+CGlobalSettings::CGlobalSettings()
 {
 	// Get INI File path
 	OSVERSIONINFO osv;
@@ -31,8 +31,50 @@ CGlobalSettings::CGlobalSettings(void)
 	}
 }
 
-CGlobalSettings::~CGlobalSettings(void)
+CGlobalSettings::~CGlobalSettings() 
+{ }
+
+// Returns a randomly generated filename if bAutoName is true, a user
+// selected filename if bAutoname is false. The string will be empty if the user
+// cancels out of the save dialog.
+// Note: the returning string will contain the full path as well.
+// Throws a CFileException exception if something goes wrong.
+CString CGlobalSettings::GetNewFileName()
 {
+    CString fName;
+    CString timeStr;
+    CString outDir;
+    SYSTEMTIME tNow;
+    GetLocalTime(&tNow);
+    timeStr.Format(_T("img_%u%02u%02u_%02u%02u%02u%03u"), tNow.wYear, tNow.wMonth, tNow.wDay, tNow.wHour, tNow.wMinute, tNow.wSecond, tNow.wMilliseconds);;
+
+    // We try and do some sanity validation. I seem to be a big fan of this...
+    if(bAutoName)
+    {
+        outDir = getOutputDir();
+        if( CheckCreateDir(outDir) )
+        {
+            fName = outDir + timeStr;
+        }
+        else
+        {
+            AfxThrowFileException(CFileException::badPath, -1, outDir);
+        }
+    }
+    else
+    {
+        // Get Filename from user. If he cancels out then return empty string.
+        CFileDialog cfSaveAs(FALSE, NULL, timeStr, OFN_HIDEREADONLY|OFN_EXPLORER, _T("All Files (*.*)|*.*||"), NULL);
+	    if( cfSaveAs.DoModal() == IDOK )
+	    {
+		    fName = cfSaveAs.GetPathName();
+	    }
+        else
+        {
+            fName = _T("");
+        }
+    }
+    return fName;
 }
 
 void CGlobalSettings::ReadSettings()
@@ -68,4 +110,38 @@ void CGlobalSettings::WriteSettings()
 	WritePrivateProfileString(_T("bScreenDumped2"), _T("OutDir"), szOutputDir, m_IniPath);
     buffer.Format(_T("%d"), bEnableHog);
 	WritePrivateProfileString(_T("bScreenDumped2"), _T("HogVideo"), buffer, m_IniPath);
+}
+
+// Checks if the directory 'path' exists. If it doesn't, it 
+// attempts to create it. If creation fails, we return false.
+// Otherwise, we return true.
+BOOL CGlobalSettings::CheckCreateDir(CString path)
+{
+    BOOL returnVal = TRUE;
+	if(_taccess(path, 0) == -1)
+	{
+		if(_tmkdir(path) != 0)
+		{
+			returnVal = FALSE;
+		}
+	}
+    return returnVal;
+}
+
+CString CGlobalSettings::getOutputDir()
+{
+    return szOutputDir;
+}
+
+BOOL CGlobalSettings::setOutputDir(CString &sDir)
+{
+    if( CheckCreateDir(sDir) )
+    {
+        szOutputDir = sDir;
+        return TRUE;
+    }
+    else
+    {
+        return FALSE;
+    }
 }
