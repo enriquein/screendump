@@ -68,7 +68,7 @@ void OptionsDialog::OnBnClickedOk()
 		{
 			if(_tmkdir(strVal) != 0)
 			{
-				MessageBox(_T("Unable to create directory, please make sure the path is correct."), _T("bScreenDumped->Options"), MB_OK|MB_ICONERROR);
+				MessageBox(_T("Unable to create directory, please make sure the path is correct and not read-only."), _T("bScreenDumped->Options"), MB_OK|MB_ICONERROR);
 				c_Destination.SetFocus();
 				c_Destination.SetSel(0, c_Destination.GetWindowTextLength(), true);
 				return;
@@ -106,10 +106,11 @@ void OptionsDialog::OnBnClickedOk()
     {
 		gs.sEnc = sEncPNG;
     }
-    c_Destination.GetWindowText(gs.szOutputDir);
+	c_Destination.GetWindowText(strVal);
+	gs.setOutputDir(strVal);
 	gs.WriteSettings();
 	
-    // Doesn't matter if this gets called since settings are saved/reloaded.
+    // Doesn't matter if OnCancel gets called since settings were saved.
 	OnCancel();
 }
 
@@ -208,7 +209,7 @@ void OptionsDialog::initializeControls()
 	{
 		c_chkHog.SetCheck(BST_UNCHECKED);
 	}
-    c_Destination.SetWindowText(gs.szOutputDir);
+    c_Destination.SetWindowText( gs.getOutputDir() );
 }
 
 // All the control validation logic goes here

@@ -30,6 +30,7 @@ public:
 
     // Dialog Data
 	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };
+	CString m_progVersion;
 
 protected:
     // Data Members
@@ -39,7 +40,7 @@ protected:
     CHogVideo m_Hog;
 	HICON m_hIcon;
 	CMenu m_trayMenu;
-	CString m_progVersion;
+
 
 	virtual void DoDataExchange(CDataExchange* pDX);	    
     void ToggleTrayMenu(BOOL bEnable); 

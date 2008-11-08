@@ -72,6 +72,7 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
     if(wc == NULL)
     {
         // If we got here, then our windowcapture engine is dead. Bail.
+		MessageBox(_T("The capture engine failed to initialize. There might be something odd happening to the GDI+ dll. Exiting."), _T("Initialization Error"), MB_ICONSTOP | MB_OK);
         EndDialog(1);
         return TRUE;
     }

@@ -16,7 +16,6 @@ CbScreenDumped2App::CbScreenDumped2App()
 
 CbScreenDumped2App theApp;
 CLimitSingleInstance g_SingleInstanceObj(_T("{981AEB41-4426-4839-B27D-97F6E872204C}"), UNIQUE_TO_SESSION);
-// {981AEB41-4426-4839-B27D-97F6E872204C} Generated via GUIDGEN
 
 BOOL CbScreenDumped2App::InitInstance()
 {

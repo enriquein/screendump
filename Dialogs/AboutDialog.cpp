@@ -34,6 +34,7 @@ BOOL CAboutDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	CString strVersionText;
+	// This is pretty ugly, I suppose. Should reconsider rethinking this through.
 	CbScreenDumped2Dlg* mainDlg;
 	mainDlg = (CbScreenDumped2Dlg*)AfxGetApp()->m_pMainWnd;
     strVersionText = _T("About bScreenDumped ") + mainDlg->m_progVersion;
