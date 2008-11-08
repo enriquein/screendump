@@ -1,17 +1,35 @@
-{\rtf1\ansi\ansicpg1252\deff0\deflang1033{\fonttbl{\f0\fswiss\fprq2\fcharset0 Verdana;}{\f1\fnil\fcharset2 Symbol;}}
-{\colortbl ;\red0\green0\blue0;}
-\viewkind4\uc1\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-300\li300\cf1\f0\fs17 Redo logic that goes beyond dialog boundaries (methods called from within other windows. these should be replaced by messages and handlers).\par
-{\pntext\f1\'B7\tab}Enable Hogging after the options dialog exits. Check if it was enabled before so that you don't re-enable it unnecesarily.\par
-{\pntext\f1\'B7\tab}Rework validation dialogs to be "neat" lol.\par
-{\pntext\f1\'B7\tab}Redo about window.\par
-{\pntext\f1\'B7\tab}If possible, change icon\par
-\strike{\pntext\f1\'B7\tab}Attempt turning WindowCapture into a class for integration in future projects (i would love to have error messages that generate screenshots - for example). Plus this way i have all the gdi crap in one place.\strike0\par
-{\pntext\f1\'B7\tab}Make a generic error logging class.\par
-\strike{\pntext\f1\'B7\tab}Turn TrayIcon stuff into a class if possible\b\strike0  (not feasible)\b0\par
-\strike{\pntext\f1\'B7\tab}Remover el splashscreen\strike0\par
-{\pntext\f1\'B7\tab}Revise license.txt for typos and idiotic remarks\par
-{\pntext\f1\'B7\tab}Update changelog.txt for user-aware changes\par
-{\pntext\f1\'B7\tab}create nsis package, but first revise script\par
-\strike{\pntext\f1\'B7\tab}Update online and package docs\strike0\par
-{\pntext\f1\'B7\tab}Add functionality to open the Help file!\par
-}
+{\rtf1\ansi\deff1\adeflang1025
+{\fonttbl{\f0\froman\fprq2\fcharset0 Liberation Serif{\*\falt Times New Roman};}{\f1\fswiss\fprq2\fcharset0 Verdana;}{\f2\fswiss\fprq2\fcharset0 Liberation Sans{\*\falt Arial};}{\f3\fnil\fprq0\fcharset2 Symbol;}{\f4\fswiss\fprq2\fcharset0 Verdana;}{\f5\fnil\fprq2\fcharset0 DejaVu Sans;}}
+{\colortbl;\red0\green0\blue0;\red128\green128\blue128;}
+{\stylesheet{\s1\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\rtlch\af1\afs24\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs24\lang1033\loch\f1\fs24\lang1033\snext1 Normal;}
+{\s2\sb240\sa120\keepn\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\rtlch\af5\afs28\lang1033\ltrch\dbch\af5\langfe1033\hich\f2\fs28\lang1033\loch\f2\fs28\lang1033\sbasedon1\snext3 Heading;}
+{\s3\sa120\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\rtlch\af1\afs24\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs24\lang1033\loch\f1\fs24\lang1033\sbasedon1\snext3 Body Text;}
+{\s4\sa120\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\rtlch\af1\afs24\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs24\lang1033\loch\f1\fs24\lang1033\sbasedon3\snext4 List;}
+{\s5\sb120\sa120\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\rtlch\af1\afs24\lang1033\ai\ltrch\dbch\af1\langfe1033\hich\f1\fs24\lang1033\i\loch\f1\fs24\lang1033\i\sbasedon1\snext5 caption;}
+{\s6\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\rtlch\af1\afs24\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs24\lang1033\loch\f1\fs24\lang1033\sbasedon1\snext6 Index;}
+{\*\cs8\cf0\rtlch\af1\afs24\lang1033\ltrch\dbch\af1\langfe1033\hich\f3\fs24\lang1033\loch\f3\fs24\lang1033 RTF_Num 2 1;}
+}{\*\listtable{\list\listtemplateid1\listsimple
+{\listlevel\levelnfc0\leveljc0\levelstartat1\levelfollow0{\leveltext \'01\'b7;}{\levelnumbers;}\f3\fi0\li0}{\listname RTF_Num 2;}\listid1}
+}{\listoverridetable{\listoverride\listid1\listoverridecount0\ls0}}
+
+{\info{\creatim\yr0\mo0\dy0\hr0\min0}{\revtim\yr0\mo0\dy0\hr0\min0}{\printim\yr0\mo0\dy0\hr0\min0}{\comment StarWriter}{\vern6800}}\deftab720
+{\*\pgdsctbl
+{\pgdsc0\pgdscuse195\pgwsxn12240\pghsxn15840\marglsxn1800\margrsxn1800\margtsxn1440\margbsxn1440\pgdscnxt0 Standard;}}
+{\*\pgdscno0}\paperh15840\paperw12240\margl1800\margr1800\margt1440\margb1440\sectd\sbknone\pgwsxn12240\pghsxn15840\marglsxn1800\margrsxn1800\margtsxn1440\margbsxn1440\ftnbj\ftnstart1\ftnrstcont\ftnnar\aenddoc\aftnrstcont\aftnstart1\aftnnrlc
+\pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Redo logic that goes beyond dialog boundaries (methods called from within other windows. these should be replaced by messages and handlers).}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Enable Hogging after the options dialog exits. Check if it was enabled before so that you don't re-enable it unnecesarily.}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Rework validation dialogs to be "neat" lol.}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Redo about window.}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 If possible, change icon}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\strike\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1\strike{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Attempt turning WindowCapture into a class for integration in future projects (i would love to have error messages that generate screenshots - for example). Plus this way i have all the gdi crap in one place.}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Make a generic error logging class.}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\f3 \tab}\ilvl0 \ltrpar\s1\cf0{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs24\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs24\lang1033\loch\f1\fs24\lang1033{\rtlch \ltrch\loch\f1\fs24\lang1033\i0\b0{\cf1\strike\rtlch\ltrch\dbch\hich\fs17\loch\fs17 Turn TrayIcon stuff into a class if possible}}{\rtlch \ltrch\loch\f1\fs24\lang1033\i0\b0{\cf1\rtlch\ltrch\dbch\hich\fs17\b\loch\fs17\b  (not feasible)}}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\strike\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1\strike{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Remover el splashscreen}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Revise license.txt for typos and idiotic remarks}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Update changelog.txt for user-aware changes}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 create nsis package, but first revise script}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\strike\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1\strike{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Update online and package docs}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Add functionality to open the Help file!}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 Add License text}
+\par \pard\plain {\listtext\pard\plain \li300\ri0\lin300\rin0\fi0\cf1\fs17\fs17\fs17\f3 \tab}\ilvl0 \ltrpar\s1\cf1{\*\hyphen2\hyphlead2\hyphtrail2\hyphmax0}\ls0\li300\ri0\lin300\rin0\fi0\rtlch\af1\afs17\lang1033\ltrch\dbch\af1\langfe1033\hich\f1\fs17\lang1033\loch\f1\fs17\lang1033 {\rtlch \ltrch\loch\f1\fs17\lang1033\i0\b0 This file is pretty outdated. Update with the new notes.}
+\par }
