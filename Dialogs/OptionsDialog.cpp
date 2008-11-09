@@ -53,7 +53,7 @@ void OptionsDialog::OnBnClickedOk()
 		val = _ttoi(strVal);
 		if( (val > 100) || (val <= 0) )  
 		{
-			MessageBox(_T("Please enter a number between 1 and 100."), _T("bScreenDumped->Options"), MB_OK|MB_ICONERROR);
+			MessageBox(_T("Please enter a number between 1 and 100."), _T("screendump->Options"), MB_OK|MB_ICONERROR);
 			c_JpegQuality.SetFocus();
 			c_JpegQuality.SetSel(0,4, true);
 			return;
@@ -64,11 +64,11 @@ void OptionsDialog::OnBnClickedOk()
 	c_Destination.GetWindowText(strVal);
 	if(_taccess(strVal, 0) == -1)
 	{
-		if( MessageBox(_T("The selected directory does not exist. Do you wish to create it?"), _T("bScreenDumped->Options"), MB_YESNO|MB_ICONQUESTION) == IDYES )
+		if( MessageBox(_T("The selected directory does not exist. Do you wish to create it?"), _T("screendump->Options"), MB_YESNO|MB_ICONQUESTION) == IDYES )
 		{
 			if(_tmkdir(strVal) != 0)
 			{
-				MessageBox(_T("Unable to create directory, please make sure the path is correct and not read-only."), _T("bScreenDumped->Options"), MB_OK|MB_ICONERROR);
+				MessageBox(_T("Unable to create directory, please make sure the path is correct and not read-only."), _T("screendump->Options"), MB_OK|MB_ICONERROR);
 				c_Destination.SetFocus();
 				c_Destination.SetSel(0, c_Destination.GetWindowTextLength(), true);
 				return;
@@ -76,7 +76,7 @@ void OptionsDialog::OnBnClickedOk()
 		}
 		else
 		{
-			MessageBox(_T("You chose to not create the directory. Please choose a valid destination before proceeding."), _T("bScreenDumped->Options"), MB_OK|MB_ICONINFORMATION);
+			MessageBox(_T("You chose to not create the directory. Please choose a valid destination before proceeding."), _T("screendump->Options"), MB_OK|MB_ICONINFORMATION);
 			c_Destination.SetFocus();
 			c_Destination.SetSel(0, c_Destination.GetWindowTextLength(), true);
 			return;
@@ -183,7 +183,7 @@ void OptionsDialog::initializeControls()
 		break;
 
 	default:
-		MessageBox(_T("Encoder Value not found. This is a very unusual error indeed."), _T("bScreenDumped->OptionsDialog()->initializeControls"), MB_OK | MB_ICONWARNING);
+		MessageBox(_T("Encoder Value not found. This is a very unusual error indeed."), _T("screendump->OptionsDialog()->initializeControls"), MB_OK | MB_ICONWARNING);
 		break;
 	}
 

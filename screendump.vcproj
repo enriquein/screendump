@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="bScreenDumped2"
+	Name="screendump"
 	ProjectGUID="{E7EF77DB-7FA7-4A1D-809E-71B9FC57C8E1}"
-	RootNamespace="bScreenDumped2"
+	RootNamespace="screendump"
 	Keyword="MFCProj"
 	TargetFrameworkVersion="131072"
 	>
@@ -74,7 +74,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib"
 				ShowProgress="2"
-				OutputFile="$(OutDir)/bScreenDumped.exe"
+				OutputFile="$(OutDir)/screendump.exe"
 				Version=""
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Visual Studio 8\VC\PlatformSDK\Lib&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
@@ -163,7 +163,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
-				OutputFile="$(OutDir)/bScreenDumped.exe"
+				OutputFile="$(OutDir)/screendump.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="false"
 				SubSystem="2"
@@ -213,11 +213,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Classes\bScreenDumped2.cpp"
+				RelativePath=".\Classes\screendump.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\bScreenDumped2Dlg.cpp"
+				RelativePath=".\Dialogs\screendumpDlg.cpp"
 				>
 			</File>
 			<File
@@ -291,11 +291,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Classes\bScreenDumped2.h"
+				RelativePath=".\Classes\screendump.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Dialogs\bScreenDumped2Dlg.h"
+				RelativePath=".\Dialogs\screendumpDlg.h"
 				>
 			</File>
 			<File
@@ -349,20 +349,20 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\res\bScreenDumped2.ico"
+				RelativePath=".\res\screendump.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\res\bScreenDumped2.rc"
+				RelativePath=".\res\screendump.rc"
 				>
 			</File>
 			<File
-				RelativePath=".\res\bScreenDumped2.rc2"
+				RelativePath=".\res\screendump.rc2"
 				>
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\res\bScreenDumped2.manifest"
+			RelativePath=".\res\screendump.manifest"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
@@ -385,7 +385,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value=".\res\bScreenDumped2.rc"
+			Value=".\res\screendump.rc"
 		/>
 	</Globals>
 </VisualStudioProject>

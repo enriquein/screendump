@@ -2,7 +2,7 @@
 //
 #include "stdafx.h"
 #include "..\res\resource.h"
-#include ".\bScreenDumped2Dlg.h"
+#include ".\screendumpDlg.h"
 #include ".\aboutdialog.h"
 
 
@@ -35,9 +35,9 @@ BOOL CAboutDialog::OnInitDialog()
 	CDialog::OnInitDialog();
 	CString strVersionText;
 	// This is pretty ugly, I suppose. Should reconsider rethinking this through.
-	CbScreenDumped2Dlg* mainDlg;
-	mainDlg = (CbScreenDumped2Dlg*)AfxGetApp()->m_pMainWnd;
-    strVersionText = _T("About bScreenDumped ") + mainDlg->m_progVersion;
+	CscreendumpDlg* mainDlg;
+	mainDlg = (CscreendumpDlg*)AfxGetApp()->m_pMainWnd;
+    strVersionText = _T("About screendump ") + mainDlg->m_progVersion;
     SetWindowText(strVersionText);
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

@@ -48,7 +48,7 @@ BEGIN
     "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)\r\n"
     "LANGUAGE 9, 1\r\n"
     "#pragma code_page(1252)\r\n"
-    "#include ""res\\bScreenDumped2.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""res\\screendump.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
     "#endif\r\n"
     "\0"
@@ -64,16 +64,16 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDR_MAINFRAME           ICON                    "bScreenDumped2.ico"
+IDR_MAINFRAME           ICON                    "screendump.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_BSCREENDUMPED2_DIALOG DIALOGEX 0, 0, 22, 10
+IDD_screendump_DIALOG DIALOGEX 0, 0, 22, 10
 STYLE DS_SETFONT | DS_MODALFRAME | DS_3DLOOK | DS_FIXEDSYS | WS_POPUP | WS_CAPTION
-CAPTION "bScreenDumped"
+CAPTION "screendump"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
@@ -81,7 +81,7 @@ END
 IDD_SETTINGSDLG DIALOGEX 0, 0, 235, 153
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "bScreenDumped Options"
+CAPTION "screendump Options"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
     GROUPBOX        "Save Image As:",IDC_STATIC,7,7,221,71
@@ -104,11 +104,11 @@ END
 IDD_ABOUTDIALOG DIALOGEX 0, 0, 314, 122
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "About bScreenDumped (version)"
+CAPTION "About screendump (version)"
 FONT 8, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
     DEFPUSHBUTTON   "Close",IDOK,131,99,52,16
-    LTEXT           "bScreenDumped: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",IDC_STATIC,7,7,300,37
+    LTEXT           "screendump: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",IDC_STATIC,7,7,300,37
     LTEXT           "As specified in the license agreement, you can use this program for free. :) enjoy.\n\nIf you have any problems, you can send me an email to braindead@indiecodelabs.com or visit the website http://www.indiecodelabs.com",IDC_STATIC,7,46,300,34
     LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,115,85,82,8
 END
@@ -179,11 +179,11 @@ BEGIN
             VALUE "CompanyName", "Indie Code Labs"
             VALUE "FileDescription", "Small program that saves screenshots automatically"
             VALUE "FileVersion", "2.1.0.18"
-            VALUE "InternalName", "bScreenDumped.exe"
+            VALUE "InternalName", "screendump.exe"
             VALUE "LegalCopyright", "None. Legal Stuff is gay."
             VALUE "LegalTrademarks", "None. Legal Stuff is gay."
-            VALUE "OriginalFilename", "bScreenDumped.exe"
-            VALUE "ProductName", "bScreenDumped"
+            VALUE "OriginalFilename", "screendump.exe"
+            VALUE "ProductName", "screendump"
             VALUE "ProductVersion", "2.1.0.18"
         END
     END
@@ -202,7 +202,7 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO 
 BEGIN
-    IDD_BSCREENDUMPED2_DIALOG, DIALOG
+    IDD_screendump_DIALOG, DIALOG
     BEGIN
         RIGHTMARGIN, 15
         TOPMARGIN, 7
@@ -281,7 +281,7 @@ END
 #if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
 LANGUAGE 9, 1
 #pragma code_page(1252)
-#include "res\bScreenDumped2.rc2"  // non-Microsoft Visual C++ edited resources
+#include "res\screendump.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components
 #endif
 

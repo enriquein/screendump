@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "..\Classes\HogVideo.h"
-#include ".\bScreenDumped2Dlg.h"
+#include ".\screendumpDlg.h"
 #include "..\Classes\WindowCapture.h"
 #include "..\Classes\GlobalSettings.h"
 #include ".\OptionsDialog.h"
@@ -9,17 +9,17 @@
 #include "..\Classes\file_ver.h"
 #include "..\Classes\ErrorString.h"
 
-UINT CbScreenDumped2Dlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
-UINT CbScreenDumped2Dlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY-{963FEF79-2137-4fa7-A0D9-D1C4F1D32298}"));
-UINT CbScreenDumped2Dlg::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
-UINT CbScreenDumped2Dlg::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
-UINT CbScreenDumped2Dlg::UWM_REQUESTHOG = ::RegisterWindowMessage(_T("UWM_REQUESTHOG-{E12B2B17-5A47-4691-B962-4469B1F960E6}"));
+UINT CscreendumpDlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
+UINT CscreendumpDlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY-{963FEF79-2137-4fa7-A0D9-D1C4F1D32298}"));
+UINT CscreendumpDlg::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
+UINT CscreendumpDlg::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
+UINT CscreendumpDlg::UWM_REQUESTHOG = ::RegisterWindowMessage(_T("UWM_REQUESTHOG-{E12B2B17-5A47-4691-B962-4469B1F960E6}"));
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScreenDumped2Dlg::IDD, pParent)
+CscreendumpDlg::CscreendumpDlg(CWnd* pParent /*=NULL*/) : CDialog(CscreendumpDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
     // Check if GDI+ was successfully loaded:
@@ -31,12 +31,12 @@ CbScreenDumped2Dlg::CbScreenDumped2Dlg(CWnd* pParent /*=NULL*/) : CDialog(CbScre
     {
         CString msg;
         msg = _T("An error has ocurred while initializing the capture engine.\nThis is usually related to gdiplus.dll not being available or not loading correctly.\nPlease make sure you installed the program version that matches your version of Windows.");
-        MessageBox(msg, _T("bScreenDumped->Ctor"), MB_OK | MB_ICONERROR);
+        MessageBox(msg, _T("screendump->Ctor"), MB_OK | MB_ICONERROR);
         wc = NULL;
     }
 }
 
-CbScreenDumped2Dlg::~CbScreenDumped2Dlg()
+CscreendumpDlg::~CscreendumpDlg()
 {
     delete wc;
 	DoUnregisterHotKeys();
@@ -44,17 +44,17 @@ CbScreenDumped2Dlg::~CbScreenDumped2Dlg()
 
 }
 
-void CbScreenDumped2Dlg::DoDataExchange(CDataExchange* pDX)
+void CscreendumpDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
-    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_SHELLICON_MSG, ShellIconCallback)
-    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_TOGGLETRAY, OnToggleTrayMsg)
-    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_CAPTURESCREEN, OnCaptureScreenMsg)
-    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_CAPTUREWINDOW, OnCaptureWindowMsg)
-    ON_REGISTERED_MESSAGE(CbScreenDumped2Dlg::UWM_REQUESTHOG, OnRequestHog)
+BEGIN_MESSAGE_MAP(CscreendumpDlg, CDialog)
+    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_SHELLICON_MSG, ShellIconCallback)
+    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_TOGGLETRAY, OnToggleTrayMsg)
+    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTURESCREEN, OnCaptureScreenMsg)
+    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTUREWINDOW, OnCaptureWindowMsg)
+    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_REQUESTHOG, OnRequestHog)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
@@ -65,7 +65,7 @@ BEGIN_MESSAGE_MAP(CbScreenDumped2Dlg, CDialog)
     ON_WM_WINDOWPOSCHANGING()
 END_MESSAGE_MAP()
 
-BOOL CbScreenDumped2Dlg::OnInitDialog()
+BOOL CscreendumpDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
     
@@ -98,7 +98,7 @@ BOOL CbScreenDumped2Dlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-void CbScreenDumped2Dlg::ShellIcon_Initialize()
+void CscreendumpDlg::ShellIcon_Initialize()
 {
     CString ttipText;
 	NOTIFYICONDATA ni;
@@ -107,7 +107,7 @@ void CbScreenDumped2Dlg::ShellIcon_Initialize()
 	ni.uID = 1;
 	ni.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     ni.uCallbackMessage = UWM_SHELLICON_MSG;
-    ttipText = _T("bScreenDumped ") + m_progVersion;
+    ttipText = _T("screendump ") + m_progVersion;
     _tcscpy_s(ni.szTip, ttipText);
 	ni.hIcon = m_hIcon;
 	
@@ -125,11 +125,11 @@ void CbScreenDumped2Dlg::ShellIcon_Initialize()
 	if(iCount > maxCount)
 	{
 		MessageBox(_T("Error while trying to create the System Tray Icon.\nThe program will continue to run in the background."),
-					_T("bScreenDumped->ShellIcon_Initialize()"), MB_OK | MB_ICONINFORMATION);
+					_T("screendump->ShellIcon_Initialize()"), MB_OK | MB_ICONINFORMATION);
 	}
 }
 
-void CbScreenDumped2Dlg::ShellIcon_Terminate()
+void CscreendumpDlg::ShellIcon_Terminate()
 {
 	NOTIFYICONDATA ni;
 	ni.cbSize = NOTIFYICONDATA_V1_SIZE; 
@@ -138,7 +138,7 @@ void CbScreenDumped2Dlg::ShellIcon_Terminate()
 	Shell_NotifyIcon(NIM_DELETE, &ni);
 }
 
-LRESULT CbScreenDumped2Dlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
+LRESULT CscreendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 {
 	if (lParam == WM_RBUTTONDOWN)
     {
@@ -151,12 +151,12 @@ LRESULT CbScreenDumped2Dlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CbScreenDumped2Dlg::OnTrayExitClick()
+void CscreendumpDlg::OnTrayExitClick()
 {
 	EndDialog(1);
 }
 
-void CbScreenDumped2Dlg::OnTrayAboutClick()
+void CscreendumpDlg::OnTrayAboutClick()
 {
 	CAboutDialog cAbt;
 	ToggleTrayMenu(FALSE);
@@ -164,14 +164,14 @@ void CbScreenDumped2Dlg::OnTrayAboutClick()
 	ToggleTrayMenu(TRUE);
 }
 
-void CbScreenDumped2Dlg::OnTrayOpenDest()
+void CscreendumpDlg::OnTrayOpenDest()
 {
 	CGlobalSettings gs;
 	gs.ReadSettings();
 	ShellExecute(m_hWnd, _T("open"), gs.getOutputDir(), NULL, NULL, SW_SHOWNORMAL);
 }
 
-void CbScreenDumped2Dlg::OnTrayOptionsClick()
+void CscreendumpDlg::OnTrayOptionsClick()
 {
 	OptionsDialog oDl;
 	ToggleTrayMenu(FALSE);
@@ -179,7 +179,7 @@ void CbScreenDumped2Dlg::OnTrayOptionsClick()
 	ToggleTrayMenu(TRUE);
 }
 
-void CbScreenDumped2Dlg::OnTrayAutoCapture()
+void CscreendumpDlg::OnTrayAutoCapture()
 {
 	CAutoCapture cAC;
 	ToggleTrayMenu(FALSE);
@@ -188,14 +188,14 @@ void CbScreenDumped2Dlg::OnTrayAutoCapture()
 }
 
 // Allows other dialogs to request Screen Captures.
-LRESULT CbScreenDumped2Dlg::OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam)
+LRESULT CscreendumpDlg::OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam)
 {
     RequestScreenCapture();
     return 0;
 }
 
 // Allows other dialogs to request Window Captures 
-LRESULT CbScreenDumped2Dlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
+LRESULT CscreendumpDlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
 {
     RequestWindowCapture();
     return 0;
@@ -203,7 +203,7 @@ LRESULT CbScreenDumped2Dlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
 
 // Allows other dialogs to request enabling/disabling of the hog interface.
 // (BOOL) wParam = Should we enable/disable hog? True means Enable, False disable.
-LRESULT CbScreenDumped2Dlg::OnRequestHog(WPARAM wParam, LPARAM lParam)
+LRESULT CscreendumpDlg::OnRequestHog(WPARAM wParam, LPARAM lParam)
 {
     if( (BOOL)wParam )
     {
@@ -217,7 +217,7 @@ LRESULT CbScreenDumped2Dlg::OnRequestHog(WPARAM wParam, LPARAM lParam)
 }
 
 // (BOOL)wParam tells us if we want to enable/disable the tray. TRUE = enable, FALSE = disable.
-LRESULT CbScreenDumped2Dlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
+LRESULT CscreendumpDlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
 {
     if(wParam != NULL)
     {
@@ -226,7 +226,7 @@ LRESULT CbScreenDumped2Dlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-void CbScreenDumped2Dlg::DoRegisterHotKeys()
+void CscreendumpDlg::DoRegisterHotKeys()
 {
 	long result, resultAlt;
 	m_Atom = new CGlobalAtom; 
@@ -237,11 +237,11 @@ void CbScreenDumped2Dlg::DoRegisterHotKeys()
 	if( (result == 0) || (resultAlt == 0) )
 	{
 		MessageBox(_T("Failed to register the hotkeys. This is almost always caused because of another program using the PrintScreen Key.\nPlease close the offending program before restarting this one."),
-				   _T("bScreenDumped->DoRegisterHotKeys()"), MB_OK | MB_ICONERROR);
+				   _T("screendump->DoRegisterHotKeys()"), MB_OK | MB_ICONERROR);
 	}
 }
 
-void CbScreenDumped2Dlg::DoUnregisterHotKeys()
+void CscreendumpDlg::DoUnregisterHotKeys()
 {
     if( (m_Atom != NULL) && (m_AtomAlt != NULL) )
     {
@@ -252,7 +252,7 @@ void CbScreenDumped2Dlg::DoUnregisterHotKeys()
     }
 }
 
-LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
+LRESULT CscreendumpDlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
     if( wParam == m_Atom->GetID() )
     {
@@ -268,7 +268,7 @@ LRESULT CbScreenDumped2Dlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CbScreenDumped2Dlg::ToggleTrayMenu(BOOL bEnable)
+void CscreendumpDlg::ToggleTrayMenu(BOOL bEnable)
 {	
 	UINT lFlags;
 	if(bEnable)
@@ -288,7 +288,7 @@ void CbScreenDumped2Dlg::ToggleTrayMenu(BOOL bEnable)
 
 // Starts the hog video window. 
 // Auto verifies if the setting is enabled before doing any work.
-void CbScreenDumped2Dlg::StartHog()
+void CscreendumpDlg::StartHog()
 {
     CGlobalSettings gs;
 	gs.ReadSettings();
@@ -313,7 +313,7 @@ void CbScreenDumped2Dlg::StartHog()
         }
         if(!tmpSuccess)
         {
-		    MessageBox(tmpErrStr, _T("bScreenDumped->InitDialog()->EnablingHog"), MB_OK|MB_ICONERROR);
+		    MessageBox(tmpErrStr, _T("screendump->InitDialog()->EnablingHog"), MB_OK|MB_ICONERROR);
 		    gs.bEnableHog = FALSE;
 		    gs.WriteSettings();
 	    }
@@ -321,18 +321,18 @@ void CbScreenDumped2Dlg::StartHog()
 }
 
 // Stops the hog window. 
-void CbScreenDumped2Dlg::StopHog()
+void CscreendumpDlg::StopHog()
 {
     m_Hog.UnHog();
 }
 
-void CbScreenDumped2Dlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
+void CscreendumpDlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
     lpwndpos->flags &= ~SWP_SHOWWINDOW;
     CDialog::OnWindowPosChanging(lpwndpos);
 }
 
-void CbScreenDumped2Dlg::RequestWindowCapture()
+void CscreendumpDlg::RequestWindowCapture()
 {
     // I really hate duplicating code, just seemed necessary here
     CGlobalSettings gs;
@@ -347,7 +347,7 @@ void CbScreenDumped2Dlg::RequestWindowCapture()
         {
             CString errMsg;
             errMsg.Format(_T("There was an error trying to save the image to %s. Possible reasons are:\nPath is invalid, access is denied, folder or drive is read only."), fName);
-            MessageBox(errMsg, _T("bScreenDumped->RequestCapture"), MB_ICONERROR|MB_OK);
+            MessageBox(errMsg, _T("screendump->RequestCapture"), MB_ICONERROR|MB_OK);
         }
     }
     if(fName.GetLength() > 0)
@@ -356,7 +356,7 @@ void CbScreenDumped2Dlg::RequestWindowCapture()
     }
 }
 
-void CbScreenDumped2Dlg::RequestScreenCapture()
+void CscreendumpDlg::RequestScreenCapture()
 {
     // I really hate duplicating code, just seemed necessary here
     CGlobalSettings gs;
@@ -371,7 +371,7 @@ void CbScreenDumped2Dlg::RequestScreenCapture()
         {
             CString errMsg;
             errMsg.Format(_T("There was an error trying to save the image to %s. Possible reasons are:\nPath is invalid, access is denied, folder or drive is read only."), fName);
-            MessageBox(errMsg, _T("bScreenDumped->RequestCapture"), MB_ICONERROR|MB_OK);            
+            MessageBox(errMsg, _T("screendump->RequestCapture"), MB_ICONERROR|MB_OK);            
         }
     }
     if(fName.GetLength() > 0)

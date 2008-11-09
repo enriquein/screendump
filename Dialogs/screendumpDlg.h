@@ -1,9 +1,9 @@
-// bScreenDumped2Dlg.h : header file
+// screendumpDlg.h : header file
 //
 
 #pragma once
-#ifndef BSCREENDUMPED2DLG_H
-#define BSCREENDUMPED2DLG_H
+#ifndef SCREENDUMPDLG_H
+#define SCREENDUMPDLG_H
 
 #include "..\Classes\HogVideo.h"
 #include "..\Classes\globalatom.h"
@@ -11,13 +11,13 @@
 #include "..\Classes\GlobalSettings.h"
 #include "..\Classes\WindowCapture.h"
 
-// CbScreenDumped2Dlg dialog
-class CbScreenDumped2Dlg : public CDialog
+// CscreendumpDlg dialog
+class CscreendumpDlg : public CDialog
 {
 // Construction
 public:
-	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
-    ~CbScreenDumped2Dlg();
+	CscreendumpDlg(CWnd* pParent = NULL);	// standard constructor
+    ~CscreendumpDlg();
 
     // ShellIcon Callback msg
     static UINT UWM_SHELLICON_MSG;
@@ -29,7 +29,7 @@ public:
     static UINT UWM_REQUESTHOG;
 
     // Dialog Data
-	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };
+	enum { IDD = IDD_screendump_DIALOG };
 	CString m_progVersion;
 
 protected:

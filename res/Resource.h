@@ -1,8 +1,8 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by bScreenDumped2.rc
+// Used by screendump.rc
 //
-#define IDD_BSCREENDUMPED2_DIALOG       102
+#define IDD_screendump_DIALOG       102
 #define IDD_ABOUTDIALOG                 103
 #define IDD_REGIONSELECT                104
 #define IDD_REGIONDIALOG                105
