@@ -30,7 +30,8 @@ public:
 
     // Dialog Data
 	enum { IDD = IDD_screendump_DIALOG };
-	CString m_progVersion;
+	CString m_progVersion; // Program's version number and revision. Used for our tooltip and about dialog.
+	CString m_runningPath; // Path where our program is located. 
 
 protected:
     // Data Members
@@ -72,6 +73,9 @@ protected:
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
     afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg BOOL OnQueryEndSession();
+	afx_msg void OnClose();
 };
 
 #endif

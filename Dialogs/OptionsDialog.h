@@ -22,7 +22,8 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
     void updateControls();
     void initializeControls();
-
+	void SendHogMessage(BOOL bEnableHog);
+	static UINT UWM_REQUESTHOG;
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedOk();
@@ -43,5 +44,11 @@ private:
     CButton c_chkAutoName;
     CButton c_chkHog;
     BOOL initialized;
+public:
+	afx_msg void OnEnChangeTxtquality();
+private:
+	CStatic c_lblErrMsg;
+public:
+    afx_msg void OnEnChangeTxtdestination();
 };
 #endif

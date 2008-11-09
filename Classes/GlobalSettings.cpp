@@ -20,7 +20,7 @@ CGlobalSettings::CGlobalSettings()
 		{
 			_tmkdir(m_IniPath);
 		}
-        m_IniPath += _T("bS.ini");
+        m_IniPath += _T("screendump.ini");
 	}
 	else
 	{
@@ -29,6 +29,7 @@ CGlobalSettings::CGlobalSettings()
         m_IniPath.ReleaseBuffer();
         m_IniPath += _T("\\screendump.ini");
 	}
+	ReadSettings();
 }
 
 CGlobalSettings::~CGlobalSettings() 
@@ -77,6 +78,8 @@ CString CGlobalSettings::GetNewFileName()
     return fName;
 }
 
+// The only reason you'd have to call this implicitly would be if you for some reason
+// want to reload settings from file. 
 void CGlobalSettings::ReadSettings()
 {
 	CString defValue;

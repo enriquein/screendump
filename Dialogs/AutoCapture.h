@@ -11,6 +11,8 @@ public:
 	CAutoCapture(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CAutoCapture();
     static UINT UWM_TIMER_AC;
+    static UINT UWM_CAPTURESCREEN;
+    static UINT UWM_CAPTUREWINDOW;
 
 // Dialog Data
 	enum { IDD = IDD_AUTOTIMER };

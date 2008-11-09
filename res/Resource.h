@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by screendump.rc
 //
-#define IDD_screendump_DIALOG       102
+#define IDD_screendump_DIALOG           102
 #define IDD_ABOUTDIALOG                 103
 #define IDD_REGIONSELECT                104
 #define IDD_REGIONDIALOG                105
@@ -27,6 +27,7 @@
 #define ID_OPTFOREGROUND                1016
 #define ID_BTNSTART                     1017
 #define IDC_IMGBACKGROUND               1018
+#define IDC_ERRORMSG                    1020
 #define ID_TRAY_ABOUT                   32773
 #define ID_TRAY_OPTIONS                 32774
 #define ID_TRAY_EXIT                    32775
@@ -41,7 +42,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        133
 #define _APS_NEXT_COMMAND_VALUE         32783
-#define _APS_NEXT_CONTROL_VALUE         1020
+#define _APS_NEXT_CONTROL_VALUE         1021
 #define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif

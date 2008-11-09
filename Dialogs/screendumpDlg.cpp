@@ -34,14 +34,23 @@ CscreendumpDlg::CscreendumpDlg(CWnd* pParent /*=NULL*/) : CDialog(CscreendumpDlg
         MessageBox(msg, _T("screendump->Ctor"), MB_OK | MB_ICONERROR);
         wc = NULL;
     }
+
+	// Get our path
+	GetModuleFileName(NULL, m_runningPath.GetBuffer(MAX_PATH), MAX_PATH * sizeof(TCHAR)); // MSDN says it asks for the size in TCHARs, and not char count.
+	m_runningPath.ReleaseBuffer();
+	m_runningPath = m_runningPath.Left(m_runningPath.ReverseFind(_T('\\')) + 1);
 }
 
 CscreendumpDlg::~CscreendumpDlg()
 {
-    delete wc;
-	DoUnregisterHotKeys();
-	ShellIcon_Terminate(); 
+	if (wc != NULL)
+	    delete wc;
 
+	if (m_Atom != NULL)
+		delete m_Atom;
+
+	if (m_AtomAlt != NULL)
+		delete m_AtomAlt;
 }
 
 void CscreendumpDlg::DoDataExchange(CDataExchange* pDX)
@@ -63,6 +72,8 @@ BEGIN_MESSAGE_MAP(CscreendumpDlg, CDialog)
 	ON_COMMAND(ID_TRAY_AUTOCAPTURE, OnTrayAutoCapture)
 	//}}AFX_MSG_MAP
     ON_WM_WINDOWPOSCHANGING()
+	ON_WM_QUERYENDSESSION()
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 BOOL CscreendumpDlg::OnInitDialog()
@@ -78,7 +89,6 @@ BOOL CscreendumpDlg::OnInitDialog()
     }
 
     CGlobalSettings gs;
-    gs.ReadSettings();
     wc->SetEncoder(gs.sEnc, gs.lJpgQuality);
 	CString exeName(CString(AfxGetAppName()) + CString(_T(".exe")));
 	CFileVersionInfo cfInfo;
@@ -153,12 +163,12 @@ LRESULT CscreendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 
 void CscreendumpDlg::OnTrayExitClick()
 {
-	EndDialog(1);
+	OnClose();
 }
 
 void CscreendumpDlg::OnTrayAboutClick()
 {
-	CAboutDialog cAbt;
+	CAboutDialog cAbt((CWnd*)this);
 	ToggleTrayMenu(FALSE);
 	cAbt.DoModal();
 	ToggleTrayMenu(TRUE);
@@ -167,13 +177,12 @@ void CscreendumpDlg::OnTrayAboutClick()
 void CscreendumpDlg::OnTrayOpenDest()
 {
 	CGlobalSettings gs;
-	gs.ReadSettings();
 	ShellExecute(m_hWnd, _T("open"), gs.getOutputDir(), NULL, NULL, SW_SHOWNORMAL);
 }
 
 void CscreendumpDlg::OnTrayOptionsClick()
 {
-	OptionsDialog oDl;
+	OptionsDialog oDl((CWnd*)this);
 	ToggleTrayMenu(FALSE);
 	oDl.DoModal();
 	ToggleTrayMenu(TRUE);
@@ -181,7 +190,7 @@ void CscreendumpDlg::OnTrayOptionsClick()
 
 void CscreendumpDlg::OnTrayAutoCapture()
 {
-	CAutoCapture cAC;
+	CAutoCapture cAC((CWnd*)this);
 	ToggleTrayMenu(FALSE);
 	cAC.DoModal();
 	ToggleTrayMenu(TRUE);
@@ -249,6 +258,8 @@ void CscreendumpDlg::DoUnregisterHotKeys()
         UnregisterHotKey( m_hWnd, m_AtomAlt->GetID() );
         delete m_Atom;
 	    delete m_AtomAlt;
+		m_Atom = NULL;
+		m_AtomAlt = NULL;
     }
 }
 
@@ -290,40 +301,47 @@ void CscreendumpDlg::ToggleTrayMenu(BOOL bEnable)
 // Auto verifies if the setting is enabled before doing any work.
 void CscreendumpDlg::StartHog()
 {
-    CGlobalSettings gs;
-	gs.ReadSettings();
-    if (gs.bEnableHog)
-    {
-        CString strFileName(_T("bs.dont.delete.me"));
-        m_Hog.SetVideo(strFileName);
-        BOOL tmpSuccess = TRUE;
-        CString tmpErrStr;
-        if(_taccess(strFileName, 0) == -1)
-        {
-            tmpErrStr = _T("A problem ocurred while enabling screenshots of videos:\nCould not find the `bs.dont.delete.me` file inside the program folder.\nThis option will be disabled for now.");
-            tmpSuccess = FALSE;
-        }
-        else
-        {
-	        if(!m_Hog.Hog())
-            {
-                tmpErrStr = _T("A problem ocurred while enabling screenshots of videos.\nPlease report this message.\nThis option will be disabled for now.");
-                tmpSuccess = FALSE;
-            }
-        }
-        if(!tmpSuccess)
-        {
-		    MessageBox(tmpErrStr, _T("screendump->InitDialog()->EnablingHog"), MB_OK|MB_ICONERROR);
-		    gs.bEnableHog = FALSE;
-		    gs.WriteSettings();
-	    }
-    }
+	// Check if its already running. If it is, then ignore the hog request.
+	if(!m_Hog.IsHogging())
+	{
+		CGlobalSettings gs;
+		if (gs.bEnableHog)
+		{
+			CString strFileName( m_runningPath + _T("bs.dont.delete.me"));
+			m_Hog.SetVideo(strFileName);
+			BOOL tmpSuccess = TRUE;
+			CString tmpErrStr;
+			if(_taccess(strFileName, 0) == -1)
+			{
+				tmpErrStr = _T("A problem ocurred while enabling screenshots of videos:\nCould not find the `bs.dont.delete.me` file inside the program folder.\nThis option will be disabled for now.");
+				tmpSuccess = FALSE;
+			}
+			else
+			{
+				if(!m_Hog.Hog())
+				{
+					tmpErrStr = _T("A problem ocurred while enabling screenshots of videos.\nPlease report this message.\nThis option will be disabled for now.");
+					tmpSuccess = FALSE;
+				}
+			}
+			if(!tmpSuccess)
+			{
+				MessageBox(tmpErrStr, _T("screendump->InitDialog()->EnablingHog"), MB_OK|MB_ICONERROR);
+				gs.bEnableHog = FALSE;
+				gs.WriteSettings();
+			}
+		}
+	}
 }
 
 // Stops the hog window. 
 void CscreendumpDlg::StopHog()
 {
-    m_Hog.UnHog();
+	// Only stop it if it was running.
+	if(m_Hog.IsHogging())
+	{
+	    m_Hog.UnHog();
+	}
 }
 
 void CscreendumpDlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
@@ -378,4 +396,18 @@ void CscreendumpDlg::RequestScreenCapture()
     {
         wc->CaptureScreen(fName);
     }
+}
+
+BOOL CscreendumpDlg::OnQueryEndSession()
+{
+	OnClose();
+	return TRUE;
+}
+
+void CscreendumpDlg::OnClose()
+{
+	DoUnregisterHotKeys();
+	ShellIcon_Terminate(); 
+	CDialog::OnClose();
+	EndDialog(1);
 }
