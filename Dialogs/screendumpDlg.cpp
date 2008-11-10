@@ -121,7 +121,7 @@ void CscreendumpDlg::ShellIcon_Initialize()
     ni.uCallbackMessage = UWM_SHELLICON_MSG;
     ttipText = _T("screendump ") + m_progVersion;
     _tcscpy_s(ni.szTip, ttipText);
-	ni.hIcon = m_hIcon;
+	ni.hIcon = AfxGetApp()->LoadIcon(IDI_ICONTRAY);;
 	
     // We have to keep retrying because Shell_NotifyIcon usually fails during Windows startup
     // on some machines with lots of other programs loading at startup as well.

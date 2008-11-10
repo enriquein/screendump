@@ -65,6 +65,7 @@ END
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
 IDR_MAINFRAME           ICON                    "screendump.ico"
+IDI_ICONTRAY            ICON                    "icontray.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //

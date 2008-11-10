@@ -213,14 +213,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Classes\screendump.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Dialogs\screendumpDlg.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Classes\ErrorString.cpp"
 				>
 			</File>
@@ -250,6 +242,14 @@
 			</File>
 			<File
 				RelativePath=".\Dialogs\OptionsDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Classes\screendump.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Dialogs\screendumpDlg.cpp"
 				>
 			</File>
 			<File
@@ -291,14 +291,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Classes\screendump.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Dialogs\screendumpDlg.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Classes\ErrorString.h"
 				>
 			</File>
@@ -335,6 +327,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Classes\screendump.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Dialogs\screendumpDlg.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdafx.h"
 				>
 			</File>
@@ -348,6 +348,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath=".\res\icontray.ico"
+				>
+			</File>
 			<File
 				RelativePath=".\res\screendump.ico"
 				>
