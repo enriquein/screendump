@@ -44,3 +44,4 @@
 #define _UNICODE
 #endif
 
+enum CaptureType {ct_Screen, ct_Window};

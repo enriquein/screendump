@@ -14,6 +14,7 @@ UINT CscreendumpDlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY
 UINT CscreendumpDlg::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
 UINT CscreendumpDlg::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
 UINT CscreendumpDlg::UWM_REQUESTHOG = ::RegisterWindowMessage(_T("UWM_REQUESTHOG-{E12B2B17-5A47-4691-B962-4469B1F960E6}"));
+UINT CscreendumpDlg::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -64,6 +65,7 @@ BEGIN_MESSAGE_MAP(CscreendumpDlg, CDialog)
     ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTURESCREEN, OnCaptureScreenMsg)
     ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTUREWINDOW, OnCaptureWindowMsg)
     ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_REQUESTHOG, OnRequestHog)
+    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_REQUESTVERSION, OnRequestVersion)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
@@ -150,13 +152,22 @@ void CscreendumpDlg::ShellIcon_Terminate()
 
 LRESULT CscreendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 {
-	if (lParam == WM_RBUTTONDOWN)
+    CPoint pt;
+    switch (lParam)
     {
-		CPoint pt;
-		GetCursorPos(&pt);		
-		SetForegroundWindow();
-		m_trayMenu.GetSubMenu(0)->TrackPopupMenu(TPM_CENTERALIGN,pt.x,pt.y,this);
-		PostMessage(WM_NULL, 0, 0);
+	    case (WM_RBUTTONDOWN):
+		    GetCursorPos(&pt);		
+		    SetForegroundWindow();
+		    m_trayMenu.GetSubMenu(0)->TrackPopupMenu(TPM_CENTERALIGN,pt.x,pt.y,this);
+		    PostMessage(WM_NULL, 0, 0);	
+	        break;
+	    case (WM_LBUTTONDOWN):
+	    case (WM_RBUTTONDBLCLK):
+	    case (WM_LBUTTONDBLCLK):
+	        // We set foreground window in case we have an open dialog. We don't want to confuse the user as to why 
+	        // the tray's menu is disabled at this point.
+	   	    SetForegroundWindow();  
+	   	    break;
 	}
 	return 0;
 }
@@ -199,14 +210,14 @@ void CscreendumpDlg::OnTrayAutoCapture()
 // Allows other dialogs to request Screen Captures.
 LRESULT CscreendumpDlg::OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam)
 {
-    RequestScreenCapture();
+    RequestCapture(ct_Screen);
     return 0;
 }
 
 // Allows other dialogs to request Window Captures 
 LRESULT CscreendumpDlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
 {
-    RequestWindowCapture();
+    RequestCapture(ct_Window);
     return 0;
 }
 
@@ -233,6 +244,12 @@ LRESULT CscreendumpDlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
         ToggleTrayMenu((BOOL)wParam);
     }
     return 0;
+}
+
+// (CString *)(LRESULT) returns a pointer to a CString object that contains our version number.
+LRESULT CscreendumpDlg::OnRequestVersion(WPARAM wParam, LPARAM lParam)
+{
+    return lParam = (LRESULT) &m_progVersion;
 }
 
 void CscreendumpDlg::DoRegisterHotKeys()
@@ -267,13 +284,13 @@ LRESULT CscreendumpDlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
     if( wParam == m_Atom->GetID() )
     {
-        RequestScreenCapture();
+        RequestCapture(ct_Screen);
     }
     else
     {
         if( wParam == m_AtomAlt->GetID() )
         {
-	        RequestWindowCapture(); 
+	        RequestCapture(ct_Window); 
         }
     }    
 	return 0;
@@ -298,7 +315,7 @@ void CscreendumpDlg::ToggleTrayMenu(BOOL bEnable)
 }
 
 // Starts the hog video window. 
-// Auto verifies if the setting is enabled before doing any work.
+// Verifies if the setting is enabled before doing any work.
 void CscreendumpDlg::StartHog()
 {
 	// Check if its already running. If it is, then ignore the hog request.
@@ -350,9 +367,8 @@ void CscreendumpDlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
     CDialog::OnWindowPosChanging(lpwndpos);
 }
 
-void CscreendumpDlg::RequestWindowCapture()
+void CscreendumpDlg::RequestCapture(CaptureType ct)
 {
-    // I really hate duplicating code, just seemed necessary here
     CGlobalSettings gs;
     CString fName;
     try
@@ -370,31 +386,16 @@ void CscreendumpDlg::RequestWindowCapture()
     }
     if(fName.GetLength() > 0)
     {
-        wc->CaptureWindow(fName);
-    }
-}
-
-void CscreendumpDlg::RequestScreenCapture()
-{
-    // I really hate duplicating code, just seemed necessary here
-    CGlobalSettings gs;
-    CString fName;
-    try
-    {
-        fName = gs.GetNewFileName();
-    }
-    catch (CFileException* e)
-    {
-        if(e->m_cause == CFileException::badPath)
+        switch (ct)
         {
-            CString errMsg;
-            errMsg.Format(_T("There was an error trying to save the image to %s. Possible reasons are:\nPath is invalid, access is denied, folder or drive is read only."), fName);
-            MessageBox(errMsg, _T("screendump->RequestCapture"), MB_ICONERROR|MB_OK);            
-        }
-    }
-    if(fName.GetLength() > 0)
-    {
-        wc->CaptureScreen(fName);
+            case ct_Screen:
+                wc->CaptureScreen(fName);
+                break;
+            case ct_Window:
+                wc->CaptureWindow(fName);
+                break;
+                
+        }     
     }
 }
 

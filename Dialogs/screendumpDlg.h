@@ -27,6 +27,7 @@ public:
     static UINT UWM_CAPTURESCREEN;
     static UINT UWM_CAPTUREWINDOW;
     static UINT UWM_REQUESTHOG;
+    static UINT UWM_REQUESTVERSION;
 
     // Dialog Data
 	enum { IDD = IDD_screendump_DIALOG };
@@ -53,6 +54,7 @@ protected:
 	void DoUnregisterHotKeys();
     void RequestWindowCapture();
     void RequestScreenCapture();
+    void RequestCapture(CaptureType ct);
 
 	// Tray Handlers
 	void OnTrayExitClick();
@@ -66,6 +68,7 @@ protected:
     afx_msg LRESULT OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnRequestHog(WPARAM wParam, LPARAM lParam);
+    afx_msg LRESULT OnRequestVersion(WPARAM wParam, LPARAM lParam);
 
 	// Message map functions
 	virtual BOOL OnInitDialog();

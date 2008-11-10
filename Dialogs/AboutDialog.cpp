@@ -2,9 +2,9 @@
 //
 #include "stdafx.h"
 #include "..\res\resource.h"
-#include ".\screendumpDlg.h"
 #include ".\aboutdialog.h"
 
+UINT CAboutDialog::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
 
 // CAboutDialog dialog
 
@@ -34,10 +34,12 @@ BOOL CAboutDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	CString strVersionText;
-	// This is pretty ugly, I suppose. Should reconsider rethinking this through.
-	CscreendumpDlg* mainDlg;
-	mainDlg = (CscreendumpDlg*)AfxGetApp()->m_pMainWnd;
-    strVersionText = _T("About screendump ") + mainDlg->m_progVersion;
+	LRESULT lres;
+	
+	// Get version number from our main dialog.
+    lres = ::SendMessage(GetParent()->m_hWnd, UWM_REQUESTVERSION, 0, 0);
+    strVersionText = *(CString*)lres;
+    strVersionText = _T("About screendump ") + strVersionText;
     SetWindowText(strVersionText);
 	return TRUE;  // return TRUE unless you set the focus to a control
 }

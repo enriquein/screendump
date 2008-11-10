@@ -12,6 +12,8 @@ public:
 	CAboutDialog(CWnd* pParent = NULL);   // standard constructor
 	virtual ~CAboutDialog();
 
+    static UINT UWM_REQUESTVERSION;
+
 // Dialog Data
 	enum { IDD = IDD_ABOUTDIALOG };
 
