@@ -114,6 +114,7 @@
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -138,6 +139,7 @@
 				InlineFunctionExpansion="1"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
+				WholeProgramOptimization="true"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
 				StringPooling="true"
 				MinimalRebuild="false"
@@ -357,6 +359,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\icon-src\progimage-64.bmp"
+				>
+			</File>
+			<File
 				RelativePath=".\res\screendump.ico"
 				>
 			</File>
@@ -369,6 +375,10 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\icon-src\progimage-64.png"
+			>
+		</File>
 		<File
 			RelativePath=".\res\screendump.manifest"
 			>

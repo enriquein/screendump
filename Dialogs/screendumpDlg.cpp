@@ -93,7 +93,7 @@ BOOL CscreendumpDlg::OnInitDialog()
 	cfInfo.ReadVersionInfo(exeName);
 	if( cfInfo.IsValid() )
 	{
-		m_progVersion = cfInfo.GetCustomFileVersionString();
+    	m_progVersion = cfInfo.GetCustomFileVersionString();	
 	}
 	else
 	{

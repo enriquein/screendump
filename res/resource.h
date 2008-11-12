@@ -12,6 +12,7 @@
 #define IDD_AUTOTIMER                   132
 #define IDI_ICON1                       133
 #define IDI_ICONTRAY                    133
+#define IDB_PROGLOGO                    135
 #define IDC_RADIOBMP                    1000
 #define IDC_RADIOTIFF                   1001
 #define IDC_RADIOPNG                    1002
@@ -31,6 +32,8 @@
 #define IDC_IMGBACKGROUND               1018
 #define IDC_ERRORMSG                    1020
 #define IDC_WANTCLIPBOARD               1021
+#define IDC_LOGOIMG                     1022
+#define IDC_SYSLINK1                    1023
 #define ID_TRAY_ABOUT                   32773
 #define ID_TRAY_OPTIONS                 32774
 #define ID_TRAY_EXIT                    32775
@@ -45,9 +48,9 @@
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        134
+#define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32785
-#define _APS_NEXT_CONTROL_VALUE         1022
+#define _APS_NEXT_CONTROL_VALUE         1024
 #define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif

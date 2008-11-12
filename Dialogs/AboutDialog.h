@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 #ifndef CABOUTDIALOG_H
 #define CABOUTDIALOG_H
@@ -23,5 +24,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
+    CStatic c_LogoImg;
+    afx_msg void OnBnClickedOk();
 };
 #endif
