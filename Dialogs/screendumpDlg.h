@@ -26,7 +26,6 @@ public:
     static UINT UWM_TOGGLETRAY;
     static UINT UWM_CAPTURESCREEN;
     static UINT UWM_CAPTUREWINDOW;
-    static UINT UWM_REQUESTHOG;
     static UINT UWM_REQUESTVERSION;
 
     // Dialog Data
@@ -43,7 +42,6 @@ protected:
 	HICON m_hIcon;
 	CMenu m_trayMenu;
 
-
 	virtual void DoDataExchange(CDataExchange* pDX);	    
     void ToggleTrayMenu(BOOL bEnable); 
     void StartHog(); 
@@ -52,9 +50,8 @@ protected:
 	void ShellIcon_Terminate();
 	void DoRegisterHotKeys();
 	void DoUnregisterHotKeys();
-    void RequestWindowCapture();
-    void RequestScreenCapture();
     void RequestCapture(CaptureType ct);
+    void RefreshSettings();
 
 	// Tray Handlers
 	void OnTrayExitClick();
@@ -67,7 +64,6 @@ protected:
     afx_msg LRESULT OnToggleTrayMsg(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam);
-    afx_msg LRESULT OnRequestHog(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnRequestVersion(WPARAM wParam, LPARAM lParam);
 
 	// Message map functions
@@ -75,11 +71,10 @@ protected:
 	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
     afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
-	DECLARE_MESSAGE_MAP()
-public:
 	afx_msg BOOL OnQueryEndSession();
 	afx_msg void OnClose();
     afx_msg void OnTrayEmptyclipboard();
+	DECLARE_MESSAGE_MAP()
 };
 
 #endif

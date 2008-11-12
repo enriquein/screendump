@@ -22,8 +22,6 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
     void updateControls();
     void initializeControls();
-	void SendHogMessage(BOOL bEnableHog);
-	static UINT UWM_REQUESTHOG;
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedOk();

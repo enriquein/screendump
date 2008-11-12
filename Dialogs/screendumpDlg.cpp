@@ -13,7 +13,6 @@ UINT CscreendumpDlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLIC
 UINT CscreendumpDlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY-{963FEF79-2137-4fa7-A0D9-D1C4F1D32298}"));
 UINT CscreendumpDlg::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
 UINT CscreendumpDlg::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
-UINT CscreendumpDlg::UWM_REQUESTHOG = ::RegisterWindowMessage(_T("UWM_REQUESTHOG-{E12B2B17-5A47-4691-B962-4469B1F960E6}"));
 UINT CscreendumpDlg::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
 
 #ifdef _DEBUG
@@ -64,7 +63,6 @@ BEGIN_MESSAGE_MAP(CscreendumpDlg, CDialog)
     ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_TOGGLETRAY, OnToggleTrayMsg)
     ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTURESCREEN, OnCaptureScreenMsg)
     ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTUREWINDOW, OnCaptureWindowMsg)
-    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_REQUESTHOG, OnRequestHog)
     ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_REQUESTVERSION, OnRequestVersion)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
@@ -82,7 +80,6 @@ END_MESSAGE_MAP()
 BOOL CscreendumpDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
-    
     if(wc == NULL)
     {
         // If we got here, then our windowcapture engine is dead. Bail.
@@ -90,10 +87,7 @@ BOOL CscreendumpDlg::OnInitDialog()
         EndDialog(1);
         return TRUE;
     }
-
-    CGlobalSettings gs;
-    wc->SetEncoder(gs.sEnc, gs.lJpgQuality);
-    wc->SetUseClipboard(gs.bWantClipboard);
+    RefreshSettings();
 	CString exeName(CString(AfxGetAppName()) + CString(_T(".exe")));
 	CFileVersionInfo cfInfo;
 	cfInfo.ReadVersionInfo(exeName);
@@ -108,7 +102,6 @@ BOOL CscreendumpDlg::OnInitDialog()
 	m_trayMenu.LoadMenu(IDR_MENU1); 
 	ShellIcon_Initialize();
 	DoRegisterHotKeys();
-    StartHog();
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
@@ -198,6 +191,7 @@ void CscreendumpDlg::OnTrayOptionsClick()
 	OptionsDialog oDl((CWnd*)this);
 	ToggleTrayMenu(FALSE);
 	oDl.DoModal();
+    RefreshSettings();
 	ToggleTrayMenu(TRUE);
 }
 
@@ -223,19 +217,12 @@ LRESULT CscreendumpDlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-// Allows other dialogs to request enabling/disabling of the hog interface.
-// (BOOL) wParam = Should we enable/disable hog? True means Enable, False disable.
-LRESULT CscreendumpDlg::OnRequestHog(WPARAM wParam, LPARAM lParam)
+void CscreendumpDlg::RefreshSettings()
 {
-    if( (BOOL)wParam )
-    {
-        StartHog();
-    }
-    else
-    {
-        StopHog();
-    }
-    return 0;
+    CGlobalSettings gs;
+    wc->SetEncoder(gs.sEnc, gs.lJpgQuality);
+    wc->SetUseClipboard(gs.bWantClipboard);
+    StartHog();
 }
 
 // (BOOL)wParam tells us if we want to enable/disable the tray. TRUE = enable, FALSE = disable.

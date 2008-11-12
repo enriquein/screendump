@@ -3,9 +3,6 @@
 #include <direct.h>
 #include ".\OptionsDialog.h"
 #include "..\Classes\GlobalSettings.h"
-#include "..\Helpers\Helpers.h"
-
-UINT OptionsDialog::UWM_REQUESTHOG = ::RegisterWindowMessage(_T("UWM_REQUESTHOG-{E12B2B17-5A47-4691-B962-4469B1F960E6}"));
 
 IMPLEMENT_DYNAMIC(OptionsDialog, CDialog)
 OptionsDialog::OptionsDialog(CWnd* pParent /*=NULL*/)
@@ -106,7 +103,6 @@ void OptionsDialog::OnBnClickedOk()
 	c_Destination.GetWindowText(strVal);
 	gs.setOutputDir(strVal);
 	gs.WriteSettings();
-	SendHogMessage(gs.bEnableHog);	
 
     // Doesn't matter if OnCancel gets called since settings were saved.
 	OnCancel();
@@ -272,10 +268,6 @@ void OptionsDialog::OnEnChangeTxtquality()
 	updateControls();
 }
 
-void OptionsDialog::SendHogMessage(BOOL bEnableHog)
-{
-	::SendMessage(GetParent()->m_hWnd, UWM_REQUESTHOG, (WPARAM) bEnableHog, 0);
-}
 void OptionsDialog::OnEnChangeTxtdestination()
 {
 	updateControls();
