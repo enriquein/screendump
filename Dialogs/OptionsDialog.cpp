@@ -20,16 +20,17 @@ OptionsDialog::~OptionsDialog()
 
 void OptionsDialog::DoDataExchange(CDataExchange* pDX)
 {
-	CDialog::DoDataExchange(pDX);
-	DDX_Control(pDX, IDOK, c_OK);
-	DDX_Control(pDX, IDC_TXTDESTINATION, c_Destination);
-	DDX_Control(pDX, IDC_TXTQUALITY, c_JpegQuality);
-	DDX_Control(pDX, IDC_RADIOBMP, c_optBmp);
-	DDX_Control(pDX, IDC_RADIOJPEG, c_optJpeg);
-	DDX_Control(pDX, IDC_RADIOPNG, c_optPng);
-	DDX_Control(pDX, IDC_CHKAUTONAME, c_chkAutoName);
-	DDX_Control(pDX, IDC_CHKHOG, c_chkHog);
-	DDX_Control(pDX, IDC_ERRORMSG, c_lblErrMsg);
+    CDialog::DoDataExchange(pDX);
+    DDX_Control(pDX, IDOK, c_OK);
+    DDX_Control(pDX, IDC_TXTDESTINATION, c_Destination);
+    DDX_Control(pDX, IDC_TXTQUALITY, c_JpegQuality);
+    DDX_Control(pDX, IDC_RADIOBMP, c_optBmp);
+    DDX_Control(pDX, IDC_RADIOJPEG, c_optJpeg);
+    DDX_Control(pDX, IDC_RADIOPNG, c_optPng);
+    DDX_Control(pDX, IDC_CHKAUTONAME, c_chkAutoName);
+    DDX_Control(pDX, IDC_CHKHOG, c_chkHog);
+    DDX_Control(pDX, IDC_ERRORMSG, c_lblErrMsg);
+    DDX_Control(pDX, IDC_WANTCLIPBOARD, c_chkWantClipboard);
 }
 
 
@@ -84,6 +85,7 @@ void OptionsDialog::OnBnClickedOk()
 	CGlobalSettings gs;
     gs.bAutoName = (c_chkAutoName.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
 	gs.bEnableHog = (c_chkHog.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
+    gs.bWantClipboard = (c_chkWantClipboard.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
 
     if( c_optBmp.GetCheck() == BST_CHECKED )
     {
@@ -201,6 +203,15 @@ void OptionsDialog::initializeControls()
 	else
 	{
 		c_chkHog.SetCheck(BST_UNCHECKED);
+	}
+
+	if(gs.bWantClipboard)
+	{
+        c_chkWantClipboard.SetCheck(BST_CHECKED);
+	}
+	else
+	{
+		c_chkWantClipboard.SetCheck(BST_UNCHECKED);
 	}
     c_Destination.SetWindowText( gs.getOutputDir() );
 }

@@ -30,6 +30,7 @@
 #define ID_BTNSTART                     1017
 #define IDC_IMGBACKGROUND               1018
 #define IDC_ERRORMSG                    1020
+#define IDC_WANTCLIPBOARD               1021
 #define ID_TRAY_ABOUT                   32773
 #define ID_TRAY_OPTIONS                 32774
 #define ID_TRAY_EXIT                    32775
@@ -37,14 +38,16 @@
 #define ID_TRAY_OPENDEST                32777
 #define ID_TRAY_AUTOCAPTURE             32778
 #define ID_TRAY_REGION                  32782
+#define ID_TRAY_MPTYCLIPBOARD           32783
+#define ID_TRAY_EMPTYCLIPBOARD          32784
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        134
-#define _APS_NEXT_COMMAND_VALUE         32783
-#define _APS_NEXT_CONTROL_VALUE         1021
+#define _APS_NEXT_COMMAND_VALUE         32785
+#define _APS_NEXT_CONTROL_VALUE         1022
 #define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif

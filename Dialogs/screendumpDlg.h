@@ -79,6 +79,7 @@ protected:
 public:
 	afx_msg BOOL OnQueryEndSession();
 	afx_msg void OnClose();
+    afx_msg void OnTrayEmptyclipboard();
 };
 
 #endif

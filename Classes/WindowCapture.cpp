@@ -22,6 +22,7 @@ WindowCapture::WindowCapture()
     lastGdiStatus = Aborted; // Initialized to anything not "Ok" so that StartGDI is the *only* one to be able to change it to "Ok".
     sEnc = sEncJPEG;
     lQuality = 100;
+    bUseClipboard = TRUE;
     gdiStartupInput.GdiplusVersion = 1; 
     gdiStartupInput.DebugEventCallback = NULL;
     gdiStartupInput.SuppressBackgroundThread = FALSE;
@@ -82,6 +83,16 @@ void WindowCapture::SetQuality(long lQualityVal)
     }
 }
 
+BOOL WindowCapture::GetUseClipboard()
+{
+    return bUseClipboard;
+}
+
+void WindowCapture::SetUseClipboard(BOOL wantClipboard)
+{
+    bUseClipboard = wantClipboard;
+}
+
 BOOL WindowCapture::CaptureRegion(int xCoord, int yCoord, int iWidth, int iHeight, CString strFilename)
 {
     return FALSE; // Not yet implemented.
@@ -132,6 +143,15 @@ BOOL WindowCapture::DoCapture(HDC &hdc, int xCoord, int yCoord, int iWidth, int 
 	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
 	Bitmap myBitMap(hbDesktop, hPalette);
 	DumpImage(&myBitMap, strFilename);
+    if(bUseClipboard)
+    {
+        if(OpenClipboard(NULL))
+        {
+            EmptyClipboard();
+            SetClipboardData(CF_BITMAP, hbDesktop);
+            CloseClipboard();
+        }
+    }
     DeleteObject(hbDesktop);
 	DeleteObject(hPalette);
     DeleteDC(hDest);

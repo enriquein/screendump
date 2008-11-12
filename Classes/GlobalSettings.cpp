@@ -88,6 +88,7 @@ void CGlobalSettings::ReadSettings()
 	lJpgQuality = (long)GetPrivateProfileInt(_T("screendump"), _T("JPGQuality"), 100, m_IniPath);
 	bAutoName = (BOOL)GetPrivateProfileInt(_T("screendump"), _T("AutoName"), 1, m_IniPath);
 	bEnableHog = (BOOL)GetPrivateProfileInt(_T("screendump"), _T("HogVideo"), 0, m_IniPath);
+    bWantClipboard = (BOOL)GetPrivateProfileInt(_T("screendump"), _T("WantClipboard"), 1, m_IniPath);
     defPtr = defValue.GetBuffer(_MAX_PATH);
 	_tgetcwd(defPtr, _MAX_PATH);
     defValue.ReleaseBuffer();
@@ -113,6 +114,8 @@ void CGlobalSettings::WriteSettings()
 	WritePrivateProfileString(_T("screendump"), _T("OutDir"), szOutputDir, m_IniPath);
     buffer.Format(_T("%d"), bEnableHog);
 	WritePrivateProfileString(_T("screendump"), _T("HogVideo"), buffer, m_IniPath);
+    buffer.Format(_T("%d"), bWantClipboard);
+	WritePrivateProfileString(_T("screendump"), _T("WantClipboard"), buffer, m_IniPath);
 }
 
 // Checks if the directory 'path' exists. If it doesn't, it 

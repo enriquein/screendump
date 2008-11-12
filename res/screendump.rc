@@ -79,7 +79,7 @@ FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
 END
 
-IDD_SETTINGSDLG DIALOGEX 0, 0, 235, 182
+IDD_SETTINGSDLG DIALOGEX 0, 0, 235, 199
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "screendump Options"
@@ -93,14 +93,16 @@ BEGIN
     CONTROL         "Generate Filenames Automatically",IDC_CHKAUTONAME,
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,84,124,10
     CONTROL         "Enable taking screenshots of video/movie windows",IDC_CHKHOG,
-                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,100,178,10
-    EDITTEXT        IDC_TXTDESTINATION,76,113,136,12,ES_AUTOHSCROLL
-    PUSHBUTTON      "...",IDC_BTNBROWSE,214,113,14,12
-    DEFPUSHBUTTON   "OK",IDOK,53,161,50,14
-    PUSHBUTTON      "Cancel",IDCANCEL,131,161,50,14
-    LTEXT           "Place screenshots in:",IDC_STATIC,7,115,68,8
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,98,178,10
+    EDITTEXT        IDC_TXTDESTINATION,76,125,136,12,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BTNBROWSE,214,125,14,12
+    DEFPUSHBUTTON   "OK",IDOK,53,178,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,131,178,50,14
+    LTEXT           "Place screenshots in:",IDC_STATIC,7,127,68,8
     LTEXT           "Quality (1-100)",IDC_STATIC,29,59,50,8
-    LTEXT           "Static",IDC_ERRORMSG,7,129,221,29,NOT WS_VISIBLE,WS_EX_STATICEDGE
+    LTEXT           "Static",IDC_ERRORMSG,7,144,221,29,NOT WS_VISIBLE,WS_EX_STATICEDGE
+    CONTROL         "Use clipboard (allows other programs to paste the image)",IDC_WANTCLIPBOARD,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,112,221,10
 END
 
 IDD_ABOUTDIALOG DIALOGEX 0, 0, 314, 122
@@ -161,13 +163,13 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,1,0,18
- PRODUCTVERSION 2,1,0,18
+ FILEVERSION 2,2,0,35
+ PRODUCTVERSION 2,2,0,35
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
- FILEFLAGS 0x1L
+ FILEFLAGS 0x21L
 #else
- FILEFLAGS 0x0L
+ FILEFLAGS 0x20L
 #endif
  FILEOS 0x4L
  FILETYPE 0x1L
@@ -182,11 +184,12 @@ BEGIN
             VALUE "FileDescription", "Small program that saves screenshots automatically"
             VALUE "FileVersion", "2.1.0.18"
             VALUE "InternalName", "screendump.exe"
-            VALUE "LegalCopyright", "None. Legal Stuff is gay."
-            VALUE "LegalTrademarks", "None. Legal Stuff is gay."
+            VALUE "LegalCopyright", "This program is covered by an artistic open source license."
+            VALUE "LegalTrademarks", "This program is covered by an artistic open source license."
             VALUE "OriginalFilename", "screendump.exe"
             VALUE "ProductName", "screendump"
-            VALUE "ProductVersion", "2.1.0.18"
+            VALUE "ProductVersion", "2.2.0.35"
+            VALUE "SpecialBuild", "Beta"
         END
     END
     BLOCK "VarFileInfo"
@@ -216,7 +219,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 228
         TOPMARGIN, 7
-        BOTTOMMARGIN, 175
+        BOTTOMMARGIN, 192
     END
 
     IDD_ABOUTDIALOG, DIALOG
@@ -259,6 +262,7 @@ BEGIN
         MENUITEM "AutoCapture",                 ID_TRAY_AUTOCAPTURE
         MENUITEM SEPARATOR
         MENUITEM "Options",                     ID_TRAY_OPTIONS
+        MENUITEM "Empty Clipboard",             ID_TRAY_EMPTYCLIPBOARD
         MENUITEM "About...",                    ID_TRAY_ABOUT
         MENUITEM SEPARATOR
         MENUITEM "Exit",                        ID_TRAY_EXIT

@@ -32,7 +32,9 @@ public:
 	afx_msg void OnBnClickedRadiopng();
 	afx_msg void OnBnClickedRadiojpeg();
 	afx_msg void OnBnClickedBtnbrowse();
-	virtual BOOL OnInitDialog();
+    afx_msg void OnEnChangeTxtdestination();
+	afx_msg void OnEnChangeTxtquality();	
+    virtual BOOL OnInitDialog();
 
 private:
     CButton c_OK;
@@ -44,11 +46,7 @@ private:
     CButton c_chkAutoName;
     CButton c_chkHog;
     BOOL initialized;
-public:
-	afx_msg void OnEnChangeTxtquality();
-private:
 	CStatic c_lblErrMsg;
-public:
-    afx_msg void OnEnChangeTxtdestination();
+    CButton c_chkWantClipboard;
 };
 #endif

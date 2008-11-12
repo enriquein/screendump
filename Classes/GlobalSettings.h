@@ -12,6 +12,7 @@ public:
 
 	selEncoder sEnc;
 	BOOL bAutoName;
+    BOOL bWantClipboard;
 	BOOL bEnableHog;
 	long lJpgQuality;
 	void ReadSettings();

@@ -55,7 +55,7 @@
 				TreatWChar_tAsBuiltInType="false"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -139,13 +139,14 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				StringPooling="true"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
 				EnableEnhancedInstructionSet="0"
 				TreatWChar_tAsBuiltInType="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="0"
 			/>
 			<Tool
@@ -190,6 +191,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+				HeapVerification="0"
+				HandleVerification="0"
+				LocksVerification="0"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

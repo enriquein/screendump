@@ -76,6 +76,7 @@ BEGIN_MESSAGE_MAP(CscreendumpDlg, CDialog)
     ON_WM_WINDOWPOSCHANGING()
 	ON_WM_QUERYENDSESSION()
 	ON_WM_CLOSE()
+    ON_COMMAND(ID_TRAY_EMPTYCLIPBOARD, &CscreendumpDlg::OnTrayEmptyclipboard)
 END_MESSAGE_MAP()
 
 BOOL CscreendumpDlg::OnInitDialog()
@@ -92,6 +93,7 @@ BOOL CscreendumpDlg::OnInitDialog()
 
     CGlobalSettings gs;
     wc->SetEncoder(gs.sEnc, gs.lJpgQuality);
+    wc->SetUseClipboard(gs.bWantClipboard);
 	CString exeName(CString(AfxGetAppName()) + CString(_T(".exe")));
 	CFileVersionInfo cfInfo;
 	cfInfo.ReadVersionInfo(exeName);
@@ -269,13 +271,17 @@ void CscreendumpDlg::DoRegisterHotKeys()
 
 void CscreendumpDlg::DoUnregisterHotKeys()
 {
-    if( (m_Atom != NULL) && (m_AtomAlt != NULL) )
+    if(m_Atom != NULL)  
     {
         UnregisterHotKey( m_hWnd, m_Atom->GetID() );
-        UnregisterHotKey( m_hWnd, m_AtomAlt->GetID() );
         delete m_Atom;
-	    delete m_AtomAlt;
 		m_Atom = NULL;
+    }
+    
+    if (m_AtomAlt != NULL) 
+    {
+        UnregisterHotKey( m_hWnd, m_AtomAlt->GetID() );    
+	    delete m_AtomAlt;    
 		m_AtomAlt = NULL;
     }
 }
@@ -312,6 +318,7 @@ void CscreendumpDlg::ToggleTrayMenu(BOOL bEnable)
 	m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_OPENDEST, lFlags);
 	m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_OPTIONS, lFlags);
 	m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_AUTOCAPTURE, lFlags);
+    m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_EMPTYCLIPBOARD, lFlags);
 }
 
 // Starts the hog video window. 
@@ -411,4 +418,13 @@ void CscreendumpDlg::OnClose()
 	ShellIcon_Terminate(); 
 	CDialog::OnClose();
 	EndDialog(1);
+}
+
+void CscreendumpDlg::OnTrayEmptyclipboard()
+{
+    if(OpenClipboard())
+    {
+        EmptyClipboard();
+        CloseClipboard();
+    }
 }
