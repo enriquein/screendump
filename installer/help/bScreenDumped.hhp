@@ -1,0 +1,25 @@
+[OPTIONS]
+Auto Index=Yes
+Compatibility=1.1 or later
+Compiled file=bScreenDumped.chm
+Contents file=toc.hhc
+Default Font=Verdana,8,0
+Default topic=srchtml\whatis.htm
+Display compile progress=No
+Index file=Index.hhk
+Language=0x409 English (United States)
+Title=bScreenDumped Help
+
+
+[FILES]
+srchtml\doc.htm
+srchtml\faq.htm
+srchtml\features.htm
+srchtml\knownissues.htm
+srchtml\whatis.htm
+srchtml\contact.htm
+srchtml\options.htm
+srchtml\autocapture.htm
+
+[INFOTYPES]
+

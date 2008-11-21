@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>bScreenDumped Options</title>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <div class="heading">
+        Options window
+    </div>
+    <hr>
+    <br>
+    The options window looks like this (it may vary depending on
+    the version, but the functionality should be the same):
+    <br><br>
+    <div align="center"><img src="images/optionswindow.jpg" border="2"></div>
+    <br>
+    <div class="subheading">Save Image As</div>
+    This area lets you choose which image format to use. A quick rundown of these
+    3 formats:
+    <ul>
+    <li>BMP: uncompressed bitmap. Higher filesize. This format is lossless since it's practically a raw image.</li>
+    <li>PNG: compressed image. This type of compression does not affect the image's quality. Good size vs quality ratio.</li>
+    <li>JPG: compressed image. This type of compression can affect the image's quality. This is the default setting since
+        it's a format most people are familiar with. The quality can be adjusted on a scale from 1 to 100, where 1 is poor
+        quality and 100 is best quality. The default is 100.</li>
+    </ul>
+    <div class="subheading">Generate filenames automatically</div>
+    This option tells the program to automatically generate a filename for the screenshot. The current format for the filename is
+    bSDump-YYYY-MM-DD--HH-mm-SS-mss.jpg (although this might change in future versions).
+    The capital letters have a special meaning, YYYY means full year, MM the month, DD the day, and so on. So for example let's say
+    today is Tuesday, September 11, 2008 and its 11:27pm (with 12 seconds and 230 milliseconds) then the filename will be: 
+    <i>bSDump-2008-09-11--23-27-12-230.jpg</i>. This might seem like a bit of overkill, but when you have 3 years worth of 
+    screenshots in one folder, believe me it pays off. It also makes it easier to take succesive screenshots. For example if I manage
+    to press the print screen key 10 times in a second, I'll get 10 different screenshots which I can then view in perfect chronological
+    order.
+    <br>
+    <br>
+    Of course, if you don't want it to generate the names automatically, you can disable this option. This brings up the familiar
+    "Save As..." window and then you can choose whichever name and folder you want to save the image to.
+    <br><br>
+    <div class="subheading">Enable taking screenshots of video/movie windows</div>
+    The way video playback works in MS Windows makes it impossible to catch a screenshot
+    of a video/movie with standard methods. This option enables a workaround that lets the program
+    capture any and all video playback without issue. There are slight limitations when using 
+    multiple monitors for display, and those are discussed in the <a href="knownissues.htm">known issues</a> section.
+    <br><br>
+    Note: this option required a program restart in version 2.1 and older. After version 2.2 a restart is no longer necessary.
+    <br><br>
+    <div class="subheading">Place screenshots in</div>
+    This is the place where you specify where you want the program to store the automatically generated screenshots.
+    Clicking on the &quot;...&quot; button brings up a window that lets you choose the folder.
+</body>
+</html>

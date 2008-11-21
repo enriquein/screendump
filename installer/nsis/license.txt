@@ -1,0 +1,64 @@
+----------------------------------------------------------------
+bScreenDumped LEGAL STUFF 
+(AKA "Legal Mumbo Jumbo". I hate this part, by I guess 
+it's mandatory...)
+
+BY USING THIS SOFTWARE (bScreenDumped) YOU
+ACCEPT ALL THE TERMS AND CONDITIONS OF THIS AGREEMENT.
+If you do not agree with the terms and conditions of this
+Agreement, just don't install the software (I won't take it
+personal, don't worry).
+
+This package contains software (Software). The term
+Software shall also include any upgrades, notified versions,
+updates, additions and copies of the Software licensed to you
+by Indie Code Labs (that's us). Indie Code Labs grants to you a 
+non-exclusive license to use the Software, provided that you
+agree the following:
+
+1. Use of the Software.
+
+You may:
+- Install the Software on as many computers as you wish. 
+- Recommend it to friends/family.
+- Point other people to the Software's web site.
+- You may use this software on ANY computer under ANY
+  environment. In other words, you may use it at home and at
+  work if you wish. This license is valid for commercial and
+  industrial purposes as well. 
+
+You may NOT (for people lacking common sense): 
+- Reverse Engineer the Software (why would you want to, anyway?)
+- Sell the software as yours. 
+- Redistribute the software as yours. 
+- Make any type of profit off the Software.
+- Patch/Corrupt/Trojan/HexEdit the Software.
+- For the time being, you may NOT host this file on your 
+  servers (not even for mirroring purposes).
+
+2. Copyright.
+The Software is the intellectual property of Indie Code Labs.
+Except as stated above, this Agreement does not grant you any 
+rights to intellectual property rights in this Software. 
+
+3. Transfer
+You may not rent, lease, or sub-license the Software.
+(Did I just repeat myself?)
+
+4. Limited Warranty And Liability
+INDIE CODE LABS DOES NOT AND CANNOT WARRANT THE
+PERFORMANCE OR RESULTS YOU MAY OBTAIN BY USING THE SOFTWARE. 
+IN NO EVENT WILL INDIE CODE LABS OR ITS SEXY LEAD DEVELOPER
+BE LIABLE TO YOU FOR ANY CONSEQUENTIAL, INCIDENTAL OR SPECIAL
+DAMAGES, INCLUDING ANY LOST PROFITS OR LOST SAVINGS. THE SOFTWARE
+IS PROVIDED FREE OF CHARGE AND YOU SHOULD BE THANKFUL FOR IT! IN ANY
+CASE, IF THERE WERE A SITUATION IN WHICH YOU GET A GOOD LAWYER AND
+INDIE CODE LABS IS FORCED TO BE HELD LIABLE FOR COSTS, THE SUM 
+AMOUNT OF LIABILITY WILL BE EQUAL TO THE TOTAL COST OF THE SOFTWARE,
+WHICH AMOUNTS TO 0 (ZERO) DOLLARS AND 0 (ZERO) CENTS. 
+
+5. Other Notes
+If you have any questions regarding this agreement send an email
+to braindead@indiecodelabs.com with "EULA" as the Subject.
+
+6. Enjoy the program.

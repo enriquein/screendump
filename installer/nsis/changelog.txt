@@ -1,0 +1,138 @@
+
+bScreenDumped Changes by Version. 
+
+  _____
+ / 2.1 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 2.1; Released on 6/18/2005
+|
+|  + Fixed an initialization fuckup. I forgot to set
+|    the OSVERSION size correctly, so the program almost
+|    never knew which version of Windows it was running on.
+|    This domino effected into the program not reading its 
+|    settings, and other misc side effects.
+|
+|  + Added: AutoCapture Dialog. This dialog takes care of the AutoCapture feature.
+|    This allows the user to set a interval at which the program will automatically
+|    take screenshots.For now it's a bit limited, I'll add more features at a
+|    later time.
+
+  _____
+ / 2.0 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 2.0; Released on 5/20/2005 
+|
+|  + Added support for PNG format. 
+|
+|  + Added ability to take screenshots of Videos/Movies.
+|
+|  + Completely rewrote the program in Visual C++ 7 (no more need of VB Runtimes).
+|
+|  + Added support to take screenshots on multiple displays (2+ monitors).
+
+  _____
+ / 1.0 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 1.0; Released on 2/21/05 
+|
+|  + Minor code changes. Speedups that might be too slight to be even noticed. 
+|
+|  + Fixed issue with the 'Save As...' dialogue not saving the files.
+|
+|  + Fixed issue with settings not being saved under some circumstances.
+|
+|  + Program will use the User's Profile Path under Windows NT-based systems.
+|
+|  + Adjusted 'About' window to have the thanks section.
+|
+|  + Rearanged Systray Menu.
+|
+|  + Declared stable enough to be the 1.0 release.
+
+  _____
+ / 0.7 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 0.7; Released on 1/10/05 
+|
+|  + Fixed some minor issues with the 'Save File Dialogue' when not
+|    using automatic filenames.
+|
+|  + Automatic filenames now include the milliseconds. This prevents the
+|    screenshots from being overwritten when taking consecutive screenshots.
+|    This made it look like the program had lag while dumping the images, since
+|    most files were overwritten up to 2-3 times.
+|
+|  + Pushed down the delay for retry capture to 100 milliseconds. After 120-200
+|    consecutive screenshots it still only needed to retry once!
+|
+|  + Also pushed down the retry delay for the System Tray Icon. This will probably
+|    make it look like it loaded faster.
+
+  _____
+ / 0.6 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 0.6; Released on 12/16/04 
+|
+|  + Added a definite workaround for the Shell_IconInitialize procedure. Now the
+|    System Tray Icon will always appear.
+
+  _____
+ / 0.5 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 0.5; Released on 11/26/04 
+|
+|  + Added a check for when the gdiplus.dll didn't initialize properly. Now if for
+|    some reason the dll doesn't load, you can still use the program and dump 
+|    bmp's. Note though, that if you don't have gdiplus.dll on your system, the
+|    program will exit with an error: 'Cannot find file gdiplus.'
+|
+|  + Tested the program on Windows 95. The JPEG's look kinda funny (they seem to
+|    ignore the encoder's 'Quality' value), but the program works like a charm.
+
+  _____
+ / 0.4 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 0.4; Released on 11/22/04 
+|
+|  + Added option to save screenshots as jpg's.
+| 
+|  + Added another workaround for the "Failed to create shell icon" error.
+
+  _____
+ / 0.3 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 0.3; Released on 10/23/04 
+|
+|  + Added preliminary bugfix for an Initialization error "Failed to create 
+|    shell icon".  
+  
+  _____
+ / 0.2 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 0.2; Released on 10/06/04 
+|
+|  + Fixed an issue where the System Tray Icon Menu wouldn't dissapear after 
+|    clicking outside the menu area.  
+| 
+|  + Added feature to name files manually after hitting the PrintScreen key.
+|
+|  + Changed the "Browse for folder" window to the Windows Common Dialog one.
+|
+|  + Changed the About Window. 
+|
+|  + Added Menu Item to open the selected destination folder. If no folder was 
+|    specified then it tries to open either the last one used to save a 
+|    screenshot or the program's folder.
+|
+|  + Fixed a _really_ nasty bug where the program would continously give an error
+|    registering the hotkeys but would never quit. A stack overflow error would
+|    then occur and all hell broke loose. Also realized that by design, no 2 
+|    programs can be intercepting the same keys as hotkeys.
+|
+|  + Fixed a bug where the program would accidentally prevent Windows from 
+|    shutting down.
+
+  _____
+ / 0.1 \
+ ---------------------------------------------------------------------------------
+| bScreenDumped 0.1; Released on 10/02/04 - Initial Release.
