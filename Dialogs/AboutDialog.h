@@ -1,8 +1,8 @@
 #pragma once
-#include "afxwin.h"
 
 #ifndef CABOUTDIALOG_H
 #define CABOUTDIALOG_H
+#include "afxwin.h"
 // CAboutDialog dialog
 
 class CAboutDialog : public CDialog
@@ -20,11 +20,15 @@ public:
 
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-
+    CStatic c_LogoImg;    
+    CString strVersionText;
+    CString strBuildDate;
+    
 	DECLARE_MESSAGE_MAP()
 public:
 	virtual BOOL OnInitDialog();
-    CStatic c_LogoImg;
-    afx_msg void OnBnClickedOk();
+    afx_msg void OnStnClickedUrllink();
+protected:
+    CStatic c_BuildText;
 };
 #endif

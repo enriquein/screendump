@@ -105,20 +105,20 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,112,221,10
 END
 
-IDD_ABOUTDIALOG DIALOGEX 0, 0, 314, 199
-STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_POPUP | WS_CAPTION | WS_SYSMENU
+IDD_ABOUTDIALOG DIALOGEX 0, 0, 314, 167
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "About screendump (version)"
-FONT 8, "MS Shell Dlg", 0, 0, 0x0
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "Close",IDOK,131,176,52,16
+    DEFPUSHBUTTON   "Close",IDOK,130,144,52,16
     LTEXT           "screendump: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",IDC_STATIC,56,7,244,46
     LTEXT           "This program is covered under a free, open source license. You may install and use this program anywhere you wish. This license includes educational, personal, and commercial purposes.",IDC_STATIC,7,57,300,34
-    LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,115,162,82,8
-    CONTROL         135,IDC_LOGOIMG,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_REALSIZEIMAGE | WS_BORDER,7,7,45,41
-    LTEXT           "Static",IDC_STATIC,118,112,19,8
-    CONTROL         "For updates, news, and source code visit our website at <a href=""http://www.indiecodelabs.com"">http://www.indiecodelabs.com</a>.",IDC_SYSLINK1,
-                    "SysLink",WS_TABSTOP,7,148,300,14
+    LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,116,129,82,8
+    CONTROL         135,IDC_LOGOIMG,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_REALSIZEIMAGE,7,7,45,41
+    LTEXT           "http://www.indiecodelabs.com",IDC_URLLINK,189,90,107,8,SS_NOTIFY
+    LTEXT           "For more information and source code, visit the website:",IDC_STATIC,7,90,182,8
+    LTEXT           "Static",IDC_BUILDTEXT,7,105,300,18
 END
 
 IDD_AUTOTIMER DIALOGEX 0, 0, 329, 156
@@ -230,7 +230,7 @@ BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 307
         TOPMARGIN, 7
-        BOTTOMMARGIN, 192
+        BOTTOMMARGIN, 160
     END
 
     IDD_AUTOTIMER, DIALOG

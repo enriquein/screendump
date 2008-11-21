@@ -247,6 +247,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Classes\Hyperlinks.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Dialogs\OptionsDialog.cpp"
 				>
 			</File>
@@ -321,6 +325,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Classes\Hyperlinks.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Classes\LimitSingleInstance.h"
 				>
 			</File>
@@ -375,10 +383,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\icon-src\progimage-64.png"
-			>
-		</File>
 		<File
 			RelativePath=".\res\screendump.manifest"
 			>
