@@ -3,7 +3,6 @@
 #define GLOBALSETTINGS_H
 #include "WindowCapture.h"
 
-// TODO: Make this class throw exceptions when it should.
 class CGlobalSettings
 {
 public:
