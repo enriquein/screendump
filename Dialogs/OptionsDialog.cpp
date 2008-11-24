@@ -79,7 +79,7 @@ void OptionsDialog::OnBnClickedOk()
 	}
 
 	// Save Settings
-	CGlobalSettings gs;
+	GlobalSettings gs;
     gs.bAutoName = (c_chkAutoName.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
 	gs.bEnableHog = (c_chkHog.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
     gs.bWantClipboard = (c_chkWantClipboard.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
@@ -153,7 +153,7 @@ BOOL OptionsDialog::OnInitDialog()
 void OptionsDialog::initializeControls()
 {
 	// Load Settings
-	CGlobalSettings gs;
+	GlobalSettings gs;
 
 	// Initialize Controls
 	switch(gs.sEnc)

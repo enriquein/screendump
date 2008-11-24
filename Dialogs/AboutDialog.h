@@ -1,17 +1,17 @@
 #pragma once
 
-#ifndef CABOUTDIALOG_H
-#define CABOUTDIALOG_H
+#ifndef AboutDialog_H
+#define AboutDialog_H
 #include "afxwin.h"
-// CAboutDialog dialog
+// AboutDialog dialog
 
-class CAboutDialog : public CDialog
+class AboutDialog : public CDialog
 {
-	DECLARE_DYNAMIC(CAboutDialog)
+	DECLARE_DYNAMIC(AboutDialog)
 
 public:
-	CAboutDialog(CWnd* pParent = NULL);   // standard constructor
-	virtual ~CAboutDialog();
+	AboutDialog(CWnd* pParent = NULL);   // standard constructor
+	virtual ~AboutDialog();
 
     static UINT UWM_REQUESTVERSION;
 

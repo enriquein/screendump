@@ -10,21 +10,21 @@
 
 //This code is partly from MSDN KB Q243953 in case you lose the article and wonder
 //where this code came from.
-class CLimitSingleInstance
+class LimitSingleInstance
 {
 protected:
     DWORD  m_dwLastError;
     HANDLE m_hMutex;
 
 public:
-CLimitSingleInstance(LPCTSTR GUID, UINT kind = UNIQUE_TO_SESSION)
+LimitSingleInstance(LPCTSTR GUID, UINT kind = UNIQUE_TO_SESSION)
 {
     CString strUniqueID = createExclusionName(GUID, kind);
     m_hMutex = CreateMutex(NULL, FALSE, strUniqueID); //do early
     m_dwLastError = GetLastError(); //save for use later...
 }
 
-~CLimitSingleInstance()
+~LimitSingleInstance()
 {
     if (m_hMutex)  //Do not forget to close handles.
     {

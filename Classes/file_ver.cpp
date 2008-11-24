@@ -4,7 +4,7 @@
 //		File:		file_ver.cpp
 //					------------
 //
-//		Content:	Implementation of class CFileVersionInfo.
+//		Content:	Implementation of class FileVersionInfo.
 //					Manages the retrieval of various information from a
 //					Win32 file image.
 //
@@ -53,7 +53,7 @@ static char THIS_FILE[]=__FILE__;
 //*****************************************************************************
 //*****************************************************************************
 //
-//				CFileVersionInfo private static data members
+//				FileVersionInfo private static data members
 //				--------------------------------------------
 //
 //  (used by the "GetVersion" member function)
@@ -63,12 +63,12 @@ static char THIS_FILE[]=__FILE__;
 
 // Format string for browsing the variable resource info block
 // ***********************************************************
-const LPCTSTR CFileVersionInfo::m_lpszFmtStringFileInfo = 
+const LPCTSTR FileVersionInfo::m_lpszFmtStringFileInfo = 
 										_T("\\StringFileInfo\\%04x%04x\\%s");
 
 // Specific pieces of version information (corresponding to SFI_xxx constants)
 // ***************************************************************************
-const LPCTSTR CFileVersionInfo::m_lpszStringFileInfos[] =
+const LPCTSTR FileVersionInfo::m_lpszStringFileInfos[] =
 { 
 	_T("CompanyName"),			// SFI_COMPANYNAME
 	_T("FileDescription"),		// SFI_FILEDESCRIPTION
@@ -90,21 +90,21 @@ const LPCTSTR CFileVersionInfo::m_lpszStringFileInfos[] =
 //*****************************************************************************
 //*****************************************************************************
 //
-//					CFileVersionInfo Construction
+//					FileVersionInfo Construction
 //					-----------------------------
 //
 //*****************************************************************************
 //*****************************************************************************
 
 // standard constructor
-CFileVersionInfo::CFileVersionInfo()
+FileVersionInfo::FileVersionInfo()
 {
 	m_pVersionInfo = NULL;
 	Clear();	// initialize all to zero
 }
 
 // copy constructor
-CFileVersionInfo::CFileVersionInfo(const CFileVersionInfo& fvi)
+FileVersionInfo::FileVersionInfo(const FileVersionInfo& fvi)
 {
 	CString strFile = fvi.GetFilename();
 	if (!strFile.IsEmpty())
@@ -119,7 +119,7 @@ CFileVersionInfo::CFileVersionInfo(const CFileVersionInfo& fvi)
 }
 
 // initialize from a specific file (by name)
-CFileVersionInfo::CFileVersionInfo(LPCTSTR lpszFile)
+FileVersionInfo::FileVersionInfo(LPCTSTR lpszFile)
 {
 	if (lpszFile && _tcslen(lpszFile))
 	{
@@ -137,14 +137,14 @@ CFileVersionInfo::CFileVersionInfo(LPCTSTR lpszFile)
 //*****************************************************************************
 //*****************************************************************************
 //
-//					CFileVersionInfo Destruction
+//					FileVersionInfo Destruction
 //					----------------------------
 //
 //*****************************************************************************
 //*****************************************************************************
 
 // perform clean up as necessary
-CFileVersionInfo::~CFileVersionInfo()
+FileVersionInfo::~FileVersionInfo()
 {
 	Clear();
 }
@@ -154,7 +154,7 @@ CFileVersionInfo::~CFileVersionInfo()
 //*****************************************************************************
 //*****************************************************************************
 //
-//					CFileVersionInfo Operations
+//					FileVersionInfo Operations
 //					---------------------------
 //
 //*****************************************************************************
@@ -162,7 +162,7 @@ CFileVersionInfo::~CFileVersionInfo()
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::Clear
+//	Function:		FileVersionInfo::Clear
 //					-----------------------
 //
 //					Clear all data, free memory if necessary.
@@ -178,7 +178,7 @@ CFileVersionInfo::~CFileVersionInfo()
 // ----------------------------------------------------------------------------
 
 // clear all data
-void CFileVersionInfo::Clear()
+void FileVersionInfo::Clear()
 {
 	m_strFilename.Empty();
 	m_dwTransInfo = 0L;
@@ -193,7 +193,7 @@ void CFileVersionInfo::Clear()
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::ReadVersionInfo
+//	Function:		FileVersionInfo::ReadVersionInfo
 //					---------------------------------
 //
 //					Read a file's version resource information block.
@@ -231,7 +231,7 @@ void CFileVersionInfo::Clear()
 // ----------------------------------------------------------------------------
 
 // read the file's version information
-BOOL CFileVersionInfo::ReadVersionInfo(const CString& strFile)
+BOOL FileVersionInfo::ReadVersionInfo(const CString& strFile)
 {
 	DWORD	dwDummy;
 	UINT	nSize;
@@ -301,7 +301,7 @@ BOOL CFileVersionInfo::ReadVersionInfo(const CString& strFile)
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetCharSetName
+//	Function:		FileVersionInfo::GetCharSetName
 //					--------------------------------
 //
 //					Get description of character set (code page) which
@@ -328,7 +328,7 @@ BOOL CFileVersionInfo::ReadVersionInfo(const CString& strFile)
 // ----------------------------------------------------------------------------
 
 // get name of charset of version info block (98/NT5 or higher)
-CString CFileVersionInfo::GetCharSetName() const
+CString FileVersionInfo::GetCharSetName() const
 { 
 // CPINFOEX struct and ::GetCPInfoEx API not available in older
 // versions of Windows ...
@@ -371,7 +371,7 @@ CString CFileVersionInfo::GetCharSetName() const
 //*****************************************************************************
 //*****************************************************************************
 //
-//					CFileVersionInfo Attributes
+//					FileVersionInfo Attributes
 //					---------------------------
 //
 //*****************************************************************************
@@ -380,7 +380,7 @@ CString CFileVersionInfo::GetCharSetName() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetVersionInfo
+//	Function:		FileVersionInfo::GetVersionInfo
 //					--------------------------------
 //
 //					Retrieve a specific piece of information from a file's
@@ -490,7 +490,7 @@ CString CFileVersionInfo::GetCharSetName() const
 // ----------------------------------------------------------------------------
 
 // Get a specific aspect of the file version resource (see above)
-CString CFileVersionInfo::GetVersionInfo(int nIndex) const
+CString FileVersionInfo::GetVersionInfo(int nIndex) const
 {
 	// First check if object data and index range are valid
 	// ****************************************************
@@ -526,7 +526,7 @@ CString CFileVersionInfo::GetVersionInfo(int nIndex) const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::IsVersionInfoAvailable
+//	Function:		FileVersionInfo::IsVersionInfoAvailable
 //					----------------------------------------
 //
 //					Check if a file's version resource information block
@@ -555,7 +555,7 @@ CString CFileVersionInfo::GetVersionInfo(int nIndex) const
 // ----------------------------------------------------------------------------
 
 // Determine, if a specific aspect of the file version info is present
-BOOL CFileVersionInfo::IsVersionInfoAvailable(int nIndex) const
+BOOL FileVersionInfo::IsVersionInfoAvailable(int nIndex) const
 {
 	// First check if object data and index range are valid
 	// ****************************************************
@@ -590,7 +590,7 @@ BOOL CFileVersionInfo::IsVersionInfoAvailable(int nIndex) const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetTargetOs
+//	Function:		FileVersionInfo::GetTargetOs
 //					-----------------------------
 //
 //					Returns a string naming the operating system this
@@ -631,7 +631,7 @@ BOOL CFileVersionInfo::IsVersionInfoAvailable(int nIndex) const
 // ----------------------------------------------------------------------------
 
 // get name of targwet operating system
-CString CFileVersionInfo::GetTargetOs(UINT nID) const
+CString FileVersionInfo::GetTargetOs(UINT nID) const
 {
 	CString str, 
 			strRes;
@@ -658,7 +658,7 @@ CString CFileVersionInfo::GetTargetOs(UINT nID) const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetFileType
+//	Function:		FileVersionInfo::GetFileType
 //					-----------------------------
 //
 //					Returns a string describing the type of the current file.
@@ -703,7 +703,7 @@ CString CFileVersionInfo::GetTargetOs(UINT nID) const
 // ----------------------------------------------------------------------------
 
 // get file type description
-CString CFileVersionInfo::GetFileType(UINT nID) const
+CString FileVersionInfo::GetFileType(UINT nID) const
 {
 	CString str, 
 			strRes;

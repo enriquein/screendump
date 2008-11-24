@@ -3,13 +3,13 @@
 #define AUTOCAPTURE_H
 #include "afxwin.h"
 
-class CAutoCapture : public CDialog
+class AutoCapture : public CDialog
 {
-	DECLARE_DYNAMIC(CAutoCapture)
+	DECLARE_DYNAMIC(AutoCapture)
 
 public:
-	CAutoCapture(CWnd* pParent = NULL);   // standard constructor
-	virtual ~CAutoCapture();
+	AutoCapture(CWnd* pParent = NULL);   // standard constructor
+	virtual ~AutoCapture();
     static UINT UWM_TIMER_AC;
     static UINT UWM_CAPTURESCREEN;
     static UINT UWM_CAPTUREWINDOW;

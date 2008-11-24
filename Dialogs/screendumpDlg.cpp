@@ -9,17 +9,17 @@
 #include "..\Classes\file_ver.h"
 #include "..\Classes\ErrorString.h"
 
-UINT CscreendumpDlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
-UINT CscreendumpDlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY-{963FEF79-2137-4fa7-A0D9-D1C4F1D32298}"));
-UINT CscreendumpDlg::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
-UINT CscreendumpDlg::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
-UINT CscreendumpDlg::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
+UINT screendumpDlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
+UINT screendumpDlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY-{963FEF79-2137-4fa7-A0D9-D1C4F1D32298}"));
+UINT screendumpDlg::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
+UINT screendumpDlg::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
+UINT screendumpDlg::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
-CscreendumpDlg::CscreendumpDlg(CWnd* pParent /*=NULL*/) : CDialog(CscreendumpDlg::IDD, pParent)
+screendumpDlg::screendumpDlg(CWnd* pParent /*=NULL*/) : CDialog(screendumpDlg::IDD, pParent)
 {
 	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
     // Check if GDI+ was successfully loaded:
@@ -41,7 +41,7 @@ CscreendumpDlg::CscreendumpDlg(CWnd* pParent /*=NULL*/) : CDialog(CscreendumpDlg
 	m_runningPath = m_runningPath.Left(m_runningPath.ReverseFind(_T('\\')) + 1);
 }
 
-CscreendumpDlg::~CscreendumpDlg()
+screendumpDlg::~screendumpDlg()
 {
 	if (wc != NULL)
 	    delete wc;
@@ -53,17 +53,17 @@ CscreendumpDlg::~CscreendumpDlg()
 		delete m_AtomAlt;
 }
 
-void CscreendumpDlg::DoDataExchange(CDataExchange* pDX)
+void screendumpDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialog::DoDataExchange(pDX);
 }
 
-BEGIN_MESSAGE_MAP(CscreendumpDlg, CDialog)
-    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_SHELLICON_MSG, ShellIconCallback)
-    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_TOGGLETRAY, OnToggleTrayMsg)
-    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTURESCREEN, OnCaptureScreenMsg)
-    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_CAPTUREWINDOW, OnCaptureWindowMsg)
-    ON_REGISTERED_MESSAGE(CscreendumpDlg::UWM_REQUESTVERSION, OnRequestVersion)
+BEGIN_MESSAGE_MAP(screendumpDlg, CDialog)
+    ON_REGISTERED_MESSAGE(screendumpDlg::UWM_SHELLICON_MSG, ShellIconCallback)
+    ON_REGISTERED_MESSAGE(screendumpDlg::UWM_TOGGLETRAY, OnToggleTrayMsg)
+    ON_REGISTERED_MESSAGE(screendumpDlg::UWM_CAPTURESCREEN, OnCaptureScreenMsg)
+    ON_REGISTERED_MESSAGE(screendumpDlg::UWM_CAPTUREWINDOW, OnCaptureWindowMsg)
+    ON_REGISTERED_MESSAGE(screendumpDlg::UWM_REQUESTVERSION, OnRequestVersion)
 	ON_MESSAGE(WM_HOTKEY, ProcessHotKey)
 	ON_COMMAND(ID_TRAY_ABOUT, OnTrayAboutClick)
 	ON_COMMAND(ID_TRAY_EXIT, OnTrayExitClick)
@@ -74,10 +74,10 @@ BEGIN_MESSAGE_MAP(CscreendumpDlg, CDialog)
     ON_WM_WINDOWPOSCHANGING()
 	ON_WM_QUERYENDSESSION()
 	ON_WM_CLOSE()
-    ON_COMMAND(ID_TRAY_EMPTYCLIPBOARD, &CscreendumpDlg::OnTrayEmptyclipboard)
+    ON_COMMAND(ID_TRAY_EMPTYCLIPBOARD, &screendumpDlg::OnTrayEmptyclipboard)
 END_MESSAGE_MAP()
 
-BOOL CscreendumpDlg::OnInitDialog()
+BOOL screendumpDlg::OnInitDialog()
 {
 	CDialog::OnInitDialog();
     if(wc == NULL)
@@ -89,7 +89,7 @@ BOOL CscreendumpDlg::OnInitDialog()
     }
     RefreshSettings();
 	CString exeName(CString(AfxGetAppName()) + CString(_T(".exe")));
-	CFileVersionInfo cfInfo;
+	FileVersionInfo cfInfo;
 	cfInfo.ReadVersionInfo(exeName);
 	if( cfInfo.IsValid() )
 	{
@@ -105,7 +105,7 @@ BOOL CscreendumpDlg::OnInitDialog()
 	return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
-void CscreendumpDlg::ShellIcon_Initialize()
+void screendumpDlg::ShellIcon_Initialize()
 {
     CString ttipText;
 	NOTIFYICONDATA ni;
@@ -136,7 +136,7 @@ void CscreendumpDlg::ShellIcon_Initialize()
 	}
 }
 
-void CscreendumpDlg::ShellIcon_Terminate()
+void screendumpDlg::ShellIcon_Terminate()
 {
 	NOTIFYICONDATA ni;
 	ni.cbSize = NOTIFYICONDATA_V1_SIZE; 
@@ -145,7 +145,7 @@ void CscreendumpDlg::ShellIcon_Terminate()
 	Shell_NotifyIcon(NIM_DELETE, &ni);
 }
 
-LRESULT CscreendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
+LRESULT screendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 {
     CPoint pt;
     switch (lParam)
@@ -167,26 +167,26 @@ LRESULT CscreendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CscreendumpDlg::OnTrayExitClick()
+void screendumpDlg::OnTrayExitClick()
 {
 	OnClose();
 }
 
-void CscreendumpDlg::OnTrayAboutClick()
+void screendumpDlg::OnTrayAboutClick()
 {
-	CAboutDialog cAbt((CWnd*)this);
+	AboutDialog cAbt((CWnd*)this);
 	ToggleTrayMenu(FALSE);
 	cAbt.DoModal();
 	ToggleTrayMenu(TRUE);
 }
 
-void CscreendumpDlg::OnTrayOpenDest()
+void screendumpDlg::OnTrayOpenDest()
 {
-	CGlobalSettings gs;
+	GlobalSettings gs;
 	ShellExecute(m_hWnd, _T("open"), gs.getOutputDir(), NULL, NULL, SW_SHOWNORMAL);
 }
 
-void CscreendumpDlg::OnTrayOptionsClick()
+void screendumpDlg::OnTrayOptionsClick()
 {
 	OptionsDialog oDl((CWnd*)this);
 	ToggleTrayMenu(FALSE);
@@ -195,38 +195,38 @@ void CscreendumpDlg::OnTrayOptionsClick()
 	ToggleTrayMenu(TRUE);
 }
 
-void CscreendumpDlg::OnTrayAutoCapture()
+void screendumpDlg::OnTrayAutoCapture()
 {
-	CAutoCapture cAC((CWnd*)this);
+	AutoCapture cAC((CWnd*)this);
 	ToggleTrayMenu(FALSE);
 	cAC.DoModal();
 	ToggleTrayMenu(TRUE);
 }
 
 // Allows other dialogs to request Screen Captures.
-LRESULT CscreendumpDlg::OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam)
+LRESULT screendumpDlg::OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam)
 {
     RequestCapture(ct_Screen);
     return 0;
 }
 
 // Allows other dialogs to request Window Captures 
-LRESULT CscreendumpDlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
+LRESULT screendumpDlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
 {
     RequestCapture(ct_Window);
     return 0;
 }
 
-void CscreendumpDlg::RefreshSettings()
+void screendumpDlg::RefreshSettings()
 {
-    CGlobalSettings gs;
+    GlobalSettings gs;
     wc->SetEncoder(gs.sEnc, gs.lJpgQuality);
     wc->SetUseClipboard(gs.bWantClipboard);
     StartHog();
 }
 
 // (BOOL)wParam tells us if we want to enable/disable the tray. TRUE = enable, FALSE = disable.
-LRESULT CscreendumpDlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
+LRESULT screendumpDlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
 {
     if(wParam != NULL)
     {
@@ -236,18 +236,18 @@ LRESULT CscreendumpDlg::OnToggleTrayMsg(WPARAM wParam, LPARAM lParam)
 }
 
 // (CString *)(LRESULT) returns a pointer to a CString object that contains our version number.
-LRESULT CscreendumpDlg::OnRequestVersion(WPARAM wParam, LPARAM lParam)
+LRESULT screendumpDlg::OnRequestVersion(WPARAM wParam, LPARAM lParam)
 {
     return lParam = (LRESULT) &m_progVersion;
 }
 
-void CscreendumpDlg::DoRegisterHotKeys()
+void screendumpDlg::DoRegisterHotKeys()
 {
 	long result, resultAlt;
-	m_Atom = new CGlobalAtom; 
+	m_Atom = new GlobalAtom; 
 	result = RegisterHotKey( m_hWnd, m_Atom->GetID(), 0, VK_SNAPSHOT);
 	Sleep(150); // Since we use the system time to initialize the atoms, we need to wait to avoid getting the same timestamp.
-	m_AtomAlt = new CGlobalAtom;
+	m_AtomAlt = new GlobalAtom;
 	resultAlt = RegisterHotKey(m_hWnd, m_AtomAlt->GetID(), MOD_ALT, VK_SNAPSHOT);
 	if( (result == 0) || (resultAlt == 0) )
 	{
@@ -256,7 +256,7 @@ void CscreendumpDlg::DoRegisterHotKeys()
 	}
 }
 
-void CscreendumpDlg::DoUnregisterHotKeys()
+void screendumpDlg::DoUnregisterHotKeys()
 {
     if(m_Atom != NULL)  
     {
@@ -273,7 +273,7 @@ void CscreendumpDlg::DoUnregisterHotKeys()
     }
 }
 
-LRESULT CscreendumpDlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
+LRESULT screendumpDlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 {
     if( wParam == m_Atom->GetID() )
     {
@@ -289,7 +289,7 @@ LRESULT CscreendumpDlg::ProcessHotKey(WPARAM wParam, LPARAM lParam)
 	return 0;
 }
 
-void CscreendumpDlg::ToggleTrayMenu(BOOL bEnable)
+void screendumpDlg::ToggleTrayMenu(BOOL bEnable)
 {	
 	UINT lFlags;
 	if(bEnable)
@@ -310,12 +310,12 @@ void CscreendumpDlg::ToggleTrayMenu(BOOL bEnable)
 
 // Starts the hog video window. 
 // Verifies if the setting is enabled before doing any work.
-void CscreendumpDlg::StartHog()
+void screendumpDlg::StartHog()
 {
 	// Check if its already running. If it is, then ignore the hog request.
 	if(!m_Hog.IsHogging())
 	{
-		CGlobalSettings gs;
+		GlobalSettings gs;
 		if (gs.bEnableHog)
 		{
 			CString strFileName( m_runningPath + _T("bs.dont.delete.me"));
@@ -346,7 +346,7 @@ void CscreendumpDlg::StartHog()
 }
 
 // Stops the hog window. 
-void CscreendumpDlg::StopHog()
+void screendumpDlg::StopHog()
 {
 	// Only stop it if it was running.
 	if(m_Hog.IsHogging())
@@ -355,15 +355,15 @@ void CscreendumpDlg::StopHog()
 	}
 }
 
-void CscreendumpDlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
+void screendumpDlg::OnWindowPosChanging(WINDOWPOS* lpwndpos)
 {
     lpwndpos->flags &= ~SWP_SHOWWINDOW;
     CDialog::OnWindowPosChanging(lpwndpos);
 }
 
-void CscreendumpDlg::RequestCapture(CaptureType ct)
+void screendumpDlg::RequestCapture(CaptureType ct)
 {
-    CGlobalSettings gs;
+    GlobalSettings gs;
     CString fName;
     try
     {
@@ -393,13 +393,13 @@ void CscreendumpDlg::RequestCapture(CaptureType ct)
     }
 }
 
-BOOL CscreendumpDlg::OnQueryEndSession()
+BOOL screendumpDlg::OnQueryEndSession()
 {
 	OnClose();
 	return TRUE;
 }
 
-void CscreendumpDlg::OnClose()
+void screendumpDlg::OnClose()
 {
 	DoUnregisterHotKeys();
 	ShellIcon_Terminate(); 
@@ -407,7 +407,7 @@ void CscreendumpDlg::OnClose()
 	EndDialog(1);
 }
 
-void CscreendumpDlg::OnTrayEmptyclipboard()
+void screendumpDlg::OnTrayEmptyclipboard()
 {
     if(OpenClipboard())
     {

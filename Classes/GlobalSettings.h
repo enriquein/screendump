@@ -3,11 +3,11 @@
 #define GLOBALSETTINGS_H
 #include "WindowCapture.h"
 
-class CGlobalSettings
+class GlobalSettings
 {
 public:
-	CGlobalSettings();
-	~CGlobalSettings();
+	GlobalSettings();
+	~GlobalSettings();
 
 	selEncoder sEnc;
 	BOOL bAutoName;

@@ -4,7 +4,7 @@
 #include <io.h>
 #include ".\GlobalSettings.h"
 
-CGlobalSettings::CGlobalSettings()
+GlobalSettings::GlobalSettings()
 {
 	// Get INI File path
 	OSVERSIONINFO osv;
@@ -32,7 +32,7 @@ CGlobalSettings::CGlobalSettings()
 	ReadSettings();
 }
 
-CGlobalSettings::~CGlobalSettings() 
+GlobalSettings::~GlobalSettings() 
 { }
 
 // Returns a randomly generated filename if bAutoName is true, a user
@@ -40,7 +40,7 @@ CGlobalSettings::~CGlobalSettings()
 // cancels out of the save dialog.
 // Note: the returning string will contain the full path as well.
 // Throws a CFileException exception if something goes wrong.
-CString CGlobalSettings::GetNewFileName()
+CString GlobalSettings::GetNewFileName()
 {
     CString fName;
     CString timeStr;
@@ -80,7 +80,7 @@ CString CGlobalSettings::GetNewFileName()
 
 // The only reason you'd have to call this implicitly would be if you for some reason
 // want to reload settings from file. 
-void CGlobalSettings::ReadSettings()
+void GlobalSettings::ReadSettings()
 {
 	CString defValue;
 	LPTSTR defPtr, outPtr;
@@ -102,7 +102,7 @@ void CGlobalSettings::ReadSettings()
     }
 }
 
-void CGlobalSettings::WriteSettings()
+void GlobalSettings::WriteSettings()
 {
     CString buffer;
     buffer.Format(_T("%d"), sEnc);
@@ -121,7 +121,7 @@ void CGlobalSettings::WriteSettings()
 // Checks if the directory 'path' exists. If it doesn't, it 
 // attempts to create it. If creation fails, we return false.
 // Otherwise, we return true.
-BOOL CGlobalSettings::CheckCreateDir(CString path)
+BOOL GlobalSettings::CheckCreateDir(CString path)
 {
     BOOL returnVal = TRUE;
 	if(_taccess(path, 0) == -1)
@@ -134,12 +134,12 @@ BOOL CGlobalSettings::CheckCreateDir(CString path)
     return returnVal;
 }
 
-CString CGlobalSettings::getOutputDir()
+CString GlobalSettings::getOutputDir()
 {
     return szOutputDir;
 }
 
-BOOL CGlobalSettings::setOutputDir(CString &sDir)
+BOOL GlobalSettings::setOutputDir(CString &sDir)
 {
     if( CheckCreateDir(sDir) )
     {
