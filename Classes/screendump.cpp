@@ -7,17 +7,17 @@
 #define new DEBUG_NEW
 #endif
 
-BEGIN_MESSAGE_MAP(CscreendumpApp, CWinApp)
+BEGIN_MESSAGE_MAP(screendumpApp, CWinApp)
 END_MESSAGE_MAP()
 
-CscreendumpApp::CscreendumpApp()
+screendumpApp::screendumpApp()
 {
 }
 
-CscreendumpApp theApp;
-CLimitSingleInstance g_SingleInstanceObj(_T("{981AEB41-4426-4839-B27D-97F6E872204C}"), UNIQUE_TO_SESSION);
+screendumpApp theApp;
+LimitSingleInstance g_SingleInstanceObj(_T("{981AEB41-4426-4839-B27D-97F6E872204C}"), UNIQUE_TO_SESSION);
 
-BOOL CscreendumpApp::InitInstance()
+BOOL screendumpApp::InitInstance()
 {
 	// Is another instance running?
 	if (g_SingleInstanceObj.IsAnotherInstanceRunning())
@@ -30,7 +30,7 @@ BOOL CscreendumpApp::InitInstance()
 	// visual styles.  Otherwise, any window creation will fail.
 	InitCommonControls();
 	CWinApp::InitInstance();
-	CscreendumpDlg dlg;
+	screendumpDlg dlg;
 	m_pMainWnd = &dlg;
 	dlg.DoModal();
 	return FALSE;

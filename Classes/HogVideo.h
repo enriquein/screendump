@@ -1,15 +1,15 @@
-// HogVideo.h: interface for the CHogVideo class.
+// HogVideo.h: interface for the HogVideo class.
 //
 //////////////////////////////////////////////////////////////////////
 
 #ifndef HOGVIDEO_H
 #define HOGVIDEO_H
 
-class CHogVideo  
+class HogVideo  
 {
 public:
-	CHogVideo();
-	virtual ~CHogVideo();
+	HogVideo();
+	virtual ~HogVideo();
 
     void    SetVideo(LPCTSTR szFilename);
     BOOL    Hog();

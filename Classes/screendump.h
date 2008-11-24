@@ -8,15 +8,15 @@
 #define screendump
 #include "..\res\resource.h"		
 
-class CscreendumpApp : public CWinApp
+class screendumpApp : public CWinApp
 {
 public:
-	CscreendumpApp();
+	screendumpApp();
 	public:
 	virtual BOOL InitInstance();
 	DECLARE_MESSAGE_MAP()
 };
 
-extern CscreendumpApp theApp;
+extern screendumpApp theApp;
 
 #endif

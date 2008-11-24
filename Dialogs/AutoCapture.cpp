@@ -3,22 +3,22 @@
 #include ".\AutoCapture.h"
 #include "..\Classes\WindowCapture.h"
 
-UINT CAutoCapture::UWM_TIMER_AC = ::RegisterWindowMessage(_T("UWM_TIMER_AC-{6B26ED52-0908-422b-9944-17DCC2EB7A40}"));
-UINT CAutoCapture::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
-UINT CAutoCapture::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
+UINT AutoCapture::UWM_TIMER_AC = ::RegisterWindowMessage(_T("UWM_TIMER_AC-{6B26ED52-0908-422b-9944-17DCC2EB7A40}"));
+UINT AutoCapture::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
+UINT AutoCapture::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
 
 
-IMPLEMENT_DYNAMIC(CAutoCapture, CDialog)
-CAutoCapture::CAutoCapture(CWnd* pParent /*=NULL*/)
-	: CDialog(CAutoCapture::IDD, pParent)
+IMPLEMENT_DYNAMIC(AutoCapture, CDialog)
+AutoCapture::AutoCapture(CWnd* pParent /*=NULL*/)
+	: CDialog(AutoCapture::IDD, pParent)
 {
 }
 
-CAutoCapture::~CAutoCapture()
+AutoCapture::~AutoCapture()
 {
 }
 
-void CAutoCapture::DoDataExchange(CDataExchange* pDX)
+void AutoCapture::DoDataExchange(CDataExchange* pDX)
 {
     CDialog::DoDataExchange(pDX);
     DDX_Control(pDX, ID_TXTACDELAY, c_txtACDelay);
@@ -30,16 +30,16 @@ void CAutoCapture::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CAutoCapture, CDialog)
+BEGIN_MESSAGE_MAP(AutoCapture, CDialog)
 	ON_MESSAGE(WM_TIMER, OnTimer)
 	ON_BN_CLICKED(ID_BTNSTART, OnBnClickedOk)
 	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 
-// CAutoCapture message handlers
+// AutoCapture message handlers
 
-void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
+void AutoCapture::OnBnClickedOk() // Start Capture was clicked
 {
 	// Check if we're actually stopping the capture:
 	CString tmpText;
@@ -107,7 +107,7 @@ void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
 	ShowWindow(SW_SHOWMINIMIZED);
 }
 
-LRESULT CAutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
+LRESULT AutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
 {
 	::SendMessage(  GetParent()->m_hWnd, 
                     bCatchForeground ? UWM_CAPTUREWINDOW : UWM_CAPTURESCREEN,
@@ -116,7 +116,7 @@ LRESULT CAutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-void CAutoCapture::EnableControls(BOOL bEnable)
+void AutoCapture::EnableControls(BOOL bEnable)
 {
 	c_txtACDelay.EnableWindow(bEnable);
     c_optForeground.EnableWindow(bEnable);
@@ -125,7 +125,7 @@ void CAutoCapture::EnableControls(BOOL bEnable)
 	c_optMilliseconds.EnableWindow(bEnable);
 }
 
-BOOL CAutoCapture::OnInitDialog()
+BOOL AutoCapture::OnInitDialog()
 {
 	CDialog::OnInitDialog();
     c_optFullScreen.SetCheck(BST_CHECKED);
@@ -134,13 +134,13 @@ BOOL CAutoCapture::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
-void CAutoCapture::OnCancel()
+void AutoCapture::OnCancel()
 {
 	KillTimer(UWM_TIMER_AC);
 	CDialog::OnCancel();
 }
 
-void CAutoCapture::OnClose()
+void AutoCapture::OnClose()
 {
 	OnCancel();
 }

@@ -4,7 +4,7 @@
 //		File:		file_ver.h
 //					----------
 //
-//		Content:	Declaration of class CFileVersionInfo and inline funcs.
+//		Content:	Declaration of class FileVersionInfo and inline funcs.
 //					Manages the retrieval of various information from a
 //					Win32 file image.
 //
@@ -132,20 +132,20 @@
 //*****************************************************************************
 //*****************************************************************************
 //
-//					CFileVersionInfo class declaration
+//					FileVersionInfo class declaration
 //					----------------------------------
 //
 //*****************************************************************************
 //*****************************************************************************
 
-class CFileVersionInfo  
+class FileVersionInfo  
 {
 // Construction/destruction
 public:
-	CFileVersionInfo();
-	CFileVersionInfo(const CFileVersionInfo& fvi);
-	CFileVersionInfo(LPCTSTR lpszFile);
-	~CFileVersionInfo();
+	FileVersionInfo();
+	FileVersionInfo(const FileVersionInfo& fvi);
+	FileVersionInfo(LPCTSTR lpszFile);
+	~FileVersionInfo();
 
 // Operations
 public:
@@ -223,10 +223,10 @@ private:
 	static const LPCTSTR m_lpszFmtStringFileInfo;
 	static const LPCTSTR m_lpszStringFileInfos[];
 
-};	// CFileVersionInfo
+};	// FileVersionInfo
 
 
-#include ".\file_ver.inl"		// CFileVersionInfo inline functions
+#include ".\file_ver.inl"		// FileVersionInfo inline functions
 
 
 

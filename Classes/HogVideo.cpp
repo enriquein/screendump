@@ -1,4 +1,4 @@
-// HogVideo.cpp: implementation of the CHogVideo class.
+// HogVideo.cpp: implementation of the HogVideo class.
 //
 //////////////////////////////////////////////////////////////////////
 #include "stdafx.h"
@@ -8,7 +8,7 @@
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-CHogVideo::CHogVideo()
+HogVideo::HogVideo()
 {
     m_HogEnabled = false;
     m_bCOMInitialized   = false;
@@ -61,7 +61,7 @@ CHogVideo::CHogVideo()
     }
 }
 
-CHogVideo::~CHogVideo()
+HogVideo::~HogVideo()
 {
     // Wait for completion.
     this->UnHog();
@@ -77,7 +77,7 @@ CHogVideo::~CHogVideo()
     this->Cleanup();
 }
 
-void CHogVideo::Cleanup()
+void HogVideo::Cleanup()
 {
     this->UnHog();
 
@@ -116,12 +116,12 @@ void CHogVideo::Cleanup()
     }
 }
 
-void CHogVideo::SetVideo(LPCTSTR szFilename)
+void HogVideo::SetVideo(LPCTSTR szFilename)
 {
     m_Filename = szFilename;
 }
 
-BOOL CHogVideo::Hog()
+BOOL HogVideo::Hog()
 {
     if (!m_pGraph && !m_pMediaControl && !m_pVideoWindow)
     {
@@ -177,7 +177,7 @@ BOOL CHogVideo::Hog()
     }
 }
 
-BOOL CHogVideo::UnHog()
+BOOL HogVideo::UnHog()
 {
     m_HogEnabled = false;
     if (!m_pMediaControl)
@@ -190,7 +190,7 @@ BOOL CHogVideo::UnHog()
     return true;
 }
 
-BOOL CHogVideo::IsHogging()
+BOOL HogVideo::IsHogging()
 {
 	return m_HogEnabled;
 }

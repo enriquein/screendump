@@ -4,7 +4,7 @@
 //		File:		file_ver.inl
 //					------------
 //
-//		Content:	Declaration of class CFileVersionInfo inline funcs.
+//		Content:	Declaration of class FileVersionInfo inline funcs.
 //					Included by file_ver.h.
 //
 //
@@ -29,7 +29,7 @@
 //*****************************************************************************
 //*****************************************************************************
 //
-//					CFileVersionInfo Attributes
+//					FileVersionInfo Attributes
 //					---------------------------
 //
 //*****************************************************************************
@@ -39,7 +39,7 @@
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::RefreshVersionInfo
+//	Function:		FileVersionInfo::RefreshVersionInfo
 //					------------------------------------
 //
 //					Read current file's version info resource again.
@@ -57,7 +57,7 @@
 // ----------------------------------------------------------------------------
 
 // read current file's info block again
-inline BOOL CFileVersionInfo::RefreshVersionInfo()
+inline BOOL FileVersionInfo::RefreshVersionInfo()
 {
 	return (m_strFilename.IsEmpty()) ? FALSE :
 									   ReadVersionInfo(m_strFilename);
@@ -66,7 +66,7 @@ inline BOOL CFileVersionInfo::RefreshVersionInfo()
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetFilename
+//	Function:		FileVersionInfo::GetFilename
 //					-----------------------------
 //
 //					Retreive name of current file.
@@ -80,13 +80,13 @@ inline BOOL CFileVersionInfo::RefreshVersionInfo()
 // ----------------------------------------------------------------------------
 
 // current file's name
-inline const CString& CFileVersionInfo::GetFilename() const
+inline const CString& FileVersionInfo::GetFilename() const
 	{ return m_strFilename; }
 
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::IsValid
+//	Function:		FileVersionInfo::IsValid
 //					-------------------------
 //
 //					Check if any version info is currently available.
@@ -100,13 +100,13 @@ inline const CString& CFileVersionInfo::GetFilename() const
 // ----------------------------------------------------------------------------
 
 // any version info currently available ?
-inline BOOL CFileVersionInfo::IsValid() const
+inline BOOL FileVersionInfo::IsValid() const
 	{ return (m_pVersionInfo != NULL); }
 
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetCharSet
+//	Function:		FileVersionInfo::GetCharSet
 //					----------------------------
 //
 //					Get character set this file is built for.
@@ -125,13 +125,13 @@ inline BOOL CFileVersionInfo::IsValid() const
 // ----------------------------------------------------------------------------
 
 // get code-page identifier
-inline WORD CFileVersionInfo::GetCharSet() const
+inline WORD FileVersionInfo::GetCharSet() const
 	{ return HIWORD(m_dwTransInfo); }
 
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetLanguageId
+//	Function:		FileVersionInfo::GetLanguageId
 //					-------------------------------
 //
 //					Get language id this file is built for.
@@ -151,13 +151,13 @@ inline WORD CFileVersionInfo::GetCharSet() const
 // ----------------------------------------------------------------------------
 
 // get language identifier
-inline WORD CFileVersionInfo::GetLanguageId() const
+inline WORD FileVersionInfo::GetLanguageId() const
 	{ return LOWORD(m_dwTransInfo); }
 
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetLanguageName
+//	Function:		FileVersionInfo::GetLanguageName
 //					---------------------------------
 //
 //					Get this file's language as CString.
@@ -177,7 +177,7 @@ inline WORD CFileVersionInfo::GetLanguageId() const
 // ----------------------------------------------------------------------------
 
 // name of the file's language
-inline CString CFileVersionInfo::GetLanguageName() const
+inline CString FileVersionInfo::GetLanguageName() const
 { 
 	CString strRes;
 	LPTSTR	lpszRes = strRes.GetBuffer(_MAX_PATH);
@@ -194,7 +194,7 @@ inline CString CFileVersionInfo::GetLanguageName() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetFileVersionString
+//	Function:		FileVersionInfo::GetFileVersionString
 //					--------------------------------------
 //
 //					Get the file version as CString.
@@ -212,7 +212,7 @@ inline CString CFileVersionInfo::GetLanguageName() const
 // ----------------------------------------------------------------------------
 
 // file version as CString (both major and minor)
-inline CString CFileVersionInfo::GetFileVersionString() const
+inline CString FileVersionInfo::GetFileVersionString() const
 { 
 	if (!m_pVersionInfo) return CString(_T(""));
 
@@ -227,7 +227,7 @@ inline CString CFileVersionInfo::GetFileVersionString() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetCustomFileVersionString
+//	Function:		FileVersionInfo::GetCustomFileVersionString
 //					--------------------------------------
 //
 //					Get the file version as CString.
@@ -246,7 +246,7 @@ inline CString CFileVersionInfo::GetFileVersionString() const
 // ----------------------------------------------------------------------------
 
 // file version as CString (both major and minor)
-inline CString CFileVersionInfo::GetCustomFileVersionString() const
+inline CString FileVersionInfo::GetCustomFileVersionString() const
 { 
 	if (!m_pVersionInfo) return CString(_T(""));
 
@@ -261,7 +261,7 @@ inline CString CFileVersionInfo::GetCustomFileVersionString() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetMajorFileVersionString
+//	Function:		FileVersionInfo::GetMajorFileVersionString
 //					-------------------------------------------
 //
 //					Get the major file version as CString.
@@ -279,7 +279,7 @@ inline CString CFileVersionInfo::GetCustomFileVersionString() const
 // ----------------------------------------------------------------------------
 
 // file version as CString (major)
-inline CString CFileVersionInfo::GetMajorFileVersionString() const
+inline CString FileVersionInfo::GetMajorFileVersionString() const
 { 
 	if (!m_pVersionInfo) return CString(_T(""));
 
@@ -293,7 +293,7 @@ inline CString CFileVersionInfo::GetMajorFileVersionString() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetMinorFileVersionString
+//	Function:		FileVersionInfo::GetMinorFileVersionString
 //					-------------------------------------------
 //
 //					Get the minor file version as CString.
@@ -311,7 +311,7 @@ inline CString CFileVersionInfo::GetMajorFileVersionString() const
 // ----------------------------------------------------------------------------
 
 // file version as CString (minor)
-inline CString CFileVersionInfo::GetMinorFileVersionString() const
+inline CString FileVersionInfo::GetMinorFileVersionString() const
 { 
 	if (!m_pVersionInfo) return CString(_T(""));
 
@@ -325,7 +325,7 @@ inline CString CFileVersionInfo::GetMinorFileVersionString() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetMajorFileVersion
+//	Function:		FileVersionInfo::GetMajorFileVersion
 //					-------------------------------------
 //
 //					Get the major file version.
@@ -339,7 +339,7 @@ inline CString CFileVersionInfo::GetMinorFileVersionString() const
 // ----------------------------------------------------------------------------
 
 // file version as DWORD (major)
-inline DWORD CFileVersionInfo::GetMajorFileVersion() const
+inline DWORD FileVersionInfo::GetMajorFileVersion() const
 { 
 	return (IsValid()) ? m_fixedFileInfo.dwFileVersionMS :
 						 0xFFFFFFFF;
@@ -348,7 +348,7 @@ inline DWORD CFileVersionInfo::GetMajorFileVersion() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetMinorFileVersion
+//	Function:		FileVersionInfo::GetMinorFileVersion
 //					-------------------------------------
 //
 //					Get the minor file version.
@@ -362,7 +362,7 @@ inline DWORD CFileVersionInfo::GetMajorFileVersion() const
 // ----------------------------------------------------------------------------
 
 // file version as DWORD (minor)
-inline DWORD CFileVersionInfo::GetMinorFileVersion() const
+inline DWORD FileVersionInfo::GetMinorFileVersion() const
 { 
 	return (IsValid()) ? m_fixedFileInfo.dwFileVersionLS :
 						 0xFFFFFFFF;
@@ -371,7 +371,7 @@ inline DWORD CFileVersionInfo::GetMinorFileVersion() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetProductVersionString
+//	Function:		FileVersionInfo::GetProductVersionString
 //					-----------------------------------------
 //
 //					Get the product version as CString.
@@ -394,7 +394,7 @@ inline DWORD CFileVersionInfo::GetMinorFileVersion() const
 // ----------------------------------------------------------------------------
 
 // product version as CString (both major and minor)
-inline CString CFileVersionInfo::GetProductVersionString() const
+inline CString FileVersionInfo::GetProductVersionString() const
 { 
 	if (!m_pVersionInfo) return CString(_T(""));
 
@@ -411,7 +411,7 @@ inline CString CFileVersionInfo::GetProductVersionString() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetMajorProductVersionString
+//	Function:		FileVersionInfo::GetMajorProductVersionString
 //					----------------------------------------------
 //
 //					Get the major product version as CString.
@@ -431,7 +431,7 @@ inline CString CFileVersionInfo::GetProductVersionString() const
 // ----------------------------------------------------------------------------
 
 // product version as CString (major)
-inline CString CFileVersionInfo::GetMajorProductVersionString() const
+inline CString FileVersionInfo::GetMajorProductVersionString() const
 { 
 	if (!m_pVersionInfo) return CString(_T(""));
 
@@ -445,7 +445,7 @@ inline CString CFileVersionInfo::GetMajorProductVersionString() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetMinorProductVersionString
+//	Function:		FileVersionInfo::GetMinorProductVersionString
 //					----------------------------------------------
 //
 //					Get the minor product version as CString.
@@ -465,7 +465,7 @@ inline CString CFileVersionInfo::GetMajorProductVersionString() const
 // ----------------------------------------------------------------------------
 
 // product version as CString (minor)
-inline CString CFileVersionInfo::GetMinorProductVersionString() const
+inline CString FileVersionInfo::GetMinorProductVersionString() const
 { 
 	if (!m_pVersionInfo) return CString(_T(""));
 
@@ -477,14 +477,14 @@ inline CString CFileVersionInfo::GetMinorProductVersionString() const
 }
 
 // product version as DWORD (major)
-inline DWORD CFileVersionInfo::GetMajorProductVersion() const
+inline DWORD FileVersionInfo::GetMajorProductVersion() const
 { 
 	return (IsValid()) ? m_fixedFileInfo.dwFileVersionMS :
 						 0xFFFFFFFF;
 }
 
 // product version as DWORD (minor)
-inline DWORD CFileVersionInfo::GetMinorProductVersion() const
+inline DWORD FileVersionInfo::GetMinorProductVersion() const
 { 
 	return (IsValid()) ? m_fixedFileInfo.dwProductVersionLS : 
 						 0xFFFFFFFF;
@@ -493,7 +493,7 @@ inline DWORD CFileVersionInfo::GetMinorProductVersion() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetFileDate
+//	Function:		FileVersionInfo::GetFileDate
 //					-----------------------------
 //
 //					Get the file's creation date and time.
@@ -508,7 +508,7 @@ inline DWORD CFileVersionInfo::GetMinorProductVersion() const
 // ----------------------------------------------------------------------------
 
 // date and time stamp as FILETIME
-inline FILETIME CFileVersionInfo::GetFileDate() const
+inline FILETIME FileVersionInfo::GetFileDate() const
 {
 	FILETIME ftRes;
 	ftRes.dwHighDateTime = m_fixedFileInfo.dwFileDateMS;
@@ -519,7 +519,7 @@ inline FILETIME CFileVersionInfo::GetFileDate() const
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetTargetOs
+//	Function:		FileVersionInfo::GetTargetOs
 //					-----------------------------
 //
 //					Get the operating system this file was built for.
@@ -539,13 +539,13 @@ inline FILETIME CFileVersionInfo::GetFileDate() const
 // ----------------------------------------------------------------------------
 
 // this file's target operating system identifier (DWORD)
-inline DWORD CFileVersionInfo::GetTargetOs() const
+inline DWORD FileVersionInfo::GetTargetOs() const
 	{ return m_fixedFileInfo.dwFileOS; }
 
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetFileType
+//	Function:		FileVersionInfo::GetFileType
 //					-----------------------------
 //
 //					Get this file's type.
@@ -564,13 +564,13 @@ inline DWORD CFileVersionInfo::GetTargetOs() const
 // ----------------------------------------------------------------------------
 
 // this file's type (DWORD)
-inline DWORD CFileVersionInfo::GetFileType() const
+inline DWORD FileVersionInfo::GetFileType() const
 	{ return m_fixedFileInfo.dwFileType; }
 
 
 // ----------------------------------------------------------------------------
 //
-//	Function:		CFileVersionInfo::GetFileSubtype
+//	Function:		FileVersionInfo::GetFileSubtype
 //					--------------------------------
 //
 //					Get this file's subtype.
@@ -591,27 +591,27 @@ inline DWORD CFileVersionInfo::GetFileType() const
 // ----------------------------------------------------------------------------
 
 // this file's subtype (DWORD)
-inline DWORD CFileVersionInfo::GetFileSubtype() const
+inline DWORD FileVersionInfo::GetFileSubtype() const
 	{ return m_fixedFileInfo.dwFileSubtype; }
 
 // debug version ?
-inline BOOL CFileVersionInfo::IsDebugVersion() const
+inline BOOL FileVersionInfo::IsDebugVersion() const
 	{ return ((IsValid() && IsFlagSet(VS_FF_DEBUG))); }
 
 // has file been modified compared to the original of the same version ?
-inline BOOL CFileVersionInfo::IsPatched() const
+inline BOOL FileVersionInfo::IsPatched() const
 	{ return ((IsValid() && IsFlagSet(VS_FF_PATCHED))); }
 
 // development version ?
-inline BOOL CFileVersionInfo::IsPreRelease() const
+inline BOOL FileVersionInfo::IsPreRelease() const
 	{ return ((IsValid() && IsFlagSet(VS_FF_PRERELEASE))); }
 
 // private build (e.g. by someone else than the org. distributor) ?
-inline BOOL CFileVersionInfo::IsPrivateBuild() const
+inline BOOL FileVersionInfo::IsPrivateBuild() const
 	{ return ((IsValid() && IsFlagSet(VS_FF_PRIVATEBUILD))); }
 
 // special build compared to other files of same version number ?
-inline BOOL CFileVersionInfo::IsSpecialBuild() const
+inline BOOL FileVersionInfo::IsSpecialBuild() const
 	{ return ((IsValid() && IsFlagSet(VS_FF_SPECIALBUILD))); }
 
 
@@ -619,14 +619,14 @@ inline BOOL CFileVersionInfo::IsSpecialBuild() const
 //*****************************************************************************
 //*****************************************************************************
 //
-//					CFileVersionInfo Implementation
+//					FileVersionInfo Implementation
 //					-------------------------------
 //
 //*****************************************************************************
 //*****************************************************************************
 
 // see if a specific flag is valid
-inline BOOL CFileVersionInfo::IsFlagSet(DWORD dwFlag) const
+inline BOOL FileVersionInfo::IsFlagSet(DWORD dwFlag) const
 { 
 	return ((m_fixedFileInfo.dwFileFlagsMask & dwFlag) &&
 			(m_fixedFileInfo.dwFileFlags & dwFlag)

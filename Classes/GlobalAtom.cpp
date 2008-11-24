@@ -2,7 +2,7 @@
 #include "Windows.h"
 #include ".\globalatom.h"
 
-CGlobalAtom::CGlobalAtom(void)
+GlobalAtom::GlobalAtom(void)
 {
 	SYSTEMTIME sTime;
 	GetLocalTime(&sTime);
@@ -11,12 +11,12 @@ CGlobalAtom::CGlobalAtom(void)
 	m_nID =	GlobalAddAtom(s);
 }
 
-CGlobalAtom::~CGlobalAtom(void)
+GlobalAtom::~GlobalAtom(void)
 {
 	GlobalDeleteAtom(m_nID);
 }
 
-ATOM CGlobalAtom::GetID()
+ATOM GlobalAtom::GetID()
 {
 	return m_nID;
 }

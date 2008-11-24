@@ -5,21 +5,21 @@
 #include ".\aboutdialog.h"
 #include "..\Classes\Hyperlinks.h"
 
-UINT CAboutDialog::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
+UINT AboutDialog::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
 
-// CAboutDialog dialog
+// AboutDialog dialog
 
-IMPLEMENT_DYNAMIC(CAboutDialog, CDialog)
-CAboutDialog::CAboutDialog(CWnd* pParent /*=NULL*/)
-	: CDialog(CAboutDialog::IDD, pParent)
+IMPLEMENT_DYNAMIC(AboutDialog, CDialog)
+AboutDialog::AboutDialog(CWnd* pParent /*=NULL*/)
+	: CDialog(AboutDialog::IDD, pParent)
 {
 }
 
-CAboutDialog::~CAboutDialog()
+AboutDialog::~AboutDialog()
 {
 }
 
-void CAboutDialog::DoDataExchange(CDataExchange* pDX)
+void AboutDialog::DoDataExchange(CDataExchange* pDX)
 {
     CDialog::DoDataExchange(pDX);
     DDX_Control(pDX, IDC_LOGOIMG, c_LogoImg);
@@ -27,14 +27,14 @@ void CAboutDialog::DoDataExchange(CDataExchange* pDX)
 }
 
 
-BEGIN_MESSAGE_MAP(CAboutDialog, CDialog)
-    ON_STN_CLICKED(IDC_URLLINK, &CAboutDialog::OnStnClickedUrllink)
+BEGIN_MESSAGE_MAP(AboutDialog, CDialog)
+    ON_STN_CLICKED(IDC_URLLINK, &AboutDialog::OnStnClickedUrllink)
 END_MESSAGE_MAP()
 
 
-// CAboutDialog message handlers
+// AboutDialog message handlers
 
-BOOL CAboutDialog::OnInitDialog()
+BOOL AboutDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	LRESULT lres;
@@ -55,7 +55,7 @@ BOOL CAboutDialog::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
-void CAboutDialog::OnStnClickedUrllink()
+void AboutDialog::OnStnClickedUrllink()
 {
     ShellExecute(NULL, _T("open"), _T("http://www.indiecodelabs.com/"), NULL, NULL, SW_SHOWNORMAL);
 }

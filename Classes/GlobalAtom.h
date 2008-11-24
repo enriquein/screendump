@@ -1,11 +1,11 @@
 #ifndef GLOBALATOM_H
 #define GLOBALATOM_H
 
-class CGlobalAtom
+class GlobalAtom
 {
 public:
-	CGlobalAtom(void);
-	~CGlobalAtom(void);
+	GlobalAtom(void);
+	~GlobalAtom(void);
 	ATOM GetID();
 
 private:

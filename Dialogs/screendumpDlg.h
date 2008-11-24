@@ -11,13 +11,13 @@
 #include "..\Classes\GlobalSettings.h"
 #include "..\Classes\WindowCapture.h"
 
-// CscreendumpDlg dialog
-class CscreendumpDlg : public CDialog
+// screendumpDlg dialog
+class screendumpDlg : public CDialog
 {
 // Construction
 public:
-	CscreendumpDlg(CWnd* pParent = NULL);	// standard constructor
-    ~CscreendumpDlg();
+	screendumpDlg(CWnd* pParent = NULL);	// standard constructor
+    ~screendumpDlg();
 
     // ShellIcon Callback msg
     static UINT UWM_SHELLICON_MSG;
@@ -36,9 +36,9 @@ public:
 protected:
     // Data Members
     WindowCapture* wc;
-	CGlobalAtom* m_Atom;
-	CGlobalAtom* m_AtomAlt;
-    CHogVideo m_Hog;
+	GlobalAtom* m_Atom;
+	GlobalAtom* m_AtomAlt;
+    HogVideo m_Hog;
 	HICON m_hIcon;
 	CMenu m_trayMenu;
 
