@@ -1,9 +1,9 @@
-// bScreenDumped2Dlg.h : header file
+// screendumpDlg.h : header file
 //
 
 #pragma once
-#ifndef BSCREENDUMPED2DLG_H
-#define BSCREENDUMPED2DLG_H
+#ifndef SCREENDUMPDLG_H
+#define SCREENDUMPDLG_H
 
 #include "..\Classes\HogVideo.h"
 #include "..\Classes\globalatom.h"
@@ -11,13 +11,13 @@
 #include "..\Classes\GlobalSettings.h"
 #include "..\Classes\WindowCapture.h"
 
-// CbScreenDumped2Dlg dialog
-class CbScreenDumped2Dlg : public CDialog
+// CscreendumpDlg dialog
+class CscreendumpDlg : public CDialog
 {
 // Construction
 public:
-	CbScreenDumped2Dlg(CWnd* pParent = NULL);	// standard constructor
-    ~CbScreenDumped2Dlg();
+	CscreendumpDlg(CWnd* pParent = NULL);	// standard constructor
+    ~CscreendumpDlg();
 
     // ShellIcon Callback msg
     static UINT UWM_SHELLICON_MSG;
@@ -26,10 +26,12 @@ public:
     static UINT UWM_TOGGLETRAY;
     static UINT UWM_CAPTURESCREEN;
     static UINT UWM_CAPTUREWINDOW;
-    static UINT UWM_REQUESTHOG;
+    static UINT UWM_REQUESTVERSION;
 
     // Dialog Data
-	enum { IDD = IDD_BSCREENDUMPED2_DIALOG };
+	enum { IDD = IDD_screendump_DIALOG };
+	CString m_progVersion; // Program's version number and revision. Used for our tooltip and about dialog.
+	CString m_runningPath; // Path where our program is located. 
 
 protected:
     // Data Members
@@ -39,7 +41,6 @@ protected:
     CHogVideo m_Hog;
 	HICON m_hIcon;
 	CMenu m_trayMenu;
-	CString m_progVersion;
 
 	virtual void DoDataExchange(CDataExchange* pDX);	    
     void ToggleTrayMenu(BOOL bEnable); 
@@ -49,8 +50,8 @@ protected:
 	void ShellIcon_Terminate();
 	void DoRegisterHotKeys();
 	void DoUnregisterHotKeys();
-    void RequestWindowCapture();
-    void RequestScreenCapture();
+    void RequestCapture(CaptureType ct);
+    void RefreshSettings();
 
 	// Tray Handlers
 	void OnTrayExitClick();
@@ -63,13 +64,16 @@ protected:
     afx_msg LRESULT OnToggleTrayMsg(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnCaptureScreenMsg(WPARAM wParam, LPARAM lParam);
     afx_msg LRESULT OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam);
-    afx_msg LRESULT OnRequestHog(WPARAM wParam, LPARAM lParam);
+    afx_msg LRESULT OnRequestVersion(WPARAM wParam, LPARAM lParam);
 
 	// Message map functions
 	virtual BOOL OnInitDialog();
 	afx_msg LRESULT ShellIconCallback(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT ProcessHotKey(WPARAM wParam, LPARAM lParam);
     afx_msg void OnWindowPosChanging(WINDOWPOS* lpwndpos);
+	afx_msg BOOL OnQueryEndSession();
+	afx_msg void OnClose();
+    afx_msg void OnTrayEmptyclipboard();
 	DECLARE_MESSAGE_MAP()
 };
 

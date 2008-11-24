@@ -24,12 +24,15 @@ public:
     selEncoder GetEncoder();    // Returns the current selected encoder.
     long GetQuality();   // Get quality value (JPG only). Range is 1 to 100.      
     void SetQuality(long lQualityVal);  // Set quality for JPG files. Range is: 1 to 100 where 1 is low quality and 100 is best possible quality.
+    void SetUseClipboard(BOOL wantClipboard); // TRUE if we want to store data on the clipboard, FALSE otherwise.
+    BOOL GetUseClipboard(); // Returns if we're storing data on the clipboard after captures.
 
 protected:
     long lQuality;      // Encoder quality, so far only useful for jpg.
     selEncoder sEnc;    // Encoder type. jpg/png/bmp/tiff (multipage not supported).
 	GdiplusStartupInput gdiStartupInput;
 	ULONG_PTR gdiToken; // Token passed to gdistartup/gdishutdown 
+    BOOL bUseClipboard; // Do we want our captured data to reside on the clipboard for other programs to use? Default: TRUE.
 
     Status lastGdiStatus;
     BOOL StartGDI();

@@ -3,7 +3,6 @@
 #define GLOBALSETTINGS_H
 #include "WindowCapture.h"
 
-// TODO: Make this class throw exceptions when it should.
 class CGlobalSettings
 {
 public:
@@ -12,6 +11,7 @@ public:
 
 	selEncoder sEnc;
 	BOOL bAutoName;
+    BOOL bWantClipboard;
 	BOOL bEnableHog;
 	long lJpgQuality;
 	void ReadSettings();

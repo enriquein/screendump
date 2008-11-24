@@ -241,7 +241,8 @@ inline CString CFileVersionInfo::GetFileVersionString() const
 //	Remarks
 //	-------
 //	The returned string has the format "#.# (rev #)".
-//
+//  If it's flagged as a pre-release version, BETA will be appended after 
+//  rev #.
 // ----------------------------------------------------------------------------
 
 // file version as CString (both major and minor)
@@ -250,10 +251,11 @@ inline CString CFileVersionInfo::GetCustomFileVersionString() const
 	if (!m_pVersionInfo) return CString(_T(""));
 
 	CString strRes;
-	strRes.Format(_T("%d.%d (rev %d)"), HIWORD (m_fixedFileInfo.dwFileVersionMS),
+	strRes.Format(_T("%d.%d (rev %d"), HIWORD (m_fixedFileInfo.dwFileVersionMS),
 									 LOWORD (m_fixedFileInfo.dwFileVersionMS),
 									 LOWORD (m_fixedFileInfo.dwFileVersionLS)
 				 );
+	strRes += IsPreRelease() ? _T(" Beta)") : _T(")");
 	return strRes;
 }
 

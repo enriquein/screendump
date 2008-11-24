@@ -189,3 +189,8 @@ BOOL CHogVideo::UnHog()
 
     return true;
 }
+
+BOOL CHogVideo::IsHogging()
+{
+	return m_HogEnabled;
+}

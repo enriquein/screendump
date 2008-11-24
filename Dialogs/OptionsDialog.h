@@ -22,7 +22,6 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
     void updateControls();
     void initializeControls();
-
 	DECLARE_MESSAGE_MAP()
 public:
 	afx_msg void OnBnClickedOk();
@@ -31,7 +30,9 @@ public:
 	afx_msg void OnBnClickedRadiopng();
 	afx_msg void OnBnClickedRadiojpeg();
 	afx_msg void OnBnClickedBtnbrowse();
-	virtual BOOL OnInitDialog();
+    afx_msg void OnEnChangeTxtdestination();
+	afx_msg void OnEnChangeTxtquality();	
+    virtual BOOL OnInitDialog();
 
 private:
     CButton c_OK;
@@ -43,5 +44,7 @@ private:
     CButton c_chkAutoName;
     CButton c_chkHog;
     BOOL initialized;
+	CStatic c_lblErrMsg;
+    CButton c_chkWantClipboard;
 };
 #endif

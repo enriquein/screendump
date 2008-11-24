@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8.00"
-	Name="bScreenDumped2"
+	Version="9.00"
+	Name="screendump"
 	ProjectGUID="{E7EF77DB-7FA7-4A1D-809E-71B9FC57C8E1}"
-	RootNamespace="bScreenDumped2"
+	RootNamespace="screendump"
 	Keyword="MFCProj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -54,7 +55,7 @@
 				TreatWChar_tAsBuiltInType="false"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool
@@ -73,12 +74,14 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib"
 				ShowProgress="2"
-				OutputFile="$(OutDir)/bScreenDumped.exe"
+				OutputFile="$(OutDir)/screendump.exe"
 				Version=""
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Visual Studio 8\VC\PlatformSDK\Lib&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -100,9 +103,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -114,6 +114,7 @@
 			InheritedPropertySheets="$(VCInstallDir)VCProjectDefaults\UpgradeFromVC71.vsprops"
 			UseOfMFC="1"
 			CharacterSet="1"
+			WholeProgramOptimization="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -138,14 +139,16 @@
 				InlineFunctionExpansion="1"
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="false"
+				WholeProgramOptimization="true"
 				PreprocessorDefinitions="WIN32;_WINDOWS;NDEBUG"
+				StringPooling="true"
 				MinimalRebuild="false"
 				RuntimeLibrary="0"
 				EnableEnhancedInstructionSet="0"
 				TreatWChar_tAsBuiltInType="true"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
-				Detect64BitPortabilityProblems="true"
+				Detect64BitPortabilityProblems="false"
 				DebugInformationFormat="0"
 			/>
 			<Tool
@@ -163,12 +166,14 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
-				OutputFile="$(OutDir)/bScreenDumped.exe"
+				OutputFile="$(OutDir)/screendump.exe"
 				LinkIncremental="1"
 				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="0"
 				EnableCOMDATFolding="0"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -188,9 +193,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
+				HeapVerification="0"
+				HandleVerification="0"
+				LocksVerification="0"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -211,14 +216,6 @@
 			</File>
 			<File
 				RelativePath=".\Dialogs\AutoCapture.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Classes\bScreenDumped2.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Dialogs\bScreenDumped2Dlg.cpp"
 				>
 			</File>
 			<File
@@ -250,7 +247,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Classes\Hyperlinks.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Dialogs\OptionsDialog.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Classes\screendump.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Dialogs\screendumpDlg.cpp"
 				>
 			</File>
 			<File
@@ -292,14 +301,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Classes\bScreenDumped2.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Dialogs\bScreenDumped2Dlg.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Classes\ErrorString.h"
 				>
 			</File>
@@ -324,6 +325,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Classes\Hyperlinks.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Classes\LimitSingleInstance.h"
 				>
 			</File>
@@ -333,6 +338,14 @@
 			</File>
 			<File
 				RelativePath=".\res\Resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Classes\screendump.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Dialogs\screendumpDlg.h"
 				>
 			</File>
 			<File
@@ -350,20 +363,28 @@
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
 			<File
-				RelativePath=".\res\bScreenDumped2.ico"
+				RelativePath=".\res\icontray.ico"
 				>
 			</File>
 			<File
-				RelativePath=".\res\bScreenDumped2.rc"
+				RelativePath=".\icon-src\progimage-64.bmp"
 				>
 			</File>
 			<File
-				RelativePath=".\res\bScreenDumped2.rc2"
+				RelativePath=".\res\screendump.ico"
+				>
+			</File>
+			<File
+				RelativePath=".\res\screendump.rc"
+				>
+			</File>
+			<File
+				RelativePath=".\res\screendump.rc2"
 				>
 			</File>
 		</Filter>
 		<File
-			RelativePath=".\res\bScreenDumped2.manifest"
+			RelativePath=".\res\screendump.manifest"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"
@@ -386,7 +407,7 @@
 	<Globals>
 		<Global
 			Name="RESOURCE_FILE"
-			Value=".\res\bScreenDumped2.rc"
+			Value=".\res\screendump.rc"
 		/>
 	</Globals>
 </VisualStudioProject>

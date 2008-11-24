@@ -1,9 +1,12 @@
 #include "stdafx.h"
-#include "..\Classes\bScreenDumped2.h"
+#include "..\Classes\screendump.h"
 #include ".\AutoCapture.h"
 #include "..\Classes\WindowCapture.h"
 
 UINT CAutoCapture::UWM_TIMER_AC = ::RegisterWindowMessage(_T("UWM_TIMER_AC-{6B26ED52-0908-422b-9944-17DCC2EB7A40}"));
+UINT CAutoCapture::UWM_CAPTUREWINDOW = ::RegisterWindowMessage(_T("UWM_CAPTURESCREEN-{8BCA6B45-C3E5-4c08-8D1D-C6CF1CE4E6F0}"));
+UINT CAutoCapture::UWM_CAPTURESCREEN = ::RegisterWindowMessage(_T("UWM_CAPTUREWINDOW-{15C4F437-8121-4530-BC07-FDB0E695012A}"));
+
 
 IMPLEMENT_DYNAMIC(CAutoCapture, CDialog)
 CAutoCapture::CAutoCapture(CWnd* pParent /*=NULL*/)
@@ -56,7 +59,7 @@ void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
     tmpText = tmpText.Trim();
 	if(tmpText.GetLength() == 0)
 	{
-		MessageBox(_T("Please enter the amount of time to wait until screenshots."), _T("bScreenDumped->AutoCapture"), MB_OK|MB_ICONERROR);
+		MessageBox(_T("Please enter the amount of time to wait until screenshots."), _T("screendump->AutoCapture"), MB_OK|MB_ICONERROR);
 		c_txtACDelay.SetFocus();
 		return;
 	}
@@ -67,7 +70,7 @@ void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
 		// User chose seconds
 		if(iDelay > 60)
 		{
-			MessageBox(_T("Please enter a number between 1 and 60."), _T("bScreenDumped->AutoCapture"), MB_OK|MB_ICONERROR);
+			MessageBox(_T("Please enter a number between 1 and 60."), _T("screendump->AutoCapture"), MB_OK|MB_ICONERROR);
 			c_txtACDelay.SetFocus();
 			return;
 		}
@@ -81,7 +84,7 @@ void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
 		// User chose milliseconds
 		if( (iDelay > 60000) || (iDelay < 250) )
 		{
-			MessageBox(_T("Please enter a number between 250 and 60000."), _T("bScreenDumped->AutoCapture"), MB_OK|MB_ICONERROR);
+			MessageBox(_T("Please enter a number between 250 and 60000."), _T("screendump->AutoCapture"), MB_OK|MB_ICONERROR);
 			c_txtACDelay.SetFocus();
 			return;
 		}
@@ -106,17 +109,11 @@ void CAutoCapture::OnBnClickedOk() // Start Capture was clicked
 
 LRESULT CAutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
 {
-	if(bCatchForeground)
-	{
-//	would rather post a msg to the main dlg
-//        CaptureWindow();
-	}
-	else
-	{
-//	would rather post a msg to the main dlg
-//		CaptureScreen();
-	}
-	return 0;
+	::SendMessage(  GetParent()->m_hWnd, 
+                    bCatchForeground ? UWM_CAPTUREWINDOW : UWM_CAPTURESCREEN,
+                    (WPARAM) TRUE, 
+				    0);
+    return 0;
 }
 
 void CAutoCapture::EnableControls(BOOL bEnable)
