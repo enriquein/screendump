@@ -5,10 +5,16 @@
     (example: GenerateAutoFileName() used to be in settings class). 
 */
 
-// Returns a new filename using the timestamp: YYYYMMDD-HHMMSSuuu.ext
-CString GenerateAutoFileName();
+// Returns a new filename using the timestamp: img_YYYYMMDD_HHMMSSuuu (does not include extension).
+// Provide a path for verifying if a file already exists and increment 1 to the filename.
+// This is useful since windows time doesn't update every millisecond.
+CString GenerateAutoFileName(CString path);
 
-// TODO Returns filename based on several pre-specified tokens and user constants. (NYI)
+// Opens a File Open dialog for the user. Returns the full path and filename selected by the user, or 
+// empty string if the user cancels out.
+CString OpenFileDialog();
+
+// TODO Returns filename based on several pre-specified tokens and user constants. (excluding extension) (NYI)
 CString GenerateTokenizedFileName(CString tokens);
 
 // Checks if the file already exists. Returns TRUE if it does, otherwise FALSE.
