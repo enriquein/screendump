@@ -201,5 +201,5 @@ void WindowCapture::DumpImage(Bitmap* aBmp, const CString& filename)
 
     // TODO add exception handling in case of ReadOnly path or Full Disk etc.
     // hint: declare a variable of type Status and then do a switch based on that. 
-	aBmp->Save(fullFilePath, &encoderClsid, &eParams);
+    aBmp->Save(fullFilePath, &encoderClsid, &eParams);
 }

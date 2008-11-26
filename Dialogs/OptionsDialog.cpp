@@ -54,19 +54,18 @@ void OptionsDialog::OnBnClickedOk()
 	c_Destination.GetWindowText(strVal);
 	if(_taccess(strVal, 0) == -1)
 	{
-		if( MessageBox(_T("The selected directory does not exist. Do you wish to create it?"), _T("screendump->Options"), MB_YESNO|MB_ICONQUESTION) == IDYES )
+		if( MessageBox(_T("The selected directory does not exist: ") + strVal + _T("\nDo you wish to create it?"), _T("screendump->Options"), MB_YESNO|MB_ICONQUESTION) == IDYES )
 		{
-            //TODO: Evaluate if strVal is a complete path. We don't want incomplete paths or else we're in for a world of inconsistency.
 			if(_tmkdir(strVal) != 0)
 			{
-				MessageBox(_T("Unable to create directory, please make sure the path is correct and not read-only."), _T("screendump->Options"), MB_OK|MB_ICONERROR);
+				MessageBox(_T("Unable to create directory: ") + strVal + _T("\nPlease make sure the path is correct and not read-only."), _T("screendump->Options"), MB_OK|MB_ICONERROR);
 				c_Destination.SetFocus();
 				c_Destination.SetSel(0, c_Destination.GetWindowTextLength(), TRUE);
 				return;
 			}
             else
             {
-                // TODO: Add a confirmation message with the complete path of the newly created directory. 
+                MessageBox(_T("The selected directory: ") + strVal + _T(" was successfully created."), _T("screendump->Options"), MB_OK|MB_ICONINFORMATION);
             }
 		}
 		else
