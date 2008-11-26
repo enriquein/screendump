@@ -47,4 +47,48 @@ private:
 	CStatic c_lblErrMsg;
     CButton c_chkWantClipboard;
 };
+
+// inline defs
+inline void OptionsDialog::OnEnChangeTxtquality()
+{
+	updateControls();
+}
+
+inline void OptionsDialog::OnEnChangeTxtdestination()
+{
+	updateControls();
+}
+
+inline void OptionsDialog::OnBnClickedCancel()
+{
+	OnCancel();
+}
+
+inline void OptionsDialog::OnBnClickedRadiobmp()
+{
+	updateControls(); 
+}
+
+inline void OptionsDialog::OnBnClickedRadiopng()
+{
+	updateControls(); 
+}
+
+inline void OptionsDialog::OnBnClickedRadiojpeg()
+{
+	updateControls(); 
+}
+
+inline void OptionsDialog::OnBnClickedBtnbrowse()
+{
+	CFileDialog* cfDlg = new CFileDialog(TRUE, NULL, _T("DO NOT DELETE THIS TEXT"), OFN_HIDEREADONLY|OFN_EXPLORER, _T("Directories|*.12ewdfvrfter||"), this);
+	if(cfDlg->DoModal() == IDOK)
+	{
+		CString csPath = cfDlg->GetPathName();
+		csPath = csPath.Left( csPath.ReverseFind(_T('\\')) );
+        c_Destination.SetWindowText(csPath);
+	}
+	delete cfDlg;
+	updateControls();
+}
 #endif

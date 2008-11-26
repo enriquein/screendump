@@ -76,20 +76,3 @@ void GlobalSettings::WriteSettings()
 	WritePrivateProfileString(_T("screendump"), _T("WantClipboard"), buffer, m_IniPath);
 }
 
-CString GlobalSettings::getOutputDir()
-{
-    return szOutputDir;
-}
-
-BOOL GlobalSettings::setOutputDir(CString &sDir)
-{
-    if( EnsurePathExists(sDir) )
-    {
-        szOutputDir = sDir;
-        return TRUE;
-    }
-    else
-    {
-        return FALSE;
-    }
-}

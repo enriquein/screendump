@@ -17,14 +17,14 @@ public:
     WindowCapture(); 
     ~WindowCapture();
 
-    BOOL CaptureRegion(int xCoord, int yCoord, int iWidth, int iHeight, CString strFilename); // Captures all windows in the region specified by the parameters.
-    BOOL CaptureScreen(CString strFilename);  // Captures the entire screen.    
-    BOOL CaptureWindow(CString strFilename);  // Captures the active window (wether it's foreground or not.) If not the foreground window, it will not capture windows on top of it.
-    void SetEncoder(selEncoder enc, long lQualityVal = 100);  // Set encoder to use. Optionally set the quality (Defaults to 100).
+//    BOOL CaptureRegion(const int& xCoord, const int& yCoord, const int& iWidth, const int& iHeight, const CString& strFilename); // Captures all windows in the region specified by the parameters.
+    BOOL CaptureScreen(const CString& strFilename);  // Captures the entire screen.    
+    BOOL CaptureWindow(const CString& strFilename);  // Captures the active window (wether it's foreground or not.) If not the foreground window, it will not capture windows on top of it.
+    void SetEncoder(const selEncoder& enc, const long& lQualityVal = 100);  // Set encoder to use. Optionally set the quality (Defaults to 100).
     selEncoder GetEncoder();    // Returns the current selected encoder.
     long GetQuality();   // Get quality value (JPG only). Range is 1 to 100.      
-    void SetQuality(long lQualityVal);  // Set quality for JPG files. Range is: 1 to 100 where 1 is low quality and 100 is best possible quality.
-    void SetUseClipboard(BOOL wantClipboard); // TRUE if we want to store data on the clipboard, FALSE otherwise.
+    void SetQuality(const long& lQualityVal);  // Set quality for JPG files. Range is: 1 to 100 where 1 is low quality and 100 is best possible quality.
+    void SetUseClipboard(const BOOL& wantClipboard); // TRUE if we want to store data on the clipboard, FALSE otherwise.
     BOOL GetUseClipboard(); // Returns if we're storing data on the clipboard after captures.
 
 protected:
@@ -37,8 +37,68 @@ protected:
     Status lastGdiStatus;
     BOOL StartGDI();
     void StopGDI();
-    BOOL DoCapture(HDC &hdc, int xCoord, int yCoord, int iWidth, int iHeight, BOOL bWantOverlayed, CString strFilename);
+    BOOL DoCapture(const HDC &hdc, const int& xCoord, const int& yCoord, const int& iWidth, const int& iHeight, const BOOL& bWantOverlayed, const CString& strFilename);
     int GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
-    void DumpImage(Bitmap* aBmp, LPCTSTR filename);
+    void DumpImage(Bitmap *aBmp, const CString& filename);
 };
+
+// inline defs
+inline BOOL WindowCapture::StartGDI()
+{
+    lastGdiStatus = GdiplusStartup(&gdiToken, &gdiStartupInput, NULL);
+    return (lastGdiStatus == Ok);
+}
+
+inline void WindowCapture::StopGDI()
+{
+    if(lastGdiStatus == Ok)
+    {
+        GdiplusShutdown(gdiToken);
+        lastGdiStatus = Aborted;
+    }
+}
+
+inline void WindowCapture::SetEncoder(const selEncoder& enc, const long& lQualityVal /* = 100 */)
+{
+    sEnc = enc;
+    lQuality = lQualityVal;
+}
+
+inline selEncoder WindowCapture::GetEncoder()
+{
+    return sEnc;
+}
+
+inline long WindowCapture::GetQuality()
+{
+    return lQuality;
+}
+
+inline void WindowCapture::SetQuality(const long& lQualityVal)
+{
+    // If an invalid number is specified for quality, default to the highest.
+    if( (lQualityVal <= 0) || (lQualityVal > 100))
+    {
+        lQuality = 100;
+    }
+    else
+    {
+        lQuality = lQualityVal;
+    }
+}
+
+inline BOOL WindowCapture::GetUseClipboard()
+{
+    return bUseClipboard;
+}
+
+inline void WindowCapture::SetUseClipboard(const BOOL& wantClipboard)
+{
+    bUseClipboard = wantClipboard;
+}
+
+//inline BOOL WindowCapture::CaptureRegion(const int& xCoord, const int& yCoord, const int& iWidth, const int& iHeight, const CString& strFilename)
+//{
+//    return FALSE; // Not yet implemented.
+//}
 #endif

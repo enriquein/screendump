@@ -54,8 +54,3 @@ BOOL AboutDialog::OnInitDialog()
     
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
-
-void AboutDialog::OnStnClickedUrllink()
-{
-    ShellExecute(NULL, _T("open"), _T("http://www.indiecodelabs.com/"), NULL, NULL, SW_SHOWNORMAL);
-}
