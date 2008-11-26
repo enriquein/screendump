@@ -105,20 +105,26 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,112,221,10
 END
 
-IDD_ABOUTDIALOG DIALOGEX 0, 0, 314, 167
+IDD_ABOUTDIALOG DIALOGEX 0, 0, 368, 234
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | DS_CENTER | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "About screendump (version)"
 FONT 8, "MS Shell Dlg", 400, 0, 0x1
 BEGIN
-    DEFPUSHBUTTON   "Close",IDOK,130,144,52,16
-    LTEXT           "screendump: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",IDC_STATIC,56,7,244,46
-    LTEXT           "This program is covered under a free, open source license. You may install and use this program anywhere you wish. This license includes educational, personal, and commercial purposes.",IDC_STATIC,7,57,300,34
-    LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,116,129,82,8
+    DEFPUSHBUTTON   "Close",IDOK,156,211,52,16
+    LTEXT           "screendump: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",IDC_STATIC,56,7,305,46
+    LTEXT           "This program is covered under a free, open source license. You may install and use this program anywhere you wish. This license includes educational, personal, and commercial purposes.",IDC_STATIC,7,57,354,17
+    LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,148,196,82,8
     CONTROL         135,IDC_LOGOIMG,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_REALSIZEIMAGE,7,7,45,41
-    LTEXT           "http://www.indiecodelabs.com",IDC_URLLINK,189,90,107,8,SS_NOTIFY
-    LTEXT           "For more information and source code, visit the website:",IDC_STATIC,7,90,182,8
-    LTEXT           "Static",IDC_BUILDTEXT,7,105,300,18
+    LTEXT           "http://www.indiecodelabs.com",IDC_URLLINK,189,82,107,8,SS_NOTIFY
+    LTEXT           "For more information and source code, visit the website:",IDC_STATIC,7,82,182,8
+    LTEXT           "Static",IDC_BUILDTEXT,14,145,340,23
+    LTEXT           "To report a bug, please visit the project's bug tracker: ",IDC_STATIC,7,99,176,8
+    LTEXT           "Alternatively, if you would rather communicate by mail, you can reach me at:",IDC_STATIC,7,116,247,8
+    LTEXT           "https://bugs.launchpad.net/screendump",IDC_LAUNCHPADURL,182,99,131,8
+    LTEXT           "dev@indiecodelabs.com",IDC_EMAIL,255,116,78,8
+    GROUPBOX        "Version Information",IDC_STATIC,7,134,354,54
+    EDITTEXT        IDC_TXTBZRID,14,168,340,12,ES_AUTOHSCROLL | ES_READONLY
 END
 
 IDD_AUTOTIMER DIALOGEX 0, 0, 329, 156
@@ -167,8 +173,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,2,0,42
- PRODUCTVERSION 2,2,0,42
+ FILEVERSION 2,2,0,0
+ PRODUCTVERSION 2,2,0,0
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x3L
@@ -186,13 +192,13 @@ BEGIN
             VALUE "Comments", "Visit the official website, http://www.indiecodelabs.com"
             VALUE "CompanyName", "Indie Code Labs"
             VALUE "FileDescription", "Small program that saves screenshots automagically."
-            VALUE "FileVersion", "2.2.0.42"
+            VALUE "FileVersion", "2.2.0.0"
             VALUE "InternalName", "screendump.exe"
             VALUE "LegalCopyright", "This program is covered by an artistic open source license."
             VALUE "LegalTrademarks", "This program is covered by an artistic open source license."
             VALUE "OriginalFilename", "screendump.exe"
             VALUE "ProductName", "screendump"
-            VALUE "ProductVersion", "2.2.0.42"
+            VALUE "ProductVersion", "2.2.0.0"
         END
     END
     BLOCK "VarFileInfo"
@@ -228,9 +234,9 @@ BEGIN
     IDD_ABOUTDIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
-        RIGHTMARGIN, 307
+        RIGHTMARGIN, 361
         TOPMARGIN, 7
-        BOTTOMMARGIN, 160
+        BOTTOMMARGIN, 227
     END
 
     IDD_AUTOTIMER, DIALOG

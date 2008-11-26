@@ -36,6 +36,10 @@
 #define IDC_SYSLINK1                    1023
 #define IDC_URLLINK                     1024
 #define IDC_BUILDTEXT                   1025
+#define IDC_LAUNCHPADURL                1026
+#define IDC_EMAIL                       1027
+#define IDC_EDIT1                       1028
+#define IDC_TXTBZRID                    1028
 #define ID_TRAY_ABOUT                   32773
 #define ID_TRAY_OPTIONS                 32774
 #define ID_TRAY_EXIT                    32775
@@ -52,7 +56,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32785
-#define _APS_NEXT_CONTROL_VALUE         1026
+#define _APS_NEXT_CONTROL_VALUE         1029
 #define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif

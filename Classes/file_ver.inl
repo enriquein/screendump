@@ -251,11 +251,10 @@ inline CString FileVersionInfo::GetCustomFileVersionString() const
 	if (!m_pVersionInfo) return CString(_T(""));
 
 	CString strRes;
-	strRes.Format(_T("%d.%d (rev %d"), HIWORD (m_fixedFileInfo.dwFileVersionMS),
-									 LOWORD (m_fixedFileInfo.dwFileVersionMS),
-									 LOWORD (m_fixedFileInfo.dwFileVersionLS)
+	strRes.Format(_T("%d.%d"),  HIWORD (m_fixedFileInfo.dwFileVersionMS),
+								LOWORD (m_fixedFileInfo.dwFileVersionMS)
 				 );
-	strRes += IsPreRelease() ? _T(" Beta)") : _T(")");
+	strRes += IsPreRelease() ? _T(" (Beta)") : _T("");
 	return strRes;
 }
 
