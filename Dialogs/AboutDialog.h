@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef AboutDialog_H
-#define AboutDialog_H
+#ifndef ABOUTDIALOG_H
+#define ABOUTDIALOG_H
 #include "afxwin.h"
 // AboutDialog dialog
 
@@ -21,6 +21,7 @@ public:
 protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
     CStatic c_LogoImg;    
+    CStatic c_BuildText; 
     CString strVersionText;
     CString strBuildDate;
     
@@ -28,7 +29,13 @@ protected:
 public:
 	virtual BOOL OnInitDialog();
     afx_msg void OnStnClickedUrllink();
-protected:
-    CStatic c_BuildText;
 };
+
+// Inline defs
+
+inline void AboutDialog::OnStnClickedUrllink()
+{
+    ShellExecute(NULL, _T("open"), _T("http://www.indiecodelabs.com/"), NULL, NULL, SW_SHOWNORMAL);
+}
+
 #endif

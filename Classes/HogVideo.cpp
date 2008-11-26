@@ -116,11 +116,6 @@ void HogVideo::Cleanup()
     }
 }
 
-void HogVideo::SetVideo(LPCTSTR szFilename)
-{
-    m_Filename = szFilename;
-}
-
 BOOL HogVideo::Hog()
 {
     if (!m_pGraph && !m_pMediaControl && !m_pVideoWindow)
@@ -177,20 +172,3 @@ BOOL HogVideo::Hog()
     }
 }
 
-BOOL HogVideo::UnHog()
-{
-    m_HogEnabled = false;
-    if (!m_pMediaControl)
-        return false;
-
-    IMediaControl *pMediaControl = (IMediaControl*)m_pMediaControl;
-    // Stop the graph.
-    pMediaControl->Stop();
-
-    return true;
-}
-
-BOOL HogVideo::IsHogging()
-{
-	return m_HogEnabled;
-}

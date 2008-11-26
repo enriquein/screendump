@@ -39,66 +39,7 @@ WindowCapture::~WindowCapture()
     StopGDI();
 }
 
-BOOL WindowCapture::StartGDI()
-{
-    lastGdiStatus = GdiplusStartup(&gdiToken, &gdiStartupInput, NULL);
-    return (lastGdiStatus == Ok);
-}
-
-void WindowCapture::StopGDI()
-{
-    if(lastGdiStatus == Ok)
-    {
-        GdiplusShutdown(gdiToken);
-        lastGdiStatus = Aborted;
-    }
-}
-
-void WindowCapture::SetEncoder(selEncoder enc, long lQualityVal /* = 100 */)
-{
-    sEnc = enc;
-    lQuality = lQualityVal;
-}
-
-selEncoder WindowCapture::GetEncoder()
-{
-    return sEnc;
-}
-
-long WindowCapture::GetQuality()
-{
-    return lQuality;
-}
-
-void WindowCapture::SetQuality(long lQualityVal)
-{
-    // If an invalid number is specified for quality, default to the highest.
-    if( (lQualityVal <= 0) || (lQualityVal > 100))
-    {
-        lQuality = 100;
-    }
-    else
-    {
-        lQuality = lQualityVal;
-    }
-}
-
-BOOL WindowCapture::GetUseClipboard()
-{
-    return bUseClipboard;
-}
-
-void WindowCapture::SetUseClipboard(BOOL wantClipboard)
-{
-    bUseClipboard = wantClipboard;
-}
-
-BOOL WindowCapture::CaptureRegion(int xCoord, int yCoord, int iWidth, int iHeight, CString strFilename)
-{
-    return FALSE; // Not yet implemented.
-}
-
-BOOL WindowCapture::CaptureScreen(CString strFilename)
+BOOL WindowCapture::CaptureScreen(const CString& strFilename)
 {
 	int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
 	int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
@@ -109,7 +50,7 @@ BOOL WindowCapture::CaptureScreen(CString strFilename)
     return TRUE;
 }
 
-BOOL WindowCapture::CaptureWindow(CString strFilename)
+BOOL WindowCapture::CaptureWindow(const CString& strFilename)
 {
     HWND hWnd = NULL;
     hWnd = ::GetForegroundWindow();   
@@ -132,7 +73,7 @@ DoCapture no longer deletes objects it doesn't create. Meaning that
 HDC's passed to it MUST be deleted by the caller after this function
 returns.
 **********************************************************************/
-BOOL WindowCapture::DoCapture(HDC &hdc, int xCoord, int yCoord, int iWidth, int iHeight, BOOL bWantOverlayed, CString strFilename)
+BOOL WindowCapture::DoCapture(const HDC &hdc, const int& xCoord, const int& yCoord, const int& iWidth, const int& iHeight, const BOOL& bWantOverlayed, const CString& strFilename)
 {
     long bltFlags;
 	bltFlags = bWantOverlayed ? (CAPTUREBLT|SRCCOPY) : SRCCOPY; // CAPTUREBLT means that we want to include windows that are on top of ours.
@@ -189,7 +130,7 @@ int WindowCapture::GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
    return -1;  // Failure
 }
 
-void WindowCapture::DumpImage(Bitmap* aBmp, LPCTSTR filename)
+void WindowCapture::DumpImage(Bitmap* aBmp, const CString& filename)
 {
 	// MSDN NOTE:
 	//When you create an EncoderParameters object, you must allocate enough memory

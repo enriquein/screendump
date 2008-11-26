@@ -243,10 +243,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Helpers\Helpers.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\Classes\HogVideo.cpp"
 				>
 			</File>
@@ -322,10 +318,6 @@
 			</File>
 			<File
 				RelativePath=".\Classes\GlobalSettings.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Helpers\Helpers.h"
 				>
 			</File>
 			<File

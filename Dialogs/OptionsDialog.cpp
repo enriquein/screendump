@@ -108,39 +108,6 @@ void OptionsDialog::OnBnClickedOk()
 	OnCancel();
 }
 
-void OptionsDialog::OnBnClickedCancel()
-{
-	OnCancel();
-}
-
-void OptionsDialog::OnBnClickedRadiobmp()
-{
-	updateControls(); 
-}
-
-void OptionsDialog::OnBnClickedRadiopng()
-{
-	updateControls(); 
-}
-
-void OptionsDialog::OnBnClickedRadiojpeg()
-{
-	updateControls(); 
-}
-
-void OptionsDialog::OnBnClickedBtnbrowse()
-{
-	CFileDialog* cfDlg = new CFileDialog(TRUE, NULL, _T("DO NOT DELETE THIS TEXT"), OFN_HIDEREADONLY|OFN_EXPLORER, _T("Directories|*.12ewdfvrfter||"), this);
-	if(cfDlg->DoModal() == IDOK)
-	{
-		CString csPath = cfDlg->GetPathName();
-		csPath = csPath.Left( csPath.ReverseFind(_T('\\')) );
-        c_Destination.SetWindowText(csPath);
-	}
-	delete cfDlg;
-	updateControls();
-}
-
 BOOL OptionsDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -261,14 +228,4 @@ void OptionsDialog::updateControls()
 	c_lblErrMsg.ShowWindow(enable ? SW_HIDE : SW_SHOW);
     c_JpegQuality.EnableWindow(c_optJpeg.GetCheck());
     c_OK.EnableWindow(enable);
-}
-
-void OptionsDialog::OnEnChangeTxtquality()
-{
-	updateControls();
-}
-
-void OptionsDialog::OnEnChangeTxtdestination()
-{
-	updateControls();
 }

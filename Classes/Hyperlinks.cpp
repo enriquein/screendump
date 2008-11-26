@@ -120,7 +120,7 @@ LRESULT CALLBACK _HyperlinkProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 	return CallWindowProc(pfnOrigProc, hwnd, message, wParam, lParam);
 }
 
-BOOL ConvertStaticToHyperlink(HWND hwndCtl)
+BOOL ConvertStaticToHyperlink(const HWND& hwndCtl)
 {
 	// Subclass the parent so we can color the controls as we desire.
 
@@ -165,7 +165,7 @@ BOOL ConvertStaticToHyperlink(HWND hwndCtl)
 	return TRUE;
 }
 
-BOOL ConvertStaticToHyperlink(HWND hwndParent, UINT uiCtlId)
+BOOL ConvertStaticToHyperlink(const HWND& hwndParent, const UINT& uiCtlId)
 {
 	return ConvertStaticToHyperlink(GetDlgItem(hwndParent, uiCtlId));
 }

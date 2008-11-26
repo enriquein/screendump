@@ -16,7 +16,3 @@ GlobalAtom::~GlobalAtom(void)
 	GlobalDeleteAtom(m_nID);
 }
 
-ATOM GlobalAtom::GetID()
-{
-	return m_nID;
-}

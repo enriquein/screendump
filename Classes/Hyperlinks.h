@@ -6,5 +6,6 @@
 // http://www.awesoftware.com
 //
 
-BOOL ConvertStaticToHyperlink(HWND hwndCtl);
-BOOL ConvertStaticToHyperlink(HWND hwndParent, UINT uiCtlId);
+BOOL ConvertStaticToHyperlink(const HWND& hwndCtl);
+BOOL ConvertStaticToHyperlink(const HWND& hwndParent, const UINT& uiCtlId);
+

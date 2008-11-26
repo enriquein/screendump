@@ -4,14 +4,14 @@
 
 #ifndef HOGVIDEO_H
 #define HOGVIDEO_H
-
+#include <dshow.h>
 class HogVideo  
 {
 public:
 	HogVideo();
 	virtual ~HogVideo();
 
-    void    SetVideo(LPCTSTR szFilename);
+    void    SetVideo(const CString& szFilename);
     BOOL    Hog();
     BOOL    UnHog();
     void    Cleanup();
@@ -27,4 +27,27 @@ private:
     void   *m_pVideoWindow;
 };
 
+// inline defs
+inline BOOL HogVideo::UnHog()
+{
+    m_HogEnabled = false;
+    if (!m_pMediaControl)
+        return false;
+
+    IMediaControl *pMediaControl = (IMediaControl*)m_pMediaControl;
+    // Stop the graph.
+    pMediaControl->Stop();
+
+    return true;
+}
+
+inline BOOL HogVideo::IsHogging()
+{
+	return m_HogEnabled;
+}
+
+inline void HogVideo::SetVideo(const CString& szFilename)
+{
+    m_Filename = szFilename;
+}
 #endif 

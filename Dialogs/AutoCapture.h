@@ -19,7 +19,7 @@ public:
 
 protected:
 	BOOL bCatchForeground;
-	void EnableControls(BOOL bEnable);
+	void EnableControls(const BOOL &bEnable);
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
 	afx_msg LRESULT OnTimer(WPARAM wParam, LPARAM lParam);
 	DECLARE_MESSAGE_MAP()
@@ -31,7 +31,7 @@ protected:
 	virtual void OnCancel();
 public:
 	afx_msg void OnClose();
-private:
+protected:
     CEdit c_txtACDelay;
     CButton c_optSeconds;
     CButton c_optMilliseconds;
@@ -39,4 +39,27 @@ private:
     CButton c_optForeground;
     CButton c_btnStart;
 };
+
+// inline defs
+
+inline void AutoCapture::EnableControls(const BOOL &bEnable)
+{
+	c_txtACDelay.EnableWindow(bEnable);
+    c_optForeground.EnableWindow(bEnable);
+	c_optFullScreen.EnableWindow(bEnable);
+	c_optSeconds.EnableWindow(bEnable);
+	c_optMilliseconds.EnableWindow(bEnable);
+}
+
+inline void AutoCapture::OnCancel()
+{
+	KillTimer(UWM_TIMER_AC);
+	CDialog::OnCancel();
+}
+
+inline void AutoCapture::OnClose()
+{
+	OnCancel();
+}
+
 #endif

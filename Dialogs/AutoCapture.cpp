@@ -107,24 +107,6 @@ void AutoCapture::OnBnClickedOk() // Start Capture was clicked
 	ShowWindow(SW_SHOWMINIMIZED);
 }
 
-LRESULT AutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
-{
-	::SendMessage(  GetParent()->m_hWnd, 
-                    bCatchForeground ? UWM_CAPTUREWINDOW : UWM_CAPTURESCREEN,
-                    (WPARAM) TRUE, 
-				    0);
-    return 0;
-}
-
-void AutoCapture::EnableControls(BOOL bEnable)
-{
-	c_txtACDelay.EnableWindow(bEnable);
-    c_optForeground.EnableWindow(bEnable);
-	c_optFullScreen.EnableWindow(bEnable);
-	c_optSeconds.EnableWindow(bEnable);
-	c_optMilliseconds.EnableWindow(bEnable);
-}
-
 BOOL AutoCapture::OnInitDialog()
 {
 	CDialog::OnInitDialog();
@@ -134,13 +116,11 @@ BOOL AutoCapture::OnInitDialog()
 	return TRUE;  // return TRUE unless you set the focus to a control
 }
 
-void AutoCapture::OnCancel()
+inline LRESULT AutoCapture::OnTimer(WPARAM wParam, LPARAM lParam)
 {
-	KillTimer(UWM_TIMER_AC);
-	CDialog::OnCancel();
-}
-
-void AutoCapture::OnClose()
-{
-	OnCancel();
+	::SendMessage(  GetParent()->m_hWnd, 
+                    bCatchForeground ? UWM_CAPTUREWINDOW : UWM_CAPTURESCREEN,
+                    (WPARAM) TRUE, 
+				    0);
+    return 0;
 }

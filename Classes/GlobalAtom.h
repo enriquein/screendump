@@ -11,4 +11,10 @@ public:
 private:
 	ATOM m_nID;
 };
+
+// inline defs
+inline ATOM GlobalAtom::GetID()
+{
+	return m_nID;
+}
 #endif
