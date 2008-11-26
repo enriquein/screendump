@@ -278,7 +278,7 @@ END
 // Bitmap
 //
 
-IDB_PROGLOGO            BITMAP                  "C:\\Documents and Settings\\enramire\\My Documents\\dev\\2.2\\icon-src\\progimage-64.bmp"
+IDB_PROGLOGO            BITMAP                  "..\\icon-src\\progimage-64.bmp"
 #endif    // English (U.S.) resources
 /////////////////////////////////////////////////////////////////////////////
 

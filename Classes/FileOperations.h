@@ -5,10 +5,10 @@
     (example: GenerateAutoFileName() used to be in settings class). 
 */
 
-// Returns a new filename using the timestamp: img_YYYYMMDD_HHMMSSuuu (does not include extension).
+// Returns a new filename using the timestamp: img_YYYYMMDD_HHMMSSuuu.
 // Provide a path for verifying if a file already exists and increment 1 to the filename.
 // This is useful since windows time doesn't update every millisecond.
-CString GenerateAutoFileName(CString path);
+CString GenerateAutoFileName();
 
 // Opens a File Open dialog for the user. Returns the full path and filename selected by the user, or 
 // empty string if the user cancels out.

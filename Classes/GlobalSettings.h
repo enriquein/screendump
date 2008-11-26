@@ -16,12 +16,10 @@ public:
 	long lJpgQuality;
 	void ReadSettings();
 	void WriteSettings();
-    CString GetNewFileName();
     CString getOutputDir();
     BOOL setOutputDir(CString& sDir);
 
 protected:
-    BOOL CheckCreateDir(CString path);
 	CString szOutputDir;    
 	CString m_IniPath;
 };

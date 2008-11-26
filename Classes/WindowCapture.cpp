@@ -203,23 +203,53 @@ void WindowCapture::DumpImage(Bitmap* aBmp, LPCTSTR filename)
     CString fullFilePath(filename);
 	EncoderParameters eParams; // Since we use only 1 parameter we don't need the fancy malloc stuff
 	CLSID encoderClsid;
+	BOOL extAppend = FALSE;
+	
+	// Check if the file extension was already provided to avoid double appending it.
 	switch (sEnc)
 	{
 	case sEncBMP:
-		fullFilePath += _T(".bmp");
+	    if (fullFilePath.GetLength() > 4)
+	    {
+	        extAppend = (fullFilePath.Right(4) == _T(".bmp")) ? FALSE : TRUE;
+	    }
+	    else
+	    {
+	        extAppend = TRUE;
+	    }
+
+		fullFilePath += extAppend ? _T(".bmp") : _T("");		
 		GetEncoderClsid(_T("image/bmp"), &encoderClsid);
 		eParams.Count = 0;
 		break;
 
 	case sEncPNG:
+	    if (fullFilePath.GetLength() > 4)
+	    {
+	        extAppend = (fullFilePath.Right(4) == _T(".png")) ? FALSE : TRUE;
+	    }
+	    else
+	    {
+	        extAppend = TRUE;
+	    }
+
+		fullFilePath += extAppend ? _T(".png") : _T("");	
 		GetEncoderClsid(_T("image/png"), &encoderClsid);
-		fullFilePath += _T(".png");
 		eParams.Count = 0;		
 		break;
 
 	case sEncJPEG:
+        if (fullFilePath.GetLength() > 4)
+	    {
+	        extAppend = (fullFilePath.Right(4) == _T(".jpg")) ? FALSE : TRUE;
+	    }
+	    else
+	    {
+	        extAppend = TRUE;
+	    }
+
+		fullFilePath += extAppend ? _T(".jpg") : _T("");	
 		GetEncoderClsid(_T("image/jpeg"), &encoderClsid);
-		fullFilePath += _T(".jpg");
 		eParams.Count = 1;
 		eParams.Parameter[0].Guid = EncoderQuality;
 		eParams.Parameter[0].NumberOfValues = 1;
@@ -228,7 +258,7 @@ void WindowCapture::DumpImage(Bitmap* aBmp, LPCTSTR filename)
 	    break;
 	}
 
-    // TODO: add exception handling in case of ReadOnly path or Full Disk etc.
+    // TODO add exception handling in case of ReadOnly path or Full Disk etc.
     // hint: declare a variable of type Status and then do a switch based on that. 
 	aBmp->Save(fullFilePath, &encoderClsid, &eParams);
 }

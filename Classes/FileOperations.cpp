@@ -4,7 +4,7 @@
 #include "FileOperations.h"
 #include "GlobalSettings.h"
 
-// Returns a new filename using the timestamp: img_YYYYMMDD_HHMMSSuuu (does not include extension).
+// Returns a new filename using the timestamp: img_YYYYMMDD_HHMMSSuuu.
 // Verifies if a file already exists with the generated filename, if it does we increment the filename.
 CString GenerateAutoFileName()
 {
@@ -39,7 +39,7 @@ CString GenerateAutoFileName()
     }
     
     // Check if the file already exists
-    while( !CheckFileExists(path + timeStr + ext) )
+    while( CheckFileExists(path + timeStr + ext) )
     {
         if (tNow.wMilliseconds == 999)
         {
@@ -51,7 +51,7 @@ CString GenerateAutoFileName()
             timeStr.Format(_T("img_%u%02u%02u_%02u%02u%02u%03u"), tNow.wYear, tNow.wMonth, tNow.wDay, tNow.wHour, tNow.wMinute, tNow.wSecond, tNow.wMilliseconds);
         }
     }
-    return timeStr;
+    return timeStr + ext;
 }
 
 // Opens a File Open dialog for the user. Returns the full path and filename selected by the user, or 
@@ -59,7 +59,34 @@ CString GenerateAutoFileName()
 CString OpenFileDialog()
 {
     CString fName;
-    CFileDialog cfSaveAs(FALSE, NULL, GenerateAutoFileName(), OFN_HIDEREADONLY|OFN_EXPLORER, _T("All Files (*.*)|*.*||"), NULL);
+    CString ext;
+    CString Filter;
+    GlobalSettings gs;
+    
+    switch (gs.sEnc)
+    {
+        case sEncBMP:
+            ext = _T("bmp");
+            Filter = _T("Bitmap Files (*.bmp)|*.bmp||");
+            break;
+            
+        case sEncJPEG:
+            ext = _T("jpg");
+            Filter = _T("JPEG Files (*.jpg)|*.jpg||");
+            break;
+            
+        case sEncPNG:
+            ext = _T("png");
+            Filter = _T("PNG Files (*.png)|*.png||");
+            break;
+            
+        default:
+            ext = _T("");
+            Filter = _T("All Files (*.*)|*.*||");
+            break;
+    }
+    
+    CFileDialog cfSaveAs(FALSE, ext, _T(""), OFN_HIDEREADONLY|OFN_EXPLORER, Filter, NULL, 0, TRUE);
     if( cfSaveAs.DoModal() == IDOK )
     {
 	    fName = cfSaveAs.GetPathName();
@@ -80,7 +107,7 @@ CString GenerateTokenizedFileName(CString tokens)
 // Checks if the file already exists. Returns TRUE if it does, otherwise FALSE.
 BOOL CheckFileExists(CString fileName)
 {
-    return _taccess(fileName, 0) == 0;
+    return _taccess_s(fileName, 0) == 0;
 }
 
 // Checks if the Path exists. If it doesn't it tries to create it. Returns true if the path exists after execution
@@ -88,7 +115,7 @@ BOOL CheckFileExists(CString fileName)
 BOOL EnsurePathExists(CString path)
 {
     BOOL returnVal = TRUE;
-	if(_taccess(path, 0) == -1)
+	if( !CheckFileExists(path) )
 	{
 		if(_tmkdir(path) != 0)
 		{
