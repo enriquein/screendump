@@ -231,6 +231,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Classes\FileOperations.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Classes\GlobalAtom.cpp"
 				>
 			</File>
@@ -306,6 +310,10 @@
 			</File>
 			<File
 				RelativePath=".\Classes\file_ver.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Classes\FileOperations.h"
 				>
 			</File>
 			<File

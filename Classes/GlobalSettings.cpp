@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include <windows.h>
-#include <direct.h>
-#include <io.h>
 #include ".\GlobalSettings.h"
+#include ".\FileOperations.h"
+
+// TODO Add a way to run from USB or other portable device.
 
 GlobalSettings::GlobalSettings()
 {
@@ -34,49 +35,6 @@ GlobalSettings::GlobalSettings()
 
 GlobalSettings::~GlobalSettings() 
 { }
-
-// Returns a randomly generated filename if bAutoName is true, a user
-// selected filename if bAutoname is false. The string will be empty if the user
-// cancels out of the save dialog.
-// Note: the returning string will contain the full path as well.
-// Throws a CFileException exception if something goes wrong.
-CString GlobalSettings::GetNewFileName()
-{
-    CString fName;
-    CString timeStr;
-    CString outDir;
-    SYSTEMTIME tNow;
-    GetLocalTime(&tNow);
-    timeStr.Format(_T("img_%u%02u%02u_%02u%02u%02u%03u"), tNow.wYear, tNow.wMonth, tNow.wDay, tNow.wHour, tNow.wMinute, tNow.wSecond, tNow.wMilliseconds);
-
-    // We try and do some sanity validation. I seem to be a big fan of this...
-    if(bAutoName)
-    {
-        outDir = getOutputDir();
-        if( CheckCreateDir(outDir) )
-        {
-            fName = outDir + timeStr;
-        }
-        else
-        {
-            AfxThrowFileException(CFileException::badPath, -1, outDir);
-        }
-    }
-    else
-    {
-        // Get Filename from user. If he cancels out then return empty string.
-        CFileDialog cfSaveAs(FALSE, NULL, timeStr, OFN_HIDEREADONLY|OFN_EXPLORER, _T("All Files (*.*)|*.*||"), NULL);
-	    if( cfSaveAs.DoModal() == IDOK )
-	    {
-		    fName = cfSaveAs.GetPathName();
-	    }
-        else
-        {
-            fName = _T("");
-        }
-    }
-    return fName;
-}
 
 // The only reason you'd have to call this implicitly would be if you for some reason
 // want to reload settings from file. 
@@ -118,22 +76,6 @@ void GlobalSettings::WriteSettings()
 	WritePrivateProfileString(_T("screendump"), _T("WantClipboard"), buffer, m_IniPath);
 }
 
-// Checks if the directory 'path' exists. If it doesn't, it 
-// attempts to create it. If creation fails, we return false.
-// Otherwise, we return true.
-BOOL GlobalSettings::CheckCreateDir(CString path)
-{
-    BOOL returnVal = TRUE;
-	if(_taccess(path, 0) == -1)
-	{
-		if(_tmkdir(path) != 0)
-		{
-			returnVal = FALSE;
-		}
-	}
-    return returnVal;
-}
-
 CString GlobalSettings::getOutputDir()
 {
     return szOutputDir;
@@ -141,7 +83,7 @@ CString GlobalSettings::getOutputDir()
 
 BOOL GlobalSettings::setOutputDir(CString &sDir)
 {
-    if( CheckCreateDir(sDir) )
+    if( EnsurePathExists(sDir) )
     {
         szOutputDir = sDir;
         return TRUE;
