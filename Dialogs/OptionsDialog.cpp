@@ -38,8 +38,9 @@ BEGIN_MESSAGE_MAP(OptionsDialog, CDialog)
 	ON_BN_CLICKED(IDC_RADIOPNG, OnBnClickedRadiopng)
 	ON_BN_CLICKED(IDC_RADIOJPEG, OnBnClickedRadiojpeg)
 	ON_BN_CLICKED(IDC_BTNBROWSE, OnBnClickedBtnbrowse)
-	ON_EN_CHANGE(IDC_TXTQUALITY, &OptionsDialog::OnEnChangeTxtquality)
-    ON_EN_CHANGE(IDC_TXTDESTINATION, &OptionsDialog::OnEnChangeTxtdestination)
+	ON_EN_CHANGE(IDC_TXTQUALITY, OnEnChangeTxtquality)
+    ON_EN_CHANGE(IDC_TXTDESTINATION, OnEnChangeTxtdestination)
+    ON_BN_CLICKED(IDC_CHKAUTONAME, OnBnClickedChkautoname)
 END_MESSAGE_MAP()
 
 
@@ -228,3 +229,4 @@ void OptionsDialog::updateControls()
     c_JpegQuality.EnableWindow(c_optJpeg.GetCheck());
     c_OK.EnableWindow(enable);
 }
+

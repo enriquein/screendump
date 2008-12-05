@@ -46,6 +46,8 @@ private:
     BOOL initialized;
 	CStatic c_lblErrMsg;
     CButton c_chkWantClipboard;
+public:
+    afx_msg void OnBnClickedChkautoname();
 };
 
 // inline defs
@@ -91,4 +93,10 @@ inline void OptionsDialog::OnBnClickedBtnbrowse()
 	delete cfDlg;
 	updateControls();
 }
+
+inline void OptionsDialog::OnBnClickedChkautoname()
+{
+    updateControls();
+}
+
 #endif
