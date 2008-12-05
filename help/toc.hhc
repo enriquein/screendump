@@ -11,12 +11,12 @@
 </OBJECT>
 <UL>
 	<LI> <OBJECT type="text/sitemap">
-		<param name="Name" value="Welcome to bScreenDumped">
+		<param name="Name" value="Welcome to screendump">
 		<param name="Local" value="srchtml\whatis.htm">
 		</OBJECT>
 	<UL>
 		<LI> <OBJECT type="text/sitemap">
-			<param name="Name" value="What is bScreenDumped?">
+			<param name="Name" value="What is screendump?">
 			<param name="Local" value="srchtml\whatis.htm">
 			</OBJECT>
 		<LI> <OBJECT type="text/sitemap">

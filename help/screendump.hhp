@@ -1,14 +1,14 @@
 [OPTIONS]
 Auto Index=Yes
 Compatibility=1.1 or later
-Compiled file=bScreenDumped.chm
+Compiled file=HelpManual.chm
 Contents file=toc.hhc
 Default Font=Verdana,8,0
 Default topic=srchtml\whatis.htm
 Display compile progress=No
 Index file=Index.hhk
 Language=0x409 English (United States)
-Title=bScreenDumped Help
+Title=screendump Help
 
 
 [FILES]

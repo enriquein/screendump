@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>bScreenDumped Options</title>
+<title>screendump Options</title>
 <meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
@@ -27,13 +27,13 @@
     </ul>
     <div class="subheading">Generate filenames automatically</div>
     This option tells the program to automatically generate a filename for the screenshot. The current format for the filename is
-    bSDump-YYYY-MM-DD--HH-mm-SS-mss.jpg (although this might change in future versions).
+    img_YYYYMMDD-HHmmSSmss.jpg (although this might change in future versions).
     The capital letters have a special meaning, YYYY means full year, MM the month, DD the day, and so on. So for example let's say
     today is Tuesday, September 11, 2008 and its 11:27pm (with 12 seconds and 230 milliseconds) then the filename will be: 
-    <i>bSDump-2008-09-11--23-27-12-230.jpg</i>. This might seem like a bit of overkill, but when you have 3 years worth of 
+    <i>img_20080911-232712230.jpg</i>. This might seem like a bit of overkill, but when you have 3 years worth of 
     screenshots in one folder, believe me it pays off. It also makes it easier to take succesive screenshots. For example if I manage
     to press the print screen key 10 times in a second, I'll get 10 different screenshots which I can then view in perfect chronological
-    order.
+    order. I'm considering adding the option to make your own name patterns sometime in the near future. 
     <br>
     <br>
     Of course, if you don't want it to generate the names automatically, you can disable this option. This brings up the familiar
@@ -47,8 +47,20 @@
     <br><br>
     Note: this option required a program restart in version 2.1 and older. After version 2.2 a restart is no longer necessary.
     <br><br>
+    <div class="subheading">Use Clipboard</div>
+    Select if you wish to save the image data to the clipboard as well as the regular file. This allows you to paste the image 
+    data into other programs if you also wish to do that. This option was disabled before version 2.2 and there was no way to
+    enable it. 
+    <br><br>
     <div class="subheading">Place screenshots in</div>
     This is the place where you specify where you want the program to store the automatically generated screenshots.
     Clicking on the &quot;...&quot; button brings up a window that lets you choose the folder.
+    <br><br>
+    <div class="subheading">Validation</div>
+    You may notice that the window has an odd gap between the last item and the Ok/Cancel buttons. This area is reserved space
+    for the validation messages. This was added in version 2.2 to give richer feedback to the user as to why the OK button is
+    disabled.
+    <br>
+    <div align="center"><img src="images/optionswindow-validation.jpg" border="2"></div>
 </body>
 </html>
