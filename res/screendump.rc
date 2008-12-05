@@ -272,8 +272,9 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "Options",                     ID_TRAY_OPTIONS
         MENUITEM "Empty Clipboard",             ID_TRAY_EMPTYCLIPBOARD
-        MENUITEM "About...",                    ID_TRAY_ABOUT
         MENUITEM SEPARATOR
+        MENUITEM "Help",                        ID_TRAY_HELP
+        MENUITEM "About...",                    ID_TRAY_ABOUT
         MENUITEM "Exit",                        ID_TRAY_EXIT
     END
 END

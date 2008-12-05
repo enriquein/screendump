@@ -62,6 +62,7 @@ protected:
 	void OnTrayOptionsClick();
 	void OnTrayOpenDest();
 	void OnTrayAutoCapture();
+	void OnTrayHelpClick();
 
     // CrossDialog Message Handlers
     afx_msg LRESULT OnToggleTrayMsg(WPARAM wParam, LPARAM lParam);
@@ -270,4 +271,10 @@ inline void screendumpDlg::OnTrayEmptyclipboard()
         CloseClipboard();
     }
 }
+
+inline void screendumpDlg::OnTrayHelpClick()
+{
+    ShellExecute(m_hWnd, _T("open"), m_runningPath + _T("\\HelpManual.chm"), NULL, NULL, SW_SHOWNORMAL);
+}
+
 #endif
