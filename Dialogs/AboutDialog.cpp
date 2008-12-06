@@ -6,7 +6,7 @@
 #include "..\Classes\Hyperlinks.h"
 
 UINT AboutDialog::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
-#define BZR_REV_ID _T("dev@indiecodelabs.com-20081126175123-w8u4lowqcec99eed")
+#define BZR_REV_ID _T("dev@indiecodelabs.com-20081206024253-k6dpilnggl5dwuet")
 
 // AboutDialog dialog
 

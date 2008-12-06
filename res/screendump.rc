@@ -114,7 +114,7 @@ BEGIN
     DEFPUSHBUTTON   "Close",IDOK,156,211,52,16
     LTEXT           "screendump: the program lazy people use to take screenshots.\n\nThis program was designed and developed because I wanted a simple program that dumped screenshots, without all the unnecesary bloat some other programs have.",IDC_STATIC,56,7,305,46
     LTEXT           "This program is covered under a free, open source license. You may install and use this program anywhere you wish. This license includes educational, personal, and commercial purposes.",IDC_STATIC,7,57,354,17
-    LTEXT           "(C) 2005 Indie Code Labs",IDC_STATIC,148,196,82,8
+    LTEXT           "(C) 2005-2008 Indie Code Labs",IDC_STATIC,133,196,101,8
     CONTROL         135,IDC_LOGOIMG,"Static",SS_BITMAP | SS_CENTERIMAGE | SS_REALSIZEIMAGE,7,7,45,41
     LTEXT           "http://www.indiecodelabs.com",IDC_URLLINK,189,82,107,8,SS_NOTIFY
     LTEXT           "For more information and source code, visit the website:",IDC_STATIC,7,82,182,8
@@ -177,9 +177,9 @@ VS_VERSION_INFO VERSIONINFO
  PRODUCTVERSION 2,2,0,0
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
- FILEFLAGS 0x3L
+ FILEFLAGS 0x1L
 #else
- FILEFLAGS 0x2L
+ FILEFLAGS 0x0L
 #endif
  FILEOS 0x4L
  FILETYPE 0x1L

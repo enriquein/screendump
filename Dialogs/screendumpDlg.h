@@ -230,6 +230,7 @@ inline void screendumpDlg::ToggleTrayMenu(const BOOL& bEnable)
 	m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_OPTIONS, lFlags);
 	m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_AUTOCAPTURE, lFlags);
     m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_EMPTYCLIPBOARD, lFlags);
+    m_trayMenu.GetSubMenu(0)->EnableMenuItem(ID_TRAY_HELP, lFlags);
 }
 
 // Stops the hog window. 
