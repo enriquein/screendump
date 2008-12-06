@@ -47,6 +47,10 @@
 			<param name="Name" value="Contact Info">
 			<param name="Local" value="srchtml\contact.htm">
 			</OBJECT>
+		<LI> <OBJECT type="text/sitemap">
+			<param name="Name" value="License">
+			<param name="Local" value="srchtml\license.htm">
+			</OBJECT>
 	</UL>
 </UL>
 </BODY></HTML>
