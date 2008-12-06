@@ -1,12 +1,45 @@
 
-bScreenDumped Changes by Version. 
+screendump Changes by Version. 
+  _____
+ / 2.2 \
+ ---------------------------------------------------------------------------------
+| screendump 2.2; Released on Dec/7/2008
+|
+|  + screendump is the open source continuation of bScreenDumped2. The project was
+|    renamed to (hopefully) avoid confusion between the two versions.
+|
+|  + Changed the naming scheme on files to a shorter one. A future release will
+|    make generated filenames be editable by the user (as a pattern).
+|
+|  + Application icons were changed.
+|
+|  + Added support for clipboard use (which is now optional, as opposed to 2.1 
+|    where the clipboard functionality was disabled).
+|
+|  + Code optimizations were done throughout the program. 
+|
+|  + Fixed the bug where in some cases the program would leave an item in the 
+|    taskbar on launch.
+|
+|  + Added support for running across multiple sessions. What this means is that
+|    if you're using a Windows Server version that supports having multiple users
+|    logged at the same time, while working on separate sessions, now the program
+|    can run and not throw an error about "being already running". Of course, the
+|    program is still smart enough to know when the user is trying to run a second
+|    instance of the program in the same session.
+|
+|  + Enabling screenshots of videos no longer requires a program restart.
+|
+|  + Added UNICODE support.
+|
+|  + Added a proper help manual.
 
   _____
  / 2.1 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 2.1; Released on 6/18/2005
+| screendump 2.1; Released on June/18/2005
 |
-|  + Fixed an initialization fuckup. I forgot to set
+|  + Fixed an initialization screwup. I forgot to set
 |    the OSVERSION size correctly, so the program almost
 |    never knew which version of Windows it was running on.
 |    This domino effected into the program not reading its 
@@ -20,7 +53,7 @@ bScreenDumped Changes by Version.
   _____
  / 2.0 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 2.0; Released on 5/20/2005 
+| screendump 2.0; Released on May/20/2005 
 |
 |  + Added support for PNG format. 
 |
@@ -33,7 +66,7 @@ bScreenDumped Changes by Version.
   _____
  / 1.0 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 1.0; Released on 2/21/05 
+| screendump 1.0; Released on Feb/21/05 
 |
 |  + Minor code changes. Speedups that might be too slight to be even noticed. 
 |
@@ -52,7 +85,7 @@ bScreenDumped Changes by Version.
   _____
  / 0.7 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 0.7; Released on 1/10/05 
+| screendump 0.7; Released on Jan/10/05 
 |
 |  + Fixed some minor issues with the 'Save File Dialogue' when not
 |    using automatic filenames.
@@ -71,7 +104,7 @@ bScreenDumped Changes by Version.
   _____
  / 0.6 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 0.6; Released on 12/16/04 
+| screendump 0.6; Released on Dec/16/04 
 |
 |  + Added a definite workaround for the Shell_IconInitialize procedure. Now the
 |    System Tray Icon will always appear.
@@ -79,7 +112,7 @@ bScreenDumped Changes by Version.
   _____
  / 0.5 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 0.5; Released on 11/26/04 
+| screendump 0.5; Released on Nov/26/04 
 |
 |  + Added a check for when the gdiplus.dll didn't initialize properly. Now if for
 |    some reason the dll doesn't load, you can still use the program and dump 
@@ -92,7 +125,7 @@ bScreenDumped Changes by Version.
   _____
  / 0.4 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 0.4; Released on 11/22/04 
+| screendump 0.4; Released on Nov/22/04 
 |
 |  + Added option to save screenshots as jpg's.
 | 
@@ -101,7 +134,7 @@ bScreenDumped Changes by Version.
   _____
  / 0.3 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 0.3; Released on 10/23/04 
+| screendump 0.3; Released on Oct/23/04 
 |
 |  + Added preliminary bugfix for an Initialization error "Failed to create 
 |    shell icon".  
@@ -109,7 +142,7 @@ bScreenDumped Changes by Version.
   _____
  / 0.2 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 0.2; Released on 10/06/04 
+| screendump 0.2; Released on Oct/06/04 
 |
 |  + Fixed an issue where the System Tray Icon Menu wouldn't dissapear after 
 |    clicking outside the menu area.  
@@ -135,4 +168,4 @@ bScreenDumped Changes by Version.
   _____
  / 0.1 \
  ---------------------------------------------------------------------------------
-| bScreenDumped 0.1; Released on 10/02/04 - Initial Release.
+| screendump 0.1; Released on Oct/02/04 - Initial Release.
