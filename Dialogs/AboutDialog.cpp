@@ -42,6 +42,14 @@ BOOL AboutDialog::OnInitDialog()
 {
 	CDialog::OnInitDialog();
 	LRESULT lres;
+	CString cpuBits;
+	
+	// Verify if 32 or 64 bit binary
+	#ifdef _M_X64
+	    cpuBits = "(64-bit)";    
+	#else
+	    cpuBits = "(32-bit)";
+	#endif
 	
 	// Convert our Static control into a Hyperlink
 	ConvertStaticToHyperlink(GetSafeHwnd(), IDC_URLLINK);
@@ -56,7 +64,7 @@ BOOL AboutDialog::OnInitDialog()
     // Set build date
     strBuildDate = CString(_T(__DATE__)) + CString(_T(" ")) + CString(_T(__TIME__));
     
-    c_BuildText.SetWindowText(_T("You are using screendump version ") + strVersionText + _T(". Built on ") + strBuildDate + _T(". For support purposes, don't forget to copy and paste the following ID into your email or bug report:"));
+    c_BuildText.SetWindowText(_T("You are using screendump ") + cpuBits + _T(" version ") + strVersionText + _T(". Built on ") + strBuildDate + _T(". For support purposes, don't forget to copy and paste the following ID into your email or bug report:"));
     
     c_txtBzrID.SetWindowText(BZR_REV_ID);
     

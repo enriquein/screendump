@@ -13,6 +13,10 @@
 #define IDC_HAND MAKEINTRESOURCE(32649)
 #endif
 
+#ifndef GWL_WNDPROC
+#define GWL_WNDPROC -4
+#endif
+
 #ifndef IDC_ARROW
 #define IDC_ARROW MAKEINTRESOURCE(32512)
 #endif

@@ -10,12 +10,12 @@
 !define PRODUCT_STARTMENU_REGVAL "NSIS:StartMenuDir"
 
 !define MY_WINXPVER "1"
-
 SetCompressor lzma
 
 ; MUI 1.67 compatible ------
 !include "MUI.nsh"
-!include Library.nsh
+!include "Library.nsh"
+!include "x64.nsh"
 ; MUI Settings
 !define MUI_ABORTWARNING
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
@@ -31,9 +31,6 @@ SetCompressor lzma
 ; Start menu page
 var ICONS_GROUP
 var AreShort
-!ifdef MY_VBRUNTIME
-  var ALREADY_INSTALLED
-!endif
 ; Instfiles page
 !insertmacro MUI_PAGE_INSTFILES
 ; Finish page
@@ -60,10 +57,21 @@ Name "${PRODUCT_NAME} ${PRODUCT_VERSION}"
 !else
        OutFile "screendump-${PRODUCT_VERSION}-Win2000-Setup.exe"
 !endif
-InstallDir "$PROGRAMFILES\screendump"
-InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
 ShowInstDetails show
 ShowUnInstDetails show
+InstallDirRegKey HKLM "${PRODUCT_DIR_REGKEY}" ""
+
+Function .onInit
+  ${If} ${RunningX64}
+    SetRegView 64
+    StrCpy $INSTDIR "$PROGRAMFILES64\screendump"
+  ${Else}
+    StrCpy $INSTDIR "$PROGRAMFILES\screendump"
+  ${EndIf}
+FunctionEnd
+
+
+
 
 Function MakeStartupLink
   CreateShortCut "$SMSTARTUP\Start screendump.lnk" "$INSTDIR\screendump.exe"
@@ -86,7 +94,11 @@ done:
   SectionIn RO
   SetOutPath "$INSTDIR"
   SetOverwrite on 
-  File "..\..\Release\screendump.exe"
+  ${If} ${RunningX64}
+    File /oname=screendump.exe "..\..\x64\Release\screendump-x64.exe"
+  ${Else}
+    File "..\..\Release\screendump.exe"
+  ${EndIf}
   File "license.txt"
   File "..\..\help\HelpManual.chm"
   File "changelog.txt"
