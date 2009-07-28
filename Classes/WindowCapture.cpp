@@ -61,8 +61,8 @@ BOOL WindowCapture::CaptureWindow(const CString& strFilename)
     CRect rect;
     GetWindowRect(hWnd, &rect);
 	rect.NormalizeRect();
-	HDC hhdc = GetWindowDC(hWnd);  
-	DoCapture(hhdc, 0, 0, rect.Width(), rect.Height(), FALSE, strFilename);
+	HDC hhdc = GetDC(NULL);  
+	DoCapture(hhdc, rect.left, rect.top, rect.Width(), rect.Height(), TRUE, strFilename);
     ReleaseDC(NULL, hhdc);
 	DeleteDC(hhdc);
     return TRUE;
