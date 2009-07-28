@@ -1,6 +1,23 @@
 
 screendump Changes by Version. 
   _____
+ / 2.3 \
+ ---------------------------------------------------------------------------------
+| screendump 2.3; Released on July/28/2009
+|
+| + Fixed Alt+PrintScreen bug that made screenshots sometime contain garbage
+|   or solid color where the window border was supposed to be. This bug only
+|   happened under Windows Vista or Windows 7, and when Aero was enabled.
+
+  _________
+ / 2.2.0.1 \
+ ---------------------------------------------------------------------------------
+| screendump 2.2.0.1; Released on July/18/2009
+|
+| + screendump now supports native 64 bit Windows. The installer should 
+|   be able to determine the right version for your operating system.
+
+  _____
  / 2.2 \
  ---------------------------------------------------------------------------------
 | screendump 2.2; Released on Dec/7/2008
