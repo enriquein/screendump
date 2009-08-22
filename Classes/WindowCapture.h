@@ -18,8 +18,8 @@ public:
     ~WindowCapture();
 
 //    BOOL CaptureRegion(const int& xCoord, const int& yCoord, const int& iWidth, const int& iHeight, const CString& strFilename); // Captures all windows in the region specified by the parameters.
-    BOOL CaptureScreen(const CString& strFilename);  // Captures the entire screen.    
-    BOOL CaptureWindow(const CString& strFilename);  // Captures the active window (wether it's foreground or not.) If not the foreground window, it will not capture windows on top of it.
+    BOOL CaptureScreen(const CString& filename);  // Captures the entire screen.    
+    BOOL CaptureWindow(const CString& filename);  // Captures the active window (wether it's foreground or not.) If not the foreground window, it will not capture windows on top of it.
     void SetEncoder(const selEncoder& enc, const long& lQualityVal = 100);  // Set encoder to use. Optionally set the quality (Defaults to 100).
     selEncoder GetEncoder();    // Returns the current selected encoder.
     long GetQuality();   // Get quality value (JPG only). Range is 1 to 100.      
@@ -37,9 +37,9 @@ protected:
     Status lastGdiStatus;
     BOOL StartGDI();
     void StopGDI();
-    BOOL DoCapture(const HDC &hdc, const int& xCoord, const int& yCoord, const int& iWidth, const int& iHeight, const BOOL& bWantOverlayed, const CString& strFilename);
+    BOOL DoCapture(const POINT& coords, const SIZE& areaSize, const CString& filename);
     int GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
-    void DumpImage(Bitmap *aBmp, const CString& filename);
+    BOOL DumpImage(Bitmap *aBmp, const CString& filename);
 };
 
 // inline defs

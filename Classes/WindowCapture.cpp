@@ -39,18 +39,13 @@ WindowCapture::~WindowCapture()
     StopGDI();
 }
 
-BOOL WindowCapture::CaptureScreen(const CString& strFilename)
+BOOL WindowCapture::CaptureScreen(const CString& filename)
 {
-	int height = GetSystemMetrics(SM_CYVIRTUALSCREEN);
-	int width = GetSystemMetrics(SM_CXVIRTUALSCREEN);
-	HDC hhdc = GetDC(NULL); 
-	DoCapture(hhdc, 0, 0, width, height, TRUE, strFilename);
-    ReleaseDC(NULL, hhdc);
-	DeleteDC(hhdc);
-    return TRUE;
+	CSize captureArea(GetSystemMetrics(SM_CXVIRTUALSCREEN), GetSystemMetrics(SM_CYVIRTUALSCREEN));
+    return DoCapture(CPoint(0, 0), captureArea, filename);
 }
 
-BOOL WindowCapture::CaptureWindow(const CString& strFilename)
+BOOL WindowCapture::CaptureWindow(const CString& filename)
 {
     HWND hWnd = NULL;
     hWnd = ::GetForegroundWindow();   
@@ -61,42 +56,72 @@ BOOL WindowCapture::CaptureWindow(const CString& strFilename)
     CRect rect;
     GetWindowRect(hWnd, &rect);
 	rect.NormalizeRect();
-	HDC hhdc = GetDC(NULL);  
-	DoCapture(hhdc, rect.left, rect.top, rect.Width(), rect.Height(), TRUE, strFilename);
-    ReleaseDC(NULL, hhdc);
-	DeleteDC(hhdc);
-    return TRUE;
+	return DoCapture(CPoint(rect.left, rect.top), CSize(rect.Width(), rect.Height()), filename);
 }
 
-/**********************************************************************
-DoCapture no longer deletes objects it doesn't create. Meaning that
-HDC's passed to it MUST be deleted by the caller after this function
-returns.
-**********************************************************************/
-BOOL WindowCapture::DoCapture(const HDC &hdc, const int& xCoord, const int& yCoord, const int& iWidth, const int& iHeight, const BOOL& bWantOverlayed, const CString& strFilename)
+BOOL WindowCapture::DoCapture(const POINT& coords, const SIZE& areaSize, const CString& filename)
 {
-    long bltFlags;
-	bltFlags = bWantOverlayed ? (CAPTUREBLT|SRCCOPY) : SRCCOPY; // CAPTUREBLT means that we want to include windows that are on top of ours.
-	HDC hDest = CreateCompatibleDC(hdc);
-	HBITMAP hbDesktop = CreateCompatibleBitmap( hdc, iWidth, iHeight ); 
-	SelectObject(hDest, hbDesktop);
-	BitBlt(hDest, 0,0, iWidth, iHeight, hdc, xCoord, yCoord, bltFlags);
-	HPALETTE hPalette = (HPALETTE)GetCurrentObject(hdc, OBJ_PAL);
-	Bitmap myBitMap(hbDesktop, hPalette);
-	DumpImage(&myBitMap, strFilename);
+	CDC dc;
+    HDC hdc = GetDC(NULL);
+    dc.Attach(hdc);
+
+    // Create a memory DC into which the bitmap will be captured
+    CDC memDC;
+    memDC.CreateCompatibleDC(&dc);
+
+    // If there is already a bitmap, delete it as we are going to replace it
+    CBitmap bmp;
+    bmp.DeleteObject();
+
+    ICONINFO info;
+ 	GetIconInfo((HICON)::GetCursor(), &info);   
+    
+    CURSORINFO cursor;
+    cursor.cbSize = sizeof(CURSORINFO);
+    GetCursorInfo(&cursor);
+		
+	bmp.CreateCompatibleBitmap(&dc, areaSize.cx, areaSize.cy);
+    CBitmap * oldbm = memDC.SelectObject(&bmp);
+
+    // Before we copy the image in, we blank the bitmap to
+    // the background fill color
+    memDC.FillSolidRect(&CRect(0,0,areaSize.cx, areaSize.cy), RGB(255,255,255));
+
+    // Copy the window image from the window DC into the memory DC
+    memDC.BitBlt(0, 0, areaSize.cx, areaSize.cy, &dc, coords.x, coords.y, SRCCOPY|CAPTUREBLT);
+
+    // We need to compensate for pointer position if we're taking a screenshot of a region/window.
+    // The super sad news is that: 1) you have to consider all icons as 32x32 as that's a Windows
+    // spec thing, 2) THEY ARE NOT TOP ALIGNED. God dammit, was it so hard to make all standard cursors
+    // top aligned? That magic "10" you see down here was compensating for the default mouse cursor.
+    // I'm even thinking of letting it be adjustable. It's so irritating, I don't even want to think 
+    // about doing math or whatever to figure out where the actual tip of the arrow is. 
+    CPoint cursorOffset(cursor.ptScreenPos.x - coords.x - 10, cursor.ptScreenPos.y - coords.y - 10);
+
+    // Now draw the image of the cursor that we captured during
+    // the mouse move. DrawIcon will draw a cursor as well.
+    memDC.DrawIcon(cursorOffset, (HICON)cursor.hCursor);
+
+    memDC.SelectObject(oldbm);	
+    
+	Bitmap outputBitMap(bmp, NULL);
+    
     if(bUseClipboard)
     {
         if(OpenClipboard(NULL))
         {
             EmptyClipboard();
-            SetClipboardData(CF_BITMAP, hbDesktop);
+            SetClipboardData(CF_BITMAP, bmp);
             CloseClipboard();
         }
     }
-    DeleteObject(hbDesktop);
-	DeleteObject(hPalette);
-    DeleteDC(hDest);
-    return TRUE;
+    
+    BOOL success = DumpImage(&outputBitMap, filename);
+
+    DeleteObject(bmp.Detach());
+    DeleteDC(dc.Detach());
+    DeleteDC(memDC.Detach());
+    return success;
 }
 
 int WindowCapture::GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
@@ -130,7 +155,7 @@ int WindowCapture::GetEncoderClsid(const WCHAR* format, CLSID* pClsid)
    return -1;  // Failure
 }
 
-void WindowCapture::DumpImage(Bitmap* aBmp, const CString& filename)
+BOOL WindowCapture::DumpImage(Bitmap* aBmp, const CString& filename)
 {
 	// MSDN NOTE:
 	//When you create an EncoderParameters object, you must allocate enough memory
@@ -199,7 +224,6 @@ void WindowCapture::DumpImage(Bitmap* aBmp, const CString& filename)
 	    break;
 	}
 
-    // TODO add exception handling in case of ReadOnly path or Full Disk etc.
-    // hint: declare a variable of type Status and then do a switch based on that. 
-    aBmp->Save(fullFilePath, &encoderClsid, &eParams);
+    Status stat = aBmp->Save(fullFilePath, &encoderClsid, &eParams);
+    return stat == Ok;
 }
