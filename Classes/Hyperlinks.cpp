@@ -20,10 +20,10 @@
 #ifndef IDC_ARROW
 #define IDC_ARROW MAKEINTRESOURCE(32512)
 #endif
-#define PROP_ORIGINAL_FONT		TEXT("_Hyperlink_Original_Font_")
-#define PROP_ORIGINAL_PROC		TEXT("_Hyperlink_Original_Proc_")
-#define PROP_STATIC_HYPERLINK	TEXT("_Hyperlink_From_Static_")
-#define PROP_UNDERLINE_FONT		TEXT("_Hyperlink_Underline_Font_")
+#define PROP_ORIGINAL_FONT		_T("_Hyperlink_Original_Font_")
+#define PROP_ORIGINAL_PROC		_T("_Hyperlink_Original_Proc_")
+#define PROP_STATIC_HYPERLINK	_T("_Hyperlink_From_Static_")
+#define PROP_UNDERLINE_FONT		_T("_Hyperlink_Underline_Font_")
 
 
 LRESULT CALLBACK _HyperlinkParentProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)

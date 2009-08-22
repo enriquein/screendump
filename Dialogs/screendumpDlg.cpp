@@ -1,14 +1,16 @@
+#pragma once
 #include "stdafx.h"
 #include "..\Classes\HogVideo.h"
 #include ".\screendumpDlg.h"
 #include "..\Classes\WindowCapture.h"
 #include "..\Classes\GlobalSettings.h"
-#include ".\OptionsDialog.h"
 #include ".\AboutDialog.h"
 #include ".\AutoCapture.h"
 #include "..\Classes\file_ver.h"
 #include "..\Classes\ErrorString.h"
 #include "..\Classes\FileOperations.h"
+#include "..\Classes\AeroCheck.h"
+#include ".\OptionsDialog.h"
 
 UINT screendumpDlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
 UINT screendumpDlg::UWM_TOGGLETRAY = ::RegisterWindowMessage(_T("UWM_TOGGLETRAY-{963FEF79-2137-4fa7-A0D9-D1C4F1D32298}"));
@@ -164,37 +166,41 @@ LRESULT screendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 // Verifies if the setting is enabled before doing any work.
 void screendumpDlg::StartHog()
 {
+    // We don't want to hog under Aero, no point in it.
+    if(CheckAeroIsEnabled())
+        return;
+
 	// Check if its already running. If it is, then ignore the hog request.
-	if(!m_Hog.IsHogging())
+	if(m_Hog.IsHogging())
+	    return;
+	    
+	GlobalSettings gs;
+	if (gs.bEnableHog)
 	{
-		GlobalSettings gs;
-		if (gs.bEnableHog)
+		CString strFileName( m_runningPath + _T("bs.dont.delete.me"));
+		m_Hog.SetVideo(strFileName);
+		BOOL tmpSuccess = TRUE;
+		CString tmpErrStr;
+		if(_taccess(strFileName, 0) == -1)
 		{
-			CString strFileName( m_runningPath + _T("bs.dont.delete.me"));
-			m_Hog.SetVideo(strFileName);
-			BOOL tmpSuccess = TRUE;
-			CString tmpErrStr;
-			if(_taccess(strFileName, 0) == -1)
+			tmpErrStr = _T("A problem ocurred while enabling screenshots of videos:\nCould not find the `bs.dont.delete.me` file inside the program folder.\nThis option will be disabled for now.");
+			tmpSuccess = FALSE;
+		}
+		else
+		{
+			if(!m_Hog.Hog())
 			{
-				tmpErrStr = _T("A problem ocurred while enabling screenshots of videos:\nCould not find the `bs.dont.delete.me` file inside the program folder.\nThis option will be disabled for now.");
+				tmpErrStr = _T("A problem ocurred while enabling screenshots of videos.\nPlease report this message.\nThis option will be disabled for now.");
 				tmpSuccess = FALSE;
 			}
-			else
-			{
-				if(!m_Hog.Hog())
-				{
-					tmpErrStr = _T("A problem ocurred while enabling screenshots of videos.\nPlease report this message.\nThis option will be disabled for now.");
-					tmpSuccess = FALSE;
-				}
-			}
-			if(!tmpSuccess)
-			{
-				MessageBox(tmpErrStr, _T("screendump->InitDialog()->EnablingHog"), MB_OK|MB_ICONERROR);
-				gs.bEnableHog = FALSE;
-				gs.WriteSettings();
-			}
 		}
-	}
+		if(!tmpSuccess)
+		{
+			MessageBox(tmpErrStr, _T("screendump->InitDialog()->EnablingHog"), MB_OK|MB_ICONERROR);
+			gs.bEnableHog = FALSE;
+			gs.WriteSettings();
+		}
+	}	
 }
 
 void screendumpDlg::RequestCapture(const CaptureType& ct)

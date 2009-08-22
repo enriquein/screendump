@@ -36,6 +36,21 @@ WindowCapture::~WindowCapture()
     StopGDI();
 }
 
+BOOL WindowCapture::StartGDI()
+{
+    lastGdiStatus = GdiplusStartup(&gdiToken, &gdiStartupInput, NULL);
+    return (lastGdiStatus == Ok);
+}
+
+void WindowCapture::StopGDI()
+{
+    if(lastGdiStatus == Ok)
+    {
+        GdiplusShutdown(gdiToken);
+        lastGdiStatus = Aborted;
+    }
+}
+
 BOOL WindowCapture::CaptureScreen(const CString& filename)
 {
 	CSize captureArea(GetSystemMetrics(SM_CXVIRTUALSCREEN), GetSystemMetrics(SM_CYVIRTUALSCREEN));

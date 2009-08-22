@@ -75,7 +75,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib dwmapi.lib"
 				ShowProgress="2"
 				OutputFile="$(OutDir)/screendump.exe"
 				Version=""
@@ -500,6 +500,10 @@
 			>
 			<File
 				RelativePath=".\Dialogs\AboutDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Classes\AeroCheck.h"
 				>
 			</File>
 			<File

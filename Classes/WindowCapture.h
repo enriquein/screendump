@@ -27,20 +27,4 @@ protected:
     int GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
     BOOL DumpImage(Bitmap *aBmp, const CString& filename);
 };
-
-// inline defs
-inline BOOL WindowCapture::StartGDI()
-{
-    lastGdiStatus = GdiplusStartup(&gdiToken, &gdiStartupInput, NULL);
-    return (lastGdiStatus == Ok);
-}
-
-inline void WindowCapture::StopGDI()
-{
-    if(lastGdiStatus == Ok)
-    {
-        GdiplusShutdown(gdiToken);
-        lastGdiStatus = Aborted;
-    }
-}
 #endif
