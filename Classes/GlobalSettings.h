@@ -1,7 +1,7 @@
 #pragma once
 #ifndef GLOBALSETTINGS_H
 #define GLOBALSETTINGS_H
-#include "WindowCapture.h"
+#include "EncoderParameterTypes.h"
 #include "FileOperations.h"
 
 class GlobalSettings
@@ -14,6 +14,7 @@ public:
 	BOOL bAutoName;
     BOOL bWantClipboard;
 	BOOL bEnableHog;
+	BOOL bWantCursor;
 	long lJpgQuality;
 	void ReadSettings();
 	void WriteSettings();

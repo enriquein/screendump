@@ -144,8 +144,7 @@ inline LRESULT screendumpDlg::OnCaptureWindowMsg(WPARAM wParam, LPARAM lParam)
 inline void screendumpDlg::RefreshSettings()
 {
     GlobalSettings gs;
-    wc->SetEncoder(gs.sEnc, gs.lJpgQuality);
-    wc->SetUseClipboard(gs.bWantClipboard);
+    wc->UpdateSettings(gs);
     StartHog();
 }
 

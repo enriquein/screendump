@@ -40,6 +40,8 @@
 #define IDC_EMAIL                       1027
 #define IDC_EDIT1                       1028
 #define IDC_TXTBZRID                    1028
+#define IDC_CHECK1                      1029
+#define IDC_WANTCURSOR                  1029
 #define ID_TRAY_ABOUT                   32773
 #define ID_TRAY_OPTIONS                 32774
 #define ID_TRAY_EXIT                    32775
@@ -58,7 +60,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        136
 #define _APS_NEXT_COMMAND_VALUE         32787
-#define _APS_NEXT_CONTROL_VALUE         1029
+#define _APS_NEXT_CONTROL_VALUE         1030
 #define _APS_NEXT_SYMED_VALUE           106
 #endif
 #endif

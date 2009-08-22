@@ -47,6 +47,7 @@ void GlobalSettings::ReadSettings()
 	bAutoName = (BOOL)GetPrivateProfileInt(_T("screendump"), _T("AutoName"), 1, m_IniPath);
 	bEnableHog = (BOOL)GetPrivateProfileInt(_T("screendump"), _T("HogVideo"), 0, m_IniPath);
     bWantClipboard = (BOOL)GetPrivateProfileInt(_T("screendump"), _T("WantClipboard"), 1, m_IniPath);
+    bWantCursor = (BOOL)GetPrivateProfileInt(_T("screendump"), _T("WantCursor"), 1, m_IniPath);
     defPtr = defValue.GetBuffer(_MAX_PATH);
 	_tgetcwd(defPtr, _MAX_PATH);
     defValue.ReleaseBuffer();
@@ -74,5 +75,7 @@ void GlobalSettings::WriteSettings()
 	WritePrivateProfileString(_T("screendump"), _T("HogVideo"), buffer, m_IniPath);
     buffer.Format(_T("%d"), bWantClipboard);
 	WritePrivateProfileString(_T("screendump"), _T("WantClipboard"), buffer, m_IniPath);
+	buffer.Format(_T("%d"), bWantCursor);
+	WritePrivateProfileString(_T("screendump"), _T("WantCursor"), buffer, m_IniPath);
 }
 

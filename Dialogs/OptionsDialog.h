@@ -48,6 +48,7 @@ private:
     CButton c_chkWantClipboard;
 public:
     afx_msg void OnBnClickedChkautoname();
+    CButton c_WantCursor;
 };
 
 // inline defs

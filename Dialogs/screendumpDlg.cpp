@@ -26,7 +26,8 @@ screendumpDlg::screendumpDlg(CWnd* pParent /*=NULL*/) : CDialog(screendumpDlg::I
     // Check if GDI+ was successfully loaded:
     try
     {
-        wc = new WindowCapture();
+        GlobalSettings gs;
+        wc = new WindowCapture(gs);
     }
     catch(...)
     {

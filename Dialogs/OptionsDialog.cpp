@@ -28,6 +28,7 @@ void OptionsDialog::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_CHKHOG, c_chkHog);
     DDX_Control(pDX, IDC_ERRORMSG, c_lblErrMsg);
     DDX_Control(pDX, IDC_WANTCLIPBOARD, c_chkWantClipboard);
+    DDX_Control(pDX, IDC_WANTCURSOR, c_WantCursor);
 }
 
 
@@ -83,6 +84,7 @@ void OptionsDialog::OnBnClickedOk()
     gs.bAutoName = (c_chkAutoName.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
 	gs.bEnableHog = (c_chkHog.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
     gs.bWantClipboard = (c_chkWantClipboard.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
+    gs.bWantCursor = (c_WantCursor.GetCheck() == BST_CHECKED) ? TRUE : FALSE;
 
     if( c_optBmp.GetCheck() == BST_CHECKED )
     {
@@ -104,7 +106,7 @@ void OptionsDialog::OnBnClickedOk()
 	gs.setOutputDir(strVal);
 	gs.WriteSettings();
 
-    // Doesn't matter if OnCancel gets called since settings were saved.
+    // Contrary to what intuition will tell you, it doesn't matter if OnCancel gets called since settings were saved.
 	OnCancel();
 }
 
@@ -176,6 +178,16 @@ void OptionsDialog::initializeControls()
 	{
 		c_chkWantClipboard.SetCheck(BST_UNCHECKED);
 	}
+	
+	if(gs.bWantCursor)
+	{
+	    c_WantCursor.SetCheck(BST_CHECKED);
+	}
+	else
+	{
+	    c_WantCursor.SetCheck(BST_UNCHECKED);
+	}
+	
     c_Destination.SetWindowText( gs.getOutputDir() );
 }
 

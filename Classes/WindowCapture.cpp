@@ -16,20 +16,17 @@ using namespace Gdiplus;
 #define SM_CXVIRTUALSCREEN 78
 #endif
 
-// Default constructor, throws CResourceException if GDIStartup failed.
-WindowCapture::WindowCapture() 
+// Throws CResourceException if GDIStartup failed.
+WindowCapture::WindowCapture(GlobalSettings gs) 
 {
     lastGdiStatus = Aborted; // Initialized to anything not "Ok" so that StartGDI is the *only* one to be able to change it to "Ok".
-    sEnc = sEncJPEG;
-    lQuality = 100;
-    bUseClipboard = TRUE;
+    programSettings = gs;
     gdiStartupInput.GdiplusVersion = 1; 
     gdiStartupInput.DebugEventCallback = NULL;
     gdiStartupInput.SuppressBackgroundThread = FALSE;
     gdiStartupInput.SuppressExternalCodecs = FALSE;
     if(!StartGDI())
     {   
-        // throw exception so our caller knows gdi startup failed.
         AfxThrowResourceException();
     }
 }
@@ -90,23 +87,25 @@ BOOL WindowCapture::DoCapture(const POINT& coords, const SIZE& areaSize, const C
     // Copy the window image from the window DC into the memory DC
     memDC.BitBlt(0, 0, areaSize.cx, areaSize.cy, &dc, coords.x, coords.y, SRCCOPY|CAPTUREBLT);
 
-    // We need to compensate for pointer position if we're taking a screenshot of a region/window.
-    // The super sad news is that: 1) you have to consider all icons as 32x32 as that's a Windows
-    // spec thing, 2) THEY ARE NOT TOP ALIGNED. God dammit, was it so hard to make all standard cursors
-    // top aligned? That magic "10" you see down here was compensating for the default mouse cursor.
-    // I'm even thinking of letting it be adjustable. It's so irritating, I don't even want to think 
-    // about doing math or whatever to figure out where the actual tip of the arrow is. 
-    CPoint cursorOffset(cursor.ptScreenPos.x - coords.x - 10, cursor.ptScreenPos.y - coords.y - 10);
+    if(programSettings.bWantCursor)
+    {    
+        // We need to compensate for pointer position if we're taking a screenshot of a region/window.
+        // The super sad news is that: 1) you have to consider all icons as 32x32 as that's a Windows
+        // spec thing, 2) THEY ARE NOT TOP ALIGNED. God dammit, was it so hard to make all standard cursors
+        // top aligned? That magic "10" you see down here was compensating for the default mouse cursor.
+        // I'm even thinking of letting it be adjustable. It's so irritating, I don't even want to think 
+        // about doing math or whatever to figure out where the actual tip of the arrow is. 
+        CPoint cursorOffset(cursor.ptScreenPos.x - coords.x - 10, cursor.ptScreenPos.y - coords.y - 10);
 
-    // Now draw the image of the cursor that we captured during
-    // the mouse move. DrawIcon will draw a cursor as well.
-    memDC.DrawIcon(cursorOffset, (HICON)cursor.hCursor);
-
+        // Now draw the image of the cursor that we captured during
+        // the mouse move. DrawIcon will draw a cursor as well.
+        memDC.DrawIcon(cursorOffset, (HICON)cursor.hCursor);
+    }
     memDC.SelectObject(oldbm);	
     
 	Bitmap outputBitMap(bmp, NULL);
     
-    if(bUseClipboard)
+    if(programSettings.bWantClipboard)
     {
         if(OpenClipboard(NULL))
         {
@@ -172,7 +171,7 @@ BOOL WindowCapture::DumpImage(Bitmap* aBmp, const CString& filename)
 	BOOL extAppend = FALSE;
 	
 	// Check if the file extension was already provided to avoid double appending it.
-	switch (sEnc)
+	switch (programSettings.sEnc)
 	{
 	case sEncBMP:
 	    if (fullFilePath.GetLength() > 4)
@@ -220,10 +219,15 @@ BOOL WindowCapture::DumpImage(Bitmap* aBmp, const CString& filename)
 		eParams.Parameter[0].Guid = EncoderQuality;
 		eParams.Parameter[0].NumberOfValues = 1;
 		eParams.Parameter[0].Type = EncoderParameterValueTypeLong;
-		eParams.Parameter[0].Value = &lQuality;
+		eParams.Parameter[0].Value = &programSettings.lJpgQuality;
 	    break;
 	}
 
     Status stat = aBmp->Save(fullFilePath, &encoderClsid, &eParams);
     return stat == Ok;
+}
+
+void WindowCapture::UpdateSettings(const GlobalSettings& settings)
+{
+    programSettings = settings;
 }

@@ -507,6 +507,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Classes\EncoderParameterTypes.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Classes\ErrorString.h"
 				>
 			</File>
