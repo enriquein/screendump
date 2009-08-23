@@ -9,17 +9,6 @@
 #include <windows.h>
 #include "Hyperlinks.h"
 
-#ifndef IDC_HAND
-#define IDC_HAND MAKEINTRESOURCE(32649)
-#endif
-
-#ifndef GWL_WNDPROC
-#define GWL_WNDPROC -4
-#endif
-
-#ifndef IDC_ARROW
-#define IDC_ARROW MAKEINTRESOURCE(32512)
-#endif
 #define PROP_ORIGINAL_FONT		_T("_Hyperlink_Original_Font_")
 #define PROP_ORIGINAL_PROC		_T("_Hyperlink_Original_Proc_")
 #define PROP_STATIC_HYPERLINK	_T("_Hyperlink_From_Static_")
@@ -49,7 +38,7 @@ LRESULT CALLBACK _HyperlinkParentProc(HWND hwnd, UINT message, WPARAM wParam, LP
 		}
 	case WM_DESTROY:
 		{
-			SetWindowLong(hwnd, GWL_WNDPROC, (LONG) pfnOrigProc);
+			SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR) pfnOrigProc);
 			RemoveProp(hwnd, PROP_ORIGINAL_PROC);
 			break;
 		}
@@ -65,7 +54,7 @@ LRESULT CALLBACK _HyperlinkProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM l
 	{
 	case WM_DESTROY:
 		{
-			SetWindowLong(hwnd, GWL_WNDPROC, (LONG) pfnOrigProc);
+			SetWindowLongPtr(hwnd, GWLP_WNDPROC, (LONG_PTR) pfnOrigProc);
 			RemoveProp(hwnd, PROP_ORIGINAL_PROC);
 
 			HFONT hOrigFont = (HFONT) GetProp(hwnd, PROP_ORIGINAL_FONT);
@@ -131,24 +120,24 @@ BOOL ConvertStaticToHyperlink(const HWND& hwndCtl)
 	HWND hwndParent = GetParent(hwndCtl);
 	if (NULL != hwndParent)
 	{
-		WNDPROC pfnOrigProc = (WNDPROC) GetWindowLong(hwndParent, GWL_WNDPROC);
+		WNDPROC pfnOrigProc = (WNDPROC) GetWindowLongPtr(hwndParent, GWLP_WNDPROC);
 		if (pfnOrigProc != _HyperlinkParentProc)
 		{
 			SetProp(hwndParent, PROP_ORIGINAL_PROC, (HANDLE) pfnOrigProc);
-			SetWindowLong(hwndParent, GWL_WNDPROC, (LONG) (WNDPROC) _HyperlinkParentProc);
+			SetWindowLongPtr(hwndParent, GWLP_WNDPROC, (LONG_PTR) _HyperlinkParentProc);
 		}
 	}
 
 	// Make sure the control will send notifications.
 
-	DWORD dwStyle = GetWindowLong(hwndCtl, GWL_STYLE);
-	SetWindowLong(hwndCtl, GWL_STYLE, dwStyle | SS_NOTIFY);
+	LONG_PTR dwStyle = GetWindowLongPtr(hwndCtl, GWL_STYLE);
+	SetWindowLongPtr(hwndCtl, GWL_STYLE, dwStyle | SS_NOTIFY);
 
 	// Subclass the existing control.
 
-	WNDPROC pfnOrigProc = (WNDPROC) GetWindowLong(hwndCtl, GWL_WNDPROC);
+	WNDPROC pfnOrigProc = (WNDPROC) GetWindowLongPtr(hwndCtl, GWLP_WNDPROC);
 	SetProp(hwndCtl, PROP_ORIGINAL_PROC, (HANDLE) pfnOrigProc);
-	SetWindowLong(hwndCtl, GWL_WNDPROC, (LONG) (WNDPROC) _HyperlinkProc);
+	SetWindowLongPtr(hwndCtl, GWLP_WNDPROC, (LONG_PTR) _HyperlinkProc);
 
 	// Create an updated font by adding an underline.
 

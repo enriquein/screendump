@@ -1,9 +1,5 @@
 #pragma once
-
-#ifndef ABOUTDIALOG_H
-#define ABOUTDIALOG_H
 #include "afxwin.h"
-// AboutDialog dialog
 
 class AboutDialog : public CDialog
 {
@@ -25,6 +21,7 @@ protected:
     CEdit c_txtBzrID;    
     CString strVersionText;
     CString strBuildDate;
+    CBrush	bgColorBrush;
     
 	DECLARE_MESSAGE_MAP()
 public:
@@ -33,6 +30,7 @@ public:
     afx_msg void OnStnClickedEmailLink();
     afx_msg void OnStnClickedLaunchpadLink();
 
+    afx_msg HBRUSH OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor);
 };
 
 // Inline defs
@@ -51,5 +49,3 @@ inline void AboutDialog::OnStnClickedEmailLink()
 {
     ShellExecute(NULL, _T("open"), _T("mailto:dev@indiecodelabs.com"), NULL, NULL, SW_SHOWNORMAL);
 }
-
-#endif

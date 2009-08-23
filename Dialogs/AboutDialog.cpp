@@ -1,5 +1,3 @@
-// AboutDialog.cpp : implementation file
-//
 #include "stdafx.h"
 #include "..\res\resource.h"
 #include ".\aboutdialog.h"
@@ -7,8 +5,6 @@
 
 UINT AboutDialog::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
 #define BZR_REV_ID _T("dev@indiecodelabs.com-20090728033102-pduhixo0ix1cib1f")
-
-// AboutDialog dialog
 
 IMPLEMENT_DYNAMIC(AboutDialog, CDialog)
 AboutDialog::AboutDialog(CWnd* pParent /*=NULL*/)
@@ -33,6 +29,7 @@ BEGIN_MESSAGE_MAP(AboutDialog, CDialog)
     ON_STN_CLICKED(IDC_URLLINK, &AboutDialog::OnStnClickedUrlLink)
     ON_STN_CLICKED(IDC_LAUNCHPADURL, &AboutDialog::OnStnClickedLaunchpadLink)
     ON_STN_CLICKED(IDC_EMAIL, &AboutDialog::OnStnClickedEmailLink)
+    ON_WM_CTLCOLOR()
 END_MESSAGE_MAP()
 
 
@@ -40,7 +37,9 @@ END_MESSAGE_MAP()
 
 BOOL AboutDialog::OnInitDialog()
 {
+    bgColorBrush.CreateSolidBrush(RGB(255,255,255));
 	CDialog::OnInitDialog();
+	
 	LRESULT lres;
 	CString cpuBits;
 	
@@ -64,9 +63,14 @@ BOOL AboutDialog::OnInitDialog()
     // Set build date
     strBuildDate = CString(_T(__DATE__)) + CString(_T(" ")) + CString(_T(__TIME__));
     
-    c_BuildText.SetWindowText(_T("You are using screendump ") + cpuBits + _T(" version ") + strVersionText + _T(". Built on ") + strBuildDate + _T(". For support purposes, don't forget to copy and paste the following ID into your email or bug report:"));
+    c_BuildText.SetWindowText(_T("You are using screendump ") + cpuBits + _T(" version ") + strVersionText + _T(", built on ") + strBuildDate + _T(". For support purposes, don't forget to copy and paste the following ID into your email or bug report:"));
     
     c_txtBzrID.SetWindowText(BZR_REV_ID);
     
 	return TRUE;  // return TRUE unless you set the focus to a control
+}
+
+HBRUSH AboutDialog::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+{
+    return bgColorBrush;
 }
