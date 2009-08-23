@@ -2,8 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#ifndef HOGVIDEO_H
-#define HOGVIDEO_H
+#pragma once
 #include <dshow.h>
 class HogVideo  
 {
@@ -50,4 +49,3 @@ inline void HogVideo::SetVideo(const CString& szFilename)
 {
     m_Filename = szFilename;
 }
-#endif 

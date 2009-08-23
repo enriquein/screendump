@@ -1,6 +1,4 @@
 #pragma once
-#ifndef AUTOCAPTURE_H
-#define AUTOCAPTURE_H
 #include "afxwin.h"
 
 class AutoCapture : public CDialog
@@ -61,5 +59,3 @@ inline void AutoCapture::OnClose()
 {
 	OnCancel();
 }
-
-#endif

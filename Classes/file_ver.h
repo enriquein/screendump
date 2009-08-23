@@ -31,9 +31,8 @@
 //
 // ----------------------------------------------------------------------------
 // ----------------------------------------------------------------------------
+#pragma once
 
-#if !defined(AFX_FILE_VER_H__BBB1EB1A_076F_405A_B71D_FDFA4256E34A__INCLUDED_)
-#define AFX_FILE_VER_H__BBB1EB1A_076F_405A_B71D_FDFA4256E34A__INCLUDED_
 
 
 
@@ -227,7 +226,3 @@ private:
 
 
 #include ".\file_ver.inl"		// FileVersionInfo inline functions
-
-
-
-#endif // !defined(AFX_FILE_VER_H__BBB1EB1A_076F_405A_B71D_FDFA4256E34A__INCLUDED_)

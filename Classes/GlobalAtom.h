@@ -1,6 +1,4 @@
-#ifndef GLOBALATOM_H
-#define GLOBALATOM_H
-
+#pragma once
 class GlobalAtom
 {
 public:
@@ -17,4 +15,3 @@ inline ATOM GlobalAtom::GetID()
 {
 	return m_nID;
 }
-#endif

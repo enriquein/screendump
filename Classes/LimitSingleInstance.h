@@ -1,5 +1,4 @@
-#ifndef LimitSingleInstance_H
-#define LimitSingleInstance_H
+#pragma once
 #include <windows.h>
 
 // Define the types of unique instances we can create
@@ -135,4 +134,3 @@ CString createExclusionName(LPCTSTR GUID, UINT kind)
 } // createExclusionName
 
 }; // class
-#endif

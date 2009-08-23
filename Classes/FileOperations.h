@@ -1,5 +1,4 @@
-#ifndef FILEOPERATIONS_H
-#define FILEOPERATIONS_H
+#pragma once
 /*
     FileOperations.h
     Several generalized file operations that are done identically in lots of places.
@@ -54,4 +53,3 @@ inline BOOL EnsurePathExists(const CString& path)
 	}
     return returnVal;
 }
-#endif

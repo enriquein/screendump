@@ -1,4 +1,3 @@
-#pragma once
 #include "stdafx.h"
 #include <io.h>
 #include <direct.h>
