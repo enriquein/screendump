@@ -1,10 +1,4 @@
-// screendumpDlg.h : header file
-//
-
 #pragma once
-#ifndef SCREENDUMPDLG_H
-#define SCREENDUMPDLG_H
-
 #include "..\Classes\HogVideo.h"
 #include "..\Classes\globalatom.h"
 #include "..\res\resource.h"
@@ -276,5 +270,3 @@ inline void screendumpDlg::OnTrayHelpClick()
 {
     ShellExecute(m_hWnd, _T("open"), m_runningPath + _T("\\HelpManual.chm"), NULL, NULL, SW_SHOWNORMAL);
 }
-
-#endif

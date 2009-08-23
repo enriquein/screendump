@@ -1,5 +1,4 @@
-#ifndef WINDOWCAPTURE_H
-#define WINDOWCAPTURE_H
+#pragma once
 #include "gdiplus.h"
 #include "GlobalSettings.h"
 #include "EncoderParameterTypes.h"
@@ -27,4 +26,3 @@ protected:
     int GetEncoderClsid(const WCHAR* format, CLSID* pClsid);
     BOOL DumpImage(Bitmap *aBmp, const CString& filename);
 };
-#endif

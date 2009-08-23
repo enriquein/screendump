@@ -2,16 +2,14 @@
 #include <windows.h>
 #include ".\GlobalSettings.h"
 #include ".\FileOperations.h"
+#include ".\OSCheck.h"
 
 // TODO Add a way to run from USB or other portable device.
 
 GlobalSettings::GlobalSettings()
 {
 	// Get INI File path
-	OSVERSIONINFO osv;
-	osv.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx(&osv);
-	if( osv.dwMajorVersion >= 5)
+	if( OSCheck::GetMajorOSVersion() >= 5)
 	{
         LPTSTR p = m_IniPath.GetBuffer(_MAX_PATH);
 		SHGetSpecialFolderPath(NULL, p, CSIDL_APPDATA, FALSE);

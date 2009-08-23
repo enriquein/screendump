@@ -4,7 +4,7 @@
 #include <direct.h>
 #include ".\OptionsDialog.h"
 #include "..\Classes\GlobalSettings.h"
-#include "..\Classes\AeroCheck.h"
+#include "..\Classes\OSCheck.h"
 
 IMPLEMENT_DYNAMIC(OptionsDialog, CDialog)
 OptionsDialog::OptionsDialog(CWnd* pParent /*=NULL*/)
@@ -166,7 +166,7 @@ void OptionsDialog::initializeControls()
     // Since there's no point to hog while Aero is on, let's not even leave the choice.
     // I'm hoping it's clear to the user that under Aero they have full support for 
     // screenshots of video windows.
-    if(CheckAeroIsEnabled())
+    if(OSCheck::CheckAeroIsEnabled())
     {
         c_chkHog.SetCheck(BST_CHECKED);
         c_chkHog.EnableWindow(FALSE);    

@@ -81,6 +81,7 @@
 				Version=""
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Visual Studio 8\VC\PlatformSDK\Lib&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
+				DelayLoadDLLs="dwmapi.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -166,12 +167,13 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib user32.lib dwmapi.lib"
 				ShowProgress="2"
 				OutputFile="$(OutDir)/screendump.exe"
 				Version=""
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\Microsoft Visual Studio 8\VC\PlatformSDK\Lib&quot;;&quot;C:\Program Files\Microsoft Platform SDK\Lib&quot;"
+				DelayLoadDLLs="dwmapi.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				RandomizedBaseAddress="1"
@@ -503,10 +505,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Classes\AeroCheck.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Dialogs\AutoCapture.h"
 				>
 			</File>
@@ -548,6 +546,10 @@
 			</File>
 			<File
 				RelativePath=".\Dialogs\OptionsDialog.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Classes\OSCheck.h"
 				>
 			</File>
 			<File

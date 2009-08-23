@@ -2,19 +2,8 @@
 #include "afxwin.h"
 #include "WindowCapture.h"
 #include "gdiplus.h"
+#include "OSCheck.h"
 using namespace Gdiplus;
-
-#ifndef CAPTUREBLT
-#define CAPTUREBLT  (DWORD)0x40000000
-#endif
-
-#ifndef SM_CYVIRTUALSCREEN
-#define SM_CYVIRTUALSCREEN 79
-#endif
-
-#ifndef SM_CXVIRTUALSCREEN
-#define SM_CXVIRTUALSCREEN 78
-#endif
 
 // Throws CResourceException if GDIStartup failed.
 WindowCapture::WindowCapture(GlobalSettings gs) 
@@ -110,7 +99,14 @@ BOOL WindowCapture::DoCapture(const POINT& coords, const SIZE& areaSize, const C
         // top aligned? That magic "10" you see down here was compensating for the default mouse cursor.
         // I'm even thinking of letting it be adjustable. It's so irritating, I don't even want to think 
         // about doing math or whatever to figure out where the actual tip of the arrow is. 
-        CPoint cursorOffset(cursor.ptScreenPos.x - coords.x - 10, cursor.ptScreenPos.y - coords.y - 10);
+        // PS: Turns out the dafault icons under Vista/7 are actually top aligned. That's why we check 
+        // and ajust accordingly.
+
+        int osVersion = OSCheck::GetMajorOSVersion(); // 6 is Vista
+        int offsetX = (osVersion >= 6) ? 0 : 10;
+        int offsetY = (osVersion >= 6) ? 0 : 10;        
+        
+        CPoint cursorOffset(cursor.ptScreenPos.x - coords.x - offsetX, cursor.ptScreenPos.y - coords.y - offsetY);
 
         // Now draw the image of the cursor that we captured during
         // the mouse move. DrawIcon will draw a cursor as well.

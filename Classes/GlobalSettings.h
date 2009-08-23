@@ -1,6 +1,4 @@
 #pragma once
-#ifndef GLOBALSETTINGS_H
-#define GLOBALSETTINGS_H
 #include "EncoderParameterTypes.h"
 #include "FileOperations.h"
 
@@ -44,4 +42,3 @@ inline BOOL GlobalSettings::setOutputDir(const CString &sDir)
         return FALSE;
     }
 }
-#endif

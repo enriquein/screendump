@@ -9,7 +9,7 @@
 #include "..\Classes\file_ver.h"
 #include "..\Classes\ErrorString.h"
 #include "..\Classes\FileOperations.h"
-#include "..\Classes\AeroCheck.h"
+#include "..\Classes\OSCheck.h"
 #include ".\OptionsDialog.h"
 
 UINT screendumpDlg::UWM_SHELLICON_MSG = ::RegisterWindowMessage(_T("UWM_SHELLICON_MSG-{7F1B3C8F-EAE9-4244-8D47-B6B2085F97EB}"));
@@ -167,7 +167,7 @@ LRESULT screendumpDlg::ShellIconCallback(WPARAM wParam, LPARAM lParam)
 void screendumpDlg::StartHog()
 {
     // We don't want to hog under Aero, no point in it.
-    if(CheckAeroIsEnabled())
+    if(OSCheck::CheckAeroIsEnabled())
         return;
 
 	// Check if its already running. If it is, then ignore the hog request.

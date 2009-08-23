@@ -1,9 +1,4 @@
 #pragma once
-
-#ifndef OPTIONSDIALOG_H
-#define OPTIONSDIALOG_H
-
-// OptionsDialog dialog
 #include "..\res\resource.h"
 #include "afxwin.h"
 
@@ -99,5 +94,3 @@ inline void OptionsDialog::OnBnClickedChkautoname()
 {
     updateControls();
 }
-
-#endif
