@@ -261,9 +261,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib dwmapi.lib"
 				OutputFile="$(OutDir)/screendump.exe"
 				LinkIncremental="1"
+				DelayLoadDLLs="dwmapi.dll"
 				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="0"
@@ -357,9 +358,10 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib"
+				AdditionalDependencies="gdiplus.lib Strmiids.lib version.lib dwmapi.lib"
 				OutputFile="$(OutDir)/screendump-x64.exe"
 				LinkIncremental="1"
+				DelayLoadDLLs="dwmapi.dll"
 				GenerateDebugInformation="false"
 				SubSystem="2"
 				OptimizeReferences="0"

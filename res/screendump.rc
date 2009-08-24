@@ -175,8 +175,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,3,0,0
- PRODUCTVERSION 2,3,0,0
+ FILEVERSION 2,4,0,9234
+ PRODUCTVERSION 2,4,0,9234
  FILEFLAGSMASK 0x1fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -193,14 +193,14 @@ BEGIN
         BEGIN
             VALUE "Comments", "Visit the official website, http://www.indiecodelabs.com"
             VALUE "CompanyName", "Indie Code Labs"
-            VALUE "FileDescription", "screendump 2.3.0.0"
-            VALUE "FileVersion", "2.3.0.0"
+            VALUE "FileDescription", "screendump 2.4.0.9234"
+            VALUE "FileVersion", "2.4.0.9234"
             VALUE "InternalName", "screendump.exe"
             VALUE "LegalCopyright", "This program is covered by an artistic open source license."
             VALUE "LegalTrademarks", "This program is covered by an artistic open source license."
             VALUE "OriginalFilename", "screendump.exe"
             VALUE "ProductName", "screendump"
-            VALUE "ProductVersion", "2.3.0.0"
+            VALUE "ProductVersion", "2.4.0.9234"
         END
     END
     BLOCK "VarFileInfo"

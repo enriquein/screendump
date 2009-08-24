@@ -97,7 +97,7 @@ BOOL screendumpDlg::OnInitDialog()
 	cfInfo.ReadVersionInfo(exeName);
 	if( cfInfo.IsValid() )
 	{
-    	m_progVersion = cfInfo.GetCustomFileVersionString();	
+    	m_progVersion = cfInfo.GetFileVersionString();
 	}
 	else
 	{
@@ -177,7 +177,7 @@ void screendumpDlg::StartHog()
 	GlobalSettings gs;
 	if (gs.bEnableHog)
 	{
-		CString strFileName( m_runningPath + _T("bs.dont.delete.me"));
+		CString strFileName( m_runningPath + _T("dontdeletethisfile"));
 		m_Hog.SetVideo(strFileName);
 		BOOL tmpSuccess = TRUE;
 		CString tmpErrStr;
