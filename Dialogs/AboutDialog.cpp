@@ -4,7 +4,7 @@
 #include "..\Classes\Hyperlinks.h"
 
 UINT AboutDialog::UWM_REQUESTVERSION = ::RegisterWindowMessage(_T("UWM_REQUESTVERSION-{F9264F49-8BFF-4667-8C00-9B9E8E9D0485}"));
-#define BZR_REV_ID _T("dev@indiecodelabs.com-20090728033102-pduhixo0ix1cib1f")
+#define BZR_REV_ID _T("dev@indiecodelabs.com-20090824031820-r91vv5plvgailmi9")
 
 IMPLEMENT_DYNAMIC(AboutDialog, CDialog)
 AboutDialog::AboutDialog(CWnd* pParent /*=NULL*/)
